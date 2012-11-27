@@ -16,6 +16,8 @@
 		0ADF45811664B14C00E0C0FA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADF457E1664B14C00E0C0FA /* Default@2x.png */; };
 		0ADF45861664B15100E0C0FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF45831664B15100E0C0FA /* main.m */; };
 		0ADF45891664B15C00E0C0FA /* TRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF45881664B15C00E0C0FA /* TRAppDelegate.m */; };
+		0ADF45931664B21F00E0C0FA /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADF45921664B21F00E0C0FA /* Icon.png */; };
+		0ADF45951664B22300E0C0FA /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADF45941664B22300E0C0FA /* Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		0ADF45841664B15100E0C0FA /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = misc/Prefix.pch; sourceTree = "<group>"; };
 		0ADF45871664B15C00E0C0FA /* TRAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRAppDelegate.h; path = src/TRAppDelegate.h; sourceTree = "<group>"; };
 		0ADF45881664B15C00E0C0FA /* TRAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRAppDelegate.m; path = src/TRAppDelegate.m; sourceTree = "<group>"; };
+		0ADF45921664B21F00E0C0FA /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		0ADF45941664B22300E0C0FA /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +55,8 @@
 		0A3890C41664AFC7002E8BC1 = {
 			isa = PBXGroup;
 			children = (
+				0ADF45941664B22300E0C0FA /* Icon@2x.png */,
+				0ADF45921664B21F00E0C0FA /* Icon.png */,
 				0A3890D91664AFC7002E8BC1 /* Stream */,
 				0A3890D21664AFC7002E8BC1 /* Frameworks */,
 				0A3890D01664AFC7002E8BC1 /* Products */,
@@ -179,6 +185,8 @@
 				0ADF457F1664B14C00E0C0FA /* Default-568h@2x.png in Resources */,
 				0ADF45801664B14C00E0C0FA /* Default.png in Resources */,
 				0ADF45811664B14C00E0C0FA /* Default@2x.png in Resources */,
+				0ADF45931664B21F00E0C0FA /* Icon.png in Resources */,
+				0ADF45951664B22300E0C0FA /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
