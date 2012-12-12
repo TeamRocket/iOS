@@ -173,6 +173,53 @@
     return nil;
 }
 
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 6, tableView.bounds.size.width-80, 20.0)];
+    tableView.sectionHeaderHeight = headerView.frame.size.height;
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, headerView.frame.size.width-40, 18)];
+    label.text = [self tableView:tableView titleForHeaderInSection:section];
+    label.font = [UIFont boldSystemFontOfSize:16.0];
+    label.shadowOffset = CGSizeMake(0, 1);
+    label.shadowColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithRed:0.298 green:0.2980 blue:0.2980 alpha:1.000];
+
+    label.center = headerView.center;
+
+    [headerView addSubview:label];
+
+    return headerView;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 30, tableView.bounds.size.width, tableView.sectionFooterHeight)];
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width-40, 55)];
+    label.text = [self tableView:tableView titleForFooterInSection:section];
+    label.font = [UIFont systemFontOfSize:13.0];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.shadowOffset = CGSizeMake(0, 1);
+    label.shadowColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithWhite:0.4f alpha:1.0];
+    label.numberOfLines = 3;
+
+    label.center = footerView.center;
+
+    [footerView addSubview:label];
+    return footerView;
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (section == 1) {
+        return @"Your phone number will always remain private. By clicking Sign Up you are indicating that you have read and agree to the Terms of Service";
+    } else {
+        return nil;
+    }
+
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField*)textField{
     [textField resignFirstResponder];
     return YES;
