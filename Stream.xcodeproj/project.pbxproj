@@ -10,10 +10,25 @@
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
+		0A510AD7167842E000E2012F /* MuseoSans_500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD5167842E000E2012F /* MuseoSans_500.otf */; };
+		0A510AD8167842E000E2012F /* MuseoSans-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD6167842E000E2012F /* MuseoSans-300.otf */; };
 		0AB19B38167805900036E2BC /* iPadIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B34167805900036E2BC /* iPadIcon.png */; };
 		0AB19B39167805900036E2BC /* iPadIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B35167805900036E2BC /* iPadIcon@2x.png */; };
 		0AB19B3A167805900036E2BC /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B36167805900036E2BC /* iPhoneIcon.png */; };
 		0AB19B3B167805900036E2BC /* iPhoneIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B37167805900036E2BC /* iPhoneIcon@2x.png */; };
+		0AB19B4E167812A20036E2BC /* orangebutton_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B4A167812A20036E2BC /* orangebutton_normal.png */; };
+		0AB19B4F167812A20036E2BC /* orangebutton_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B4B167812A20036E2BC /* orangebutton_normal@2x.png */; };
+		0AB19B50167812A20036E2BC /* orangebutton_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B4C167812A20036E2BC /* orangebutton_pressed.png */; };
+		0AB19B51167812A20036E2BC /* orangebutton_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B4D167812A20036E2BC /* orangebutton_pressed@2x.png */; };
+		0AB19B571678141F0036E2BC /* TRSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB19B551678141F0036E2BC /* TRSplashViewController.m */; };
+		0AB19B5A167814390036E2BC /* TRSplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B59167814390036E2BC /* TRSplashViewController.xib */; };
+		0AB19B6016781CC20036E2BC /* MuseoSans_700.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B5F16781C8B0036E2BC /* MuseoSans_700.otf */; };
+		0AB19B6516781F240036E2BC /* blackbutton_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B6116781F240036E2BC /* blackbutton_normal.png */; };
+		0AB19B6616781F240036E2BC /* blackbutton_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B6216781F240036E2BC /* blackbutton_normal@2x.png */; };
+		0AB19B6716781F240036E2BC /* blackbutton_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B6316781F240036E2BC /* blackbutton_pressed.png */; };
+		0AB19B6816781F240036E2BC /* blackbutton_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B6416781F240036E2BC /* blackbutton_pressed@2x.png */; };
+		0AB19B6B167822A00036E2BC /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B69167822A00036E2BC /* logo.png */; };
+		0AB19B6C167822A00036E2BC /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B6A167822A00036E2BC /* logo@2x.png */; };
 		0ADF457B1664B14100E0C0FA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ADF45791664B14100E0C0FA /* InfoPlist.strings */; };
 		0ADF457F1664B14C00E0C0FA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADF457C1664B14C00E0C0FA /* Default-568h@2x.png */; };
 		0ADF45801664B14C00E0C0FA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADF457D1664B14C00E0C0FA /* Default.png */; };
@@ -27,10 +42,26 @@
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0A510AD5167842E000E2012F /* MuseoSans_500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSans_500.otf; path = img/Fonts/MuseoSans_500.otf; sourceTree = "<group>"; };
+		0A510AD6167842E000E2012F /* MuseoSans-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MuseoSans-300.otf"; path = "img/Fonts/MuseoSans-300.otf"; sourceTree = "<group>"; };
 		0AB19B34167805900036E2BC /* iPadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPadIcon.png; path = img/iPadIcon.png; sourceTree = "<group>"; };
 		0AB19B35167805900036E2BC /* iPadIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPadIcon@2x.png"; path = "img/iPadIcon@2x.png"; sourceTree = "<group>"; };
 		0AB19B36167805900036E2BC /* iPhoneIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPhoneIcon.png; path = img/iPhoneIcon.png; sourceTree = "<group>"; };
 		0AB19B37167805900036E2BC /* iPhoneIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPhoneIcon@2x.png"; path = "img/iPhoneIcon@2x.png"; sourceTree = "<group>"; };
+		0AB19B4A167812A20036E2BC /* orangebutton_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = orangebutton_normal.png; path = img/UI/orangebutton_normal.png; sourceTree = "<group>"; };
+		0AB19B4B167812A20036E2BC /* orangebutton_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "orangebutton_normal@2x.png"; path = "img/UI/orangebutton_normal@2x.png"; sourceTree = "<group>"; };
+		0AB19B4C167812A20036E2BC /* orangebutton_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = orangebutton_pressed.png; path = img/UI/orangebutton_pressed.png; sourceTree = "<group>"; };
+		0AB19B4D167812A20036E2BC /* orangebutton_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "orangebutton_pressed@2x.png"; path = "img/UI/orangebutton_pressed@2x.png"; sourceTree = "<group>"; };
+		0AB19B541678141F0036E2BC /* TRSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRSplashViewController.h; path = src/view/TRSplashViewController.h; sourceTree = "<group>"; };
+		0AB19B551678141F0036E2BC /* TRSplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRSplashViewController.m; path = src/view/TRSplashViewController.m; sourceTree = "<group>"; };
+		0AB19B59167814390036E2BC /* TRSplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRSplashViewController.xib; path = gui/TRSplashViewController.xib; sourceTree = "<group>"; };
+		0AB19B5F16781C8B0036E2BC /* MuseoSans_700.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSans_700.otf; path = img/Fonts/MuseoSans_700.otf; sourceTree = "<group>"; };
+		0AB19B6116781F240036E2BC /* blackbutton_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blackbutton_normal.png; path = img/UI/blackbutton_normal.png; sourceTree = "<group>"; };
+		0AB19B6216781F240036E2BC /* blackbutton_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blackbutton_normal@2x.png"; path = "img/UI/blackbutton_normal@2x.png"; sourceTree = "<group>"; };
+		0AB19B6316781F240036E2BC /* blackbutton_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blackbutton_pressed.png; path = img/UI/blackbutton_pressed.png; sourceTree = "<group>"; };
+		0AB19B6416781F240036E2BC /* blackbutton_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blackbutton_pressed@2x.png"; path = "img/UI/blackbutton_pressed@2x.png"; sourceTree = "<group>"; };
+		0AB19B69167822A00036E2BC /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = img/logo.png; sourceTree = "<group>"; };
+		0AB19B6A167822A00036E2BC /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "img/logo@2x.png"; sourceTree = "<group>"; };
 		0ADF457A1664B14100E0C0FA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = gui/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0ADF457C1664B14C00E0C0FA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "img/Default-568h@2x.png"; sourceTree = "<group>"; };
 		0ADF457D1664B14C00E0C0FA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = img/Default.png; sourceTree = "<group>"; };
@@ -98,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				0ADF45791664B14100E0C0FA /* InfoPlist.strings */,
+				0AB19B59167814390036E2BC /* TRSplashViewController.xib */,
 			);
 			name = gui;
 			sourceTree = "<group>";
@@ -107,6 +139,7 @@
 			children = (
 				0ADF45871664B15C00E0C0FA /* TRAppDelegate.h */,
 				0ADF45881664B15C00E0C0FA /* TRAppDelegate.m */,
+				0AB19B4016780B040036E2BC /* view */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -128,11 +161,49 @@
 				0AB19B35167805900036E2BC /* iPadIcon@2x.png */,
 				0AB19B36167805900036E2BC /* iPhoneIcon.png */,
 				0AB19B37167805900036E2BC /* iPhoneIcon@2x.png */,
+				0AB19B69167822A00036E2BC /* logo.png */,
+				0AB19B6A167822A00036E2BC /* logo@2x.png */,
 				0ADF457C1664B14C00E0C0FA /* Default-568h@2x.png */,
 				0ADF457D1664B14C00E0C0FA /* Default.png */,
 				0ADF457E1664B14C00E0C0FA /* Default@2x.png */,
+				0AB19B5B1678190C0036E2BC /* Fonts */,
+				0AB19B49167812930036E2BC /* UI */,
 			);
 			name = img;
+			sourceTree = "<group>";
+		};
+		0AB19B4016780B040036E2BC /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0AB19B541678141F0036E2BC /* TRSplashViewController.h */,
+				0AB19B551678141F0036E2BC /* TRSplashViewController.m */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
+		0AB19B49167812930036E2BC /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				0AB19B6116781F240036E2BC /* blackbutton_normal.png */,
+				0AB19B6216781F240036E2BC /* blackbutton_normal@2x.png */,
+				0AB19B6316781F240036E2BC /* blackbutton_pressed.png */,
+				0AB19B6416781F240036E2BC /* blackbutton_pressed@2x.png */,
+				0AB19B4A167812A20036E2BC /* orangebutton_normal.png */,
+				0AB19B4B167812A20036E2BC /* orangebutton_normal@2x.png */,
+				0AB19B4C167812A20036E2BC /* orangebutton_pressed.png */,
+				0AB19B4D167812A20036E2BC /* orangebutton_pressed@2x.png */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		0AB19B5B1678190C0036E2BC /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0A510AD6167842E000E2012F /* MuseoSans-300.otf */,
+				0A510AD5167842E000E2012F /* MuseoSans_500.otf */,
+				0AB19B5F16781C8B0036E2BC /* MuseoSans_700.otf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +266,20 @@
 				0AB19B39167805900036E2BC /* iPadIcon@2x.png in Resources */,
 				0AB19B3A167805900036E2BC /* iPhoneIcon.png in Resources */,
 				0AB19B3B167805900036E2BC /* iPhoneIcon@2x.png in Resources */,
+				0AB19B4E167812A20036E2BC /* orangebutton_normal.png in Resources */,
+				0AB19B4F167812A20036E2BC /* orangebutton_normal@2x.png in Resources */,
+				0AB19B50167812A20036E2BC /* orangebutton_pressed.png in Resources */,
+				0AB19B51167812A20036E2BC /* orangebutton_pressed@2x.png in Resources */,
+				0AB19B5A167814390036E2BC /* TRSplashViewController.xib in Resources */,
+				0AB19B6016781CC20036E2BC /* MuseoSans_700.otf in Resources */,
+				0AB19B6516781F240036E2BC /* blackbutton_normal.png in Resources */,
+				0AB19B6616781F240036E2BC /* blackbutton_normal@2x.png in Resources */,
+				0AB19B6716781F240036E2BC /* blackbutton_pressed.png in Resources */,
+				0AB19B6816781F240036E2BC /* blackbutton_pressed@2x.png in Resources */,
+				0AB19B6B167822A00036E2BC /* logo.png in Resources */,
+				0AB19B6C167822A00036E2BC /* logo@2x.png in Resources */,
+				0A510AD7167842E000E2012F /* MuseoSans_500.otf in Resources */,
+				0A510AD8167842E000E2012F /* MuseoSans-300.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +292,7 @@
 			files = (
 				0ADF45861664B15100E0C0FA /* main.m in Sources */,
 				0ADF45891664B15C00E0C0FA /* TRAppDelegate.m in Sources */,
+				0AB19B571678141F0036E2BC /* TRSplashViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
