@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TRLoginViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface TRLoginViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     IBOutlet UINavigationBar * mNavBar;
     IBOutlet UIBarButtonItem * mBackBtn;
     IBOutlet UIBarButtonItem * mSigninBtn;

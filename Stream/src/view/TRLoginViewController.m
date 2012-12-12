@@ -10,7 +10,7 @@
 
 #import "TRLoginViewController.h"
 
-#import "TRTableViewCell.h"
+#import "TRTextFieldCell.h"
 
 @interface TRLoginViewController ()
 
@@ -55,25 +55,76 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 2;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TRTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TRTextFieldCell"];
+    TRTextFieldCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TRTextFieldCell"];
     if (!cell)
-        cell = [[TRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TRTextFieldCell"];
+        cell = [[NSBundle mainBundle] loadNibNamed:@"TRTextFieldCell" owner:self options:nil][0];
         
     int sectionRows = [tableView numberOfRowsInSection:[indexPath section]];
-    if (indexPath.row == 0 && indexPath.row == sectionRows - 1) {
-        [cell setCapType:TRTableViewCellCapTypeTopBot];
-    } else if (indexPath.row == 0) {
+    if (indexPath.row == 0) {
         [cell setCapType:TRTableViewCellCapTypeTop];
+        [cell.textField setPlaceholder:@"Username"];
     } else if (indexPath.row == sectionRows - 1) {
         [cell setCapType:TRTableViewCellCapTypeBot];
-    } else {
-        [cell setCapType:TRTableViewCellCapTypeNone];
+        [cell.textField setPlaceholder:@"Password"];
+        [cell.textField setSecureTextEntry:YES];
     }
     return cell;
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    return @"Forgot Password?";
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"WELCOME BACK";
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 36.0)];
+    tableView.sectionHeaderHeight = headerView.frame.size.height;
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    label.text = [self tableView:tableView titleForHeaderInSection:section];
+    label.font = [UIFont boldSystemFontOfSize:16.0];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.shadowOffset = CGSizeMake(0, 1);
+    label.shadowColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithRed:0.298 green:0.2980 blue:0.2980 alpha:1.000];
+
+    label.center = headerView.center;
+
+    [headerView addSubview:label];
+
+    return headerView;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 15, tableView.bounds.size.width, tableView.sectionFooterHeight)];
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    label.text = [self tableView:tableView titleForFooterInSection:section];
+    label.font = [UIFont systemFontOfSize:13.0];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.shadowOffset = CGSizeMake(0, 1);
+    label.shadowColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithWhite:0.4f alpha:1.0];
+
+    label.center = footerView.center;
+
+    [footerView addSubview:label];
+    return footerView;
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

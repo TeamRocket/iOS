@@ -19,6 +19,8 @@
 		0A4C6C8016792346002DD362 /* tableviewgrouped_mid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C7E16792346002DD362 /* tableviewgrouped_mid.png */; };
 		0A4C6C8116792346002DD362 /* tableviewgrouped_mid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C7F16792346002DD362 /* tableviewgrouped_mid@2x.png */; };
 		0A4C6C84167924EA002DD362 /* TRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6C83167924EA002DD362 /* TRTableViewCell.m */; };
+		0A4C6C891679299C002DD362 /* TRTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C881679299C002DD362 /* TRTextFieldCell.xib */; };
+		0A4C6C8C167929D3002DD362 /* TRTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6C8B167929C4002DD362 /* TRTextFieldCell.m */; };
 		0A510AD7167842E000E2012F /* MuseoSans_500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD5167842E000E2012F /* MuseoSans_500.otf */; };
 		0A510AD8167842E000E2012F /* MuseoSans-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD6167842E000E2012F /* MuseoSans-300.otf */; };
 		0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A510AF416784B9F00E2012F /* TRLoginViewController.m */; };
@@ -69,6 +71,9 @@
 		0A4C6C7F16792346002DD362 /* tableviewgrouped_mid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tableviewgrouped_mid@2x.png"; path = "img/UI/tableviewgrouped_mid@2x.png"; sourceTree = "<group>"; };
 		0A4C6C82167924EA002DD362 /* TRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRTableViewCell.h; path = src/view/TRTableViewCell.h; sourceTree = "<group>"; };
 		0A4C6C83167924EA002DD362 /* TRTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRTableViewCell.m; path = src/view/TRTableViewCell.m; sourceTree = "<group>"; };
+		0A4C6C881679299C002DD362 /* TRTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRTextFieldCell.xib; path = gui/TRTextFieldCell.xib; sourceTree = "<group>"; };
+		0A4C6C8A167929C4002DD362 /* TRTextFieldCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TRTextFieldCell.h; path = src/view/TRTextFieldCell.h; sourceTree = "<group>"; };
+		0A4C6C8B167929C4002DD362 /* TRTextFieldCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TRTextFieldCell.m; path = src/view/TRTextFieldCell.m; sourceTree = "<group>"; };
 		0A510AD5167842E000E2012F /* MuseoSans_500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSans_500.otf; path = img/Fonts/MuseoSans_500.otf; sourceTree = "<group>"; };
 		0A510AD6167842E000E2012F /* MuseoSans-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MuseoSans-300.otf"; path = "img/Fonts/MuseoSans-300.otf"; sourceTree = "<group>"; };
 		0A510AF316784B9F00E2012F /* TRLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRLoginViewController.h; path = src/view/TRLoginViewController.h; sourceTree = "<group>"; };
@@ -167,6 +172,7 @@
 				0ADF45791664B14100E0C0FA /* InfoPlist.strings */,
 				0A510AF916784BD500E2012F /* TRLoginViewController.xib */,
 				0AB19B59167814390036E2BC /* TRSplashViewController.xib */,
+				0A4C6C881679299C002DD362 /* TRTextFieldCell.xib */,
 			);
 			name = gui;
 			sourceTree = "<group>";
@@ -218,6 +224,8 @@
 				0AB19B551678141F0036E2BC /* TRSplashViewController.m */,
 				0A4C6C82167924EA002DD362 /* TRTableViewCell.h */,
 				0A4C6C83167924EA002DD362 /* TRTableViewCell.m */,
+				0A4C6C8A167929C4002DD362 /* TRTextFieldCell.h */,
+				0A4C6C8B167929C4002DD362 /* TRTextFieldCell.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -350,6 +358,7 @@
 				0A4C6C7C167921E9002DD362 /* tableviewgrouped_top@2x.png in Resources */,
 				0A4C6C8016792346002DD362 /* tableviewgrouped_mid.png in Resources */,
 				0A4C6C8116792346002DD362 /* tableviewgrouped_mid@2x.png in Resources */,
+				0A4C6C891679299C002DD362 /* TRTextFieldCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +374,7 @@
 				0AB19B571678141F0036E2BC /* TRSplashViewController.m in Sources */,
 				0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */,
 				0A4C6C84167924EA002DD362 /* TRTableViewCell.m in Sources */,
+				0A4C6C8C167929D3002DD362 /* TRTextFieldCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
