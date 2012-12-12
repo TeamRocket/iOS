@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class TRLoginViewController;
+@class TRSignupViewController;
 
 @interface TRSplashViewController : UIViewController {
     IBOutlet UIImageView * mLogoView;
@@ -18,6 +19,7 @@
     IBOutlet UIButton * mSigninButton;
 
     TRLoginViewController * mLoginView;
+    TRSignupViewController * mSignupView;
 }
 
 @end

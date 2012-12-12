@@ -9,6 +9,7 @@
 #import "TRSplashViewController.h"
 
 #import "TRLoginViewController.h"
+#import "TRSignupViewController.h"
 
 @interface TRSplashViewController ()
 
@@ -30,6 +31,13 @@
         mLoginView = [[TRLoginViewController alloc] initWithNibName:@"TRLoginViewController" bundle:nil];
     
     [self presentViewController:mLoginView animated:YES completion:nil];
+}
+
+- (IBAction)presentSignup:(id)sender {
+    if (!mSignupView) {
+        mSignupView = [[TRSignupViewController alloc] initWithNibName:@"TRSignupViewController" bundle:nil];
+    }
+    [self presentViewController:mSignupView animated:YES completion:nil];
 }
 
 - (void)viewDidLoad

@@ -21,6 +21,10 @@
 		0A4C6C84167924EA002DD362 /* TRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6C83167924EA002DD362 /* TRTableViewCell.m */; };
 		0A4C6C891679299C002DD362 /* TRTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C881679299C002DD362 /* TRTextFieldCell.xib */; };
 		0A4C6C8C167929D3002DD362 /* TRTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6C8B167929C4002DD362 /* TRTextFieldCell.m */; };
+		0A4C6C90167930B3002DD362 /* TRSignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6C8E167930B2002DD362 /* TRSignupViewController.m */; };
+		0A4C6C93167930D4002DD362 /* TRSignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C92167930D4002DD362 /* TRSignupViewController.xib */; };
+		0A4C6C96167935CF002DD362 /* navbaritem_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C94167935CF002DD362 /* navbaritem_orange.png */; };
+		0A4C6C97167935CF002DD362 /* navbaritem_orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C95167935CF002DD362 /* navbaritem_orange@2x.png */; };
 		0A510AD7167842E000E2012F /* MuseoSans_500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD5167842E000E2012F /* MuseoSans_500.otf */; };
 		0A510AD8167842E000E2012F /* MuseoSans-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD6167842E000E2012F /* MuseoSans-300.otf */; };
 		0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A510AF416784B9F00E2012F /* TRLoginViewController.m */; };
@@ -74,6 +78,11 @@
 		0A4C6C881679299C002DD362 /* TRTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRTextFieldCell.xib; path = gui/TRTextFieldCell.xib; sourceTree = "<group>"; };
 		0A4C6C8A167929C4002DD362 /* TRTextFieldCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TRTextFieldCell.h; path = src/view/TRTextFieldCell.h; sourceTree = "<group>"; };
 		0A4C6C8B167929C4002DD362 /* TRTextFieldCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TRTextFieldCell.m; path = src/view/TRTextFieldCell.m; sourceTree = "<group>"; };
+		0A4C6C8D167930B2002DD362 /* TRSignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRSignupViewController.h; path = src/view/TRSignupViewController.h; sourceTree = "<group>"; };
+		0A4C6C8E167930B2002DD362 /* TRSignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRSignupViewController.m; path = src/view/TRSignupViewController.m; sourceTree = "<group>"; };
+		0A4C6C92167930D4002DD362 /* TRSignupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRSignupViewController.xib; path = gui/TRSignupViewController.xib; sourceTree = "<group>"; };
+		0A4C6C94167935CF002DD362 /* navbaritem_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navbaritem_orange.png; path = img/UI/navbaritem_orange.png; sourceTree = "<group>"; };
+		0A4C6C95167935CF002DD362 /* navbaritem_orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navbaritem_orange@2x.png"; path = "img/UI/navbaritem_orange@2x.png"; sourceTree = "<group>"; };
 		0A510AD5167842E000E2012F /* MuseoSans_500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSans_500.otf; path = img/Fonts/MuseoSans_500.otf; sourceTree = "<group>"; };
 		0A510AD6167842E000E2012F /* MuseoSans-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MuseoSans-300.otf"; path = "img/Fonts/MuseoSans-300.otf"; sourceTree = "<group>"; };
 		0A510AF316784B9F00E2012F /* TRLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRLoginViewController.h; path = src/view/TRLoginViewController.h; sourceTree = "<group>"; };
@@ -171,6 +180,7 @@
 			children = (
 				0ADF45791664B14100E0C0FA /* InfoPlist.strings */,
 				0A510AF916784BD500E2012F /* TRLoginViewController.xib */,
+				0A4C6C92167930D4002DD362 /* TRSignupViewController.xib */,
 				0AB19B59167814390036E2BC /* TRSplashViewController.xib */,
 				0A4C6C881679299C002DD362 /* TRTextFieldCell.xib */,
 			);
@@ -220,6 +230,8 @@
 			children = (
 				0A510AF316784B9F00E2012F /* TRLoginViewController.h */,
 				0A510AF416784B9F00E2012F /* TRLoginViewController.m */,
+				0A4C6C8D167930B2002DD362 /* TRSignupViewController.h */,
+				0A4C6C8E167930B2002DD362 /* TRSignupViewController.m */,
 				0AB19B541678141F0036E2BC /* TRSplashViewController.h */,
 				0AB19B551678141F0036E2BC /* TRSplashViewController.m */,
 				0A4C6C82167924EA002DD362 /* TRTableViewCell.h */,
@@ -239,6 +251,8 @@
 				0A510B0016785D7300E2012F /* navbarback@2x.png */,
 				0A510AFB1678598F00E2012F /* navbarbg.png */,
 				0A510AFC1678598F00E2012F /* navbarbg@2x.png */,
+				0A4C6C94167935CF002DD362 /* navbaritem_orange.png */,
+				0A4C6C95167935CF002DD362 /* navbaritem_orange@2x.png */,
 				0AB19B6116781F240036E2BC /* blackbutton_normal.png */,
 				0AB19B6216781F240036E2BC /* blackbutton_normal@2x.png */,
 				0AB19B6316781F240036E2BC /* blackbutton_pressed.png */,
@@ -359,6 +373,9 @@
 				0A4C6C8016792346002DD362 /* tableviewgrouped_mid.png in Resources */,
 				0A4C6C8116792346002DD362 /* tableviewgrouped_mid@2x.png in Resources */,
 				0A4C6C891679299C002DD362 /* TRTextFieldCell.xib in Resources */,
+				0A4C6C93167930D4002DD362 /* TRSignupViewController.xib in Resources */,
+				0A4C6C96167935CF002DD362 /* navbaritem_orange.png in Resources */,
+				0A4C6C97167935CF002DD362 /* navbaritem_orange@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +392,7 @@
 				0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */,
 				0A4C6C84167924EA002DD362 /* TRTableViewCell.m in Sources */,
 				0A4C6C8C167929D3002DD362 /* TRTextFieldCell.m in Sources */,
+				0A4C6C90167930B3002DD362 /* TRSignupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
