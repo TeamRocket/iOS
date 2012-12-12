@@ -69,7 +69,12 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+    if ([self presentedViewController] != mLoginView)
+        mLoginView = nil;
+    if ([self presentedViewController] != mSignupView) {
+        mSignupView = nil;
+    }
 }
 
 @end
