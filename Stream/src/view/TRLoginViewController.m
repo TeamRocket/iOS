@@ -6,7 +6,11 @@
 //  Copyright (c) 2012 TeamRocket. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "TRLoginViewController.h"
+
+#import "TRTableViewCell.h"
 
 @interface TRLoginViewController ()
 
@@ -41,12 +45,35 @@
     [mBackBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"MuseoSans-500" size:11.0], UITextAttributeFont, nil] forState:UIControlStateNormal];
     [mSigninBtn setBackgroundImage:[UIImage imageNamed:@"navbaritem.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [mSigninBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"MuseoSans-500" size:11.0], UITextAttributeFont, nil] forState:UIControlStateNormal];
+
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - UITableViewDelegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 3;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TRTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TRTextFieldCell"];
+    if (!cell)
+        cell = [[TRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TRTextFieldCell"];
+        
+    int sectionRows = [tableView numberOfRowsInSection:[indexPath section]];
+    if (indexPath.row == 0 && indexPath.row == sectionRows - 1) {
+        [cell setCapType:TRTableViewCellCapTypeTopBot];
+    } else if (indexPath.row == 0) {
+        [cell setCapType:TRTableViewCellCapTypeTop];
+    } else if (indexPath.row == sectionRows - 1) {
+        [cell setCapType:TRTableViewCellCapTypeBot];
+    } else {
+        [cell setCapType:TRTableViewCellCapTypeNone];
+    }
+    return cell;
 }
 
 @end

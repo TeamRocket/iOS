@@ -10,6 +10,15 @@
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
+		0A4C6C77167921E9002DD362 /* tableviewgrouped_bot.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C71167921E9002DD362 /* tableviewgrouped_bot.png */; };
+		0A4C6C78167921E9002DD362 /* tableviewgrouped_bot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C72167921E9002DD362 /* tableviewgrouped_bot@2x.png */; };
+		0A4C6C79167921E9002DD362 /* tableviewgrouped_cap.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C73167921E9002DD362 /* tableviewgrouped_cap.png */; };
+		0A4C6C7A167921E9002DD362 /* tableviewgrouped_cap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C74167921E9002DD362 /* tableviewgrouped_cap@2x.png */; };
+		0A4C6C7B167921E9002DD362 /* tableviewgrouped_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C75167921E9002DD362 /* tableviewgrouped_top.png */; };
+		0A4C6C7C167921E9002DD362 /* tableviewgrouped_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C76167921E9002DD362 /* tableviewgrouped_top@2x.png */; };
+		0A4C6C8016792346002DD362 /* tableviewgrouped_mid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C7E16792346002DD362 /* tableviewgrouped_mid.png */; };
+		0A4C6C8116792346002DD362 /* tableviewgrouped_mid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C7F16792346002DD362 /* tableviewgrouped_mid@2x.png */; };
+		0A4C6C84167924EA002DD362 /* TRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6C83167924EA002DD362 /* TRTableViewCell.m */; };
 		0A510AD7167842E000E2012F /* MuseoSans_500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD5167842E000E2012F /* MuseoSans_500.otf */; };
 		0A510AD8167842E000E2012F /* MuseoSans-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD6167842E000E2012F /* MuseoSans-300.otf */; };
 		0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A510AF416784B9F00E2012F /* TRLoginViewController.m */; };
@@ -50,6 +59,16 @@
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0A4C6C71167921E9002DD362 /* tableviewgrouped_bot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tableviewgrouped_bot.png; path = img/UI/tableviewgrouped_bot.png; sourceTree = "<group>"; };
+		0A4C6C72167921E9002DD362 /* tableviewgrouped_bot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tableviewgrouped_bot@2x.png"; path = "img/UI/tableviewgrouped_bot@2x.png"; sourceTree = "<group>"; };
+		0A4C6C73167921E9002DD362 /* tableviewgrouped_cap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tableviewgrouped_cap.png; path = img/UI/tableviewgrouped_cap.png; sourceTree = "<group>"; };
+		0A4C6C74167921E9002DD362 /* tableviewgrouped_cap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tableviewgrouped_cap@2x.png"; path = "img/UI/tableviewgrouped_cap@2x.png"; sourceTree = "<group>"; };
+		0A4C6C75167921E9002DD362 /* tableviewgrouped_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tableviewgrouped_top.png; path = img/UI/tableviewgrouped_top.png; sourceTree = "<group>"; };
+		0A4C6C76167921E9002DD362 /* tableviewgrouped_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tableviewgrouped_top@2x.png"; path = "img/UI/tableviewgrouped_top@2x.png"; sourceTree = "<group>"; };
+		0A4C6C7E16792346002DD362 /* tableviewgrouped_mid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tableviewgrouped_mid.png; path = img/UI/tableviewgrouped_mid.png; sourceTree = "<group>"; };
+		0A4C6C7F16792346002DD362 /* tableviewgrouped_mid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tableviewgrouped_mid@2x.png"; path = "img/UI/tableviewgrouped_mid@2x.png"; sourceTree = "<group>"; };
+		0A4C6C82167924EA002DD362 /* TRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRTableViewCell.h; path = src/view/TRTableViewCell.h; sourceTree = "<group>"; };
+		0A4C6C83167924EA002DD362 /* TRTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRTableViewCell.m; path = src/view/TRTableViewCell.m; sourceTree = "<group>"; };
 		0A510AD5167842E000E2012F /* MuseoSans_500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSans_500.otf; path = img/Fonts/MuseoSans_500.otf; sourceTree = "<group>"; };
 		0A510AD6167842E000E2012F /* MuseoSans-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MuseoSans-300.otf"; path = "img/Fonts/MuseoSans-300.otf"; sourceTree = "<group>"; };
 		0A510AF316784B9F00E2012F /* TRLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRLoginViewController.h; path = src/view/TRLoginViewController.h; sourceTree = "<group>"; };
@@ -197,6 +216,8 @@
 				0A510AF416784B9F00E2012F /* TRLoginViewController.m */,
 				0AB19B541678141F0036E2BC /* TRSplashViewController.h */,
 				0AB19B551678141F0036E2BC /* TRSplashViewController.m */,
+				0A4C6C82167924EA002DD362 /* TRTableViewCell.h */,
+				0A4C6C83167924EA002DD362 /* TRTableViewCell.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -218,6 +239,14 @@
 				0AB19B4B167812A20036E2BC /* orangebutton_normal@2x.png */,
 				0AB19B4C167812A20036E2BC /* orangebutton_pressed.png */,
 				0AB19B4D167812A20036E2BC /* orangebutton_pressed@2x.png */,
+				0A4C6C71167921E9002DD362 /* tableviewgrouped_bot.png */,
+				0A4C6C72167921E9002DD362 /* tableviewgrouped_bot@2x.png */,
+				0A4C6C73167921E9002DD362 /* tableviewgrouped_cap.png */,
+				0A4C6C74167921E9002DD362 /* tableviewgrouped_cap@2x.png */,
+				0A4C6C7E16792346002DD362 /* tableviewgrouped_mid.png */,
+				0A4C6C7F16792346002DD362 /* tableviewgrouped_mid@2x.png */,
+				0A4C6C75167921E9002DD362 /* tableviewgrouped_top.png */,
+				0A4C6C76167921E9002DD362 /* tableviewgrouped_top@2x.png */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -313,6 +342,14 @@
 				0A510B0216785D7300E2012F /* navbarback@2x.png in Resources */,
 				0A510B051678600D00E2012F /* navbaritem.png in Resources */,
 				0A510B061678600D00E2012F /* navbaritem@2x.png in Resources */,
+				0A4C6C77167921E9002DD362 /* tableviewgrouped_bot.png in Resources */,
+				0A4C6C78167921E9002DD362 /* tableviewgrouped_bot@2x.png in Resources */,
+				0A4C6C79167921E9002DD362 /* tableviewgrouped_cap.png in Resources */,
+				0A4C6C7A167921E9002DD362 /* tableviewgrouped_cap@2x.png in Resources */,
+				0A4C6C7B167921E9002DD362 /* tableviewgrouped_top.png in Resources */,
+				0A4C6C7C167921E9002DD362 /* tableviewgrouped_top@2x.png in Resources */,
+				0A4C6C8016792346002DD362 /* tableviewgrouped_mid.png in Resources */,
+				0A4C6C8116792346002DD362 /* tableviewgrouped_mid@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +364,7 @@
 				0ADF45891664B15C00E0C0FA /* TRAppDelegate.m in Sources */,
 				0AB19B571678141F0036E2BC /* TRSplashViewController.m in Sources */,
 				0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */,
+				0A4C6C84167924EA002DD362 /* TRTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
