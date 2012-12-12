@@ -8,13 +8,16 @@
 
 #import "TRAppDelegate.h"
 
+#import "TRSplashViewController.h"
+
 @implementation TRAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    mSplash = [[TRSplashViewController alloc] initWithNibName:@"TRSplashViewController" bundle:nil];
+    self.window.rootViewController = mSplash;
     [self.window makeKeyAndVisible];
     return YES;
 }

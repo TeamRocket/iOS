@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TRAppDelegate : UIResponder <UIApplicationDelegate>
+@class TRSplashViewController;
+
+@interface TRAppDelegate : UIResponder <UIApplicationDelegate> {
+    TRSplashViewController * mSplash;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
