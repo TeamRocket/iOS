@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class TRLoginViewController;
+
 @interface TRSplashViewController : UIViewController {
     IBOutlet UIImageView * mLogoView;
     IBOutlet UILabel * mTitleLabel;
     IBOutlet UILabel * mSubtitleLabel;
     IBOutlet UIButton * mSignupButton;
     IBOutlet UIButton * mSigninButton;
+
+    TRLoginViewController * mLoginView;
 }
 
 @end

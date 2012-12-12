@@ -12,6 +12,14 @@
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
 		0A510AD7167842E000E2012F /* MuseoSans_500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD5167842E000E2012F /* MuseoSans_500.otf */; };
 		0A510AD8167842E000E2012F /* MuseoSans-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD6167842E000E2012F /* MuseoSans-300.otf */; };
+		0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A510AF416784B9F00E2012F /* TRLoginViewController.m */; };
+		0A510AFA16784BD500E2012F /* TRLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AF916784BD500E2012F /* TRLoginViewController.xib */; };
+		0A510AFD1678598F00E2012F /* navbarbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AFB1678598F00E2012F /* navbarbg.png */; };
+		0A510AFE1678598F00E2012F /* navbarbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AFC1678598F00E2012F /* navbarbg@2x.png */; };
+		0A510B0116785D7300E2012F /* navbarback.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AFF16785D7300E2012F /* navbarback.png */; };
+		0A510B0216785D7300E2012F /* navbarback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A510B0016785D7300E2012F /* navbarback@2x.png */; };
+		0A510B051678600D00E2012F /* navbaritem.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A510B031678600D00E2012F /* navbaritem.png */; };
+		0A510B061678600D00E2012F /* navbaritem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A510B041678600D00E2012F /* navbaritem@2x.png */; };
 		0AB19B38167805900036E2BC /* iPadIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B34167805900036E2BC /* iPadIcon.png */; };
 		0AB19B39167805900036E2BC /* iPadIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B35167805900036E2BC /* iPadIcon@2x.png */; };
 		0AB19B3A167805900036E2BC /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B36167805900036E2BC /* iPhoneIcon.png */; };
@@ -44,6 +52,15 @@
 		0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0A510AD5167842E000E2012F /* MuseoSans_500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSans_500.otf; path = img/Fonts/MuseoSans_500.otf; sourceTree = "<group>"; };
 		0A510AD6167842E000E2012F /* MuseoSans-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MuseoSans-300.otf"; path = "img/Fonts/MuseoSans-300.otf"; sourceTree = "<group>"; };
+		0A510AF316784B9F00E2012F /* TRLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRLoginViewController.h; path = src/view/TRLoginViewController.h; sourceTree = "<group>"; };
+		0A510AF416784B9F00E2012F /* TRLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRLoginViewController.m; path = src/view/TRLoginViewController.m; sourceTree = "<group>"; };
+		0A510AF916784BD500E2012F /* TRLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRLoginViewController.xib; path = gui/TRLoginViewController.xib; sourceTree = "<group>"; };
+		0A510AFB1678598F00E2012F /* navbarbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navbarbg.png; path = img/UI/navbarbg.png; sourceTree = "<group>"; };
+		0A510AFC1678598F00E2012F /* navbarbg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navbarbg@2x.png"; path = "img/UI/navbarbg@2x.png"; sourceTree = "<group>"; };
+		0A510AFF16785D7300E2012F /* navbarback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navbarback.png; path = img/UI/navbarback.png; sourceTree = "<group>"; };
+		0A510B0016785D7300E2012F /* navbarback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navbarback@2x.png"; path = "img/UI/navbarback@2x.png"; sourceTree = "<group>"; };
+		0A510B031678600D00E2012F /* navbaritem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navbaritem.png; path = img/UI/navbaritem.png; sourceTree = "<group>"; };
+		0A510B041678600D00E2012F /* navbaritem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navbaritem@2x.png"; path = "img/UI/navbaritem@2x.png"; sourceTree = "<group>"; };
 		0AB19B34167805900036E2BC /* iPadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPadIcon.png; path = img/iPadIcon.png; sourceTree = "<group>"; };
 		0AB19B35167805900036E2BC /* iPadIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPadIcon@2x.png"; path = "img/iPadIcon@2x.png"; sourceTree = "<group>"; };
 		0AB19B36167805900036E2BC /* iPhoneIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPhoneIcon.png; path = img/iPhoneIcon.png; sourceTree = "<group>"; };
@@ -129,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				0ADF45791664B14100E0C0FA /* InfoPlist.strings */,
+				0A510AF916784BD500E2012F /* TRLoginViewController.xib */,
 				0AB19B59167814390036E2BC /* TRSplashViewController.xib */,
 			);
 			name = gui;
@@ -175,6 +193,8 @@
 		0AB19B4016780B040036E2BC /* view */ = {
 			isa = PBXGroup;
 			children = (
+				0A510AF316784B9F00E2012F /* TRLoginViewController.h */,
+				0A510AF416784B9F00E2012F /* TRLoginViewController.m */,
 				0AB19B541678141F0036E2BC /* TRSplashViewController.h */,
 				0AB19B551678141F0036E2BC /* TRSplashViewController.m */,
 			);
@@ -184,6 +204,12 @@
 		0AB19B49167812930036E2BC /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				0A510B031678600D00E2012F /* navbaritem.png */,
+				0A510B041678600D00E2012F /* navbaritem@2x.png */,
+				0A510AFF16785D7300E2012F /* navbarback.png */,
+				0A510B0016785D7300E2012F /* navbarback@2x.png */,
+				0A510AFB1678598F00E2012F /* navbarbg.png */,
+				0A510AFC1678598F00E2012F /* navbarbg@2x.png */,
 				0AB19B6116781F240036E2BC /* blackbutton_normal.png */,
 				0AB19B6216781F240036E2BC /* blackbutton_normal@2x.png */,
 				0AB19B6316781F240036E2BC /* blackbutton_pressed.png */,
@@ -280,6 +306,13 @@
 				0AB19B6C167822A00036E2BC /* logo@2x.png in Resources */,
 				0A510AD7167842E000E2012F /* MuseoSans_500.otf in Resources */,
 				0A510AD8167842E000E2012F /* MuseoSans-300.otf in Resources */,
+				0A510AFA16784BD500E2012F /* TRLoginViewController.xib in Resources */,
+				0A510AFD1678598F00E2012F /* navbarbg.png in Resources */,
+				0A510AFE1678598F00E2012F /* navbarbg@2x.png in Resources */,
+				0A510B0116785D7300E2012F /* navbarback.png in Resources */,
+				0A510B0216785D7300E2012F /* navbarback@2x.png in Resources */,
+				0A510B051678600D00E2012F /* navbaritem.png in Resources */,
+				0A510B061678600D00E2012F /* navbaritem@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +326,7 @@
 				0ADF45861664B15100E0C0FA /* main.m in Sources */,
 				0ADF45891664B15C00E0C0FA /* TRAppDelegate.m in Sources */,
 				0AB19B571678141F0036E2BC /* TRSplashViewController.m in Sources */,
+				0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

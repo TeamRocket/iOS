@@ -8,6 +8,8 @@
 
 #import "TRSplashViewController.h"
 
+#import "TRLoginViewController.h"
+
 @interface TRSplashViewController ()
 
 @end
@@ -21,6 +23,13 @@
         // Custom initialization
     }
     return self;
+}
+
+- (IBAction)presentLogin:(id)sender {
+    if (!mLoginView)
+        mLoginView = [[TRLoginViewController alloc] initWithNibName:@"TRLoginViewController" bundle:nil];
+    
+    [self presentViewController:mLoginView animated:YES completion:nil];
 }
 
 - (void)viewDidLoad
