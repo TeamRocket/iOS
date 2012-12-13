@@ -8,16 +8,21 @@
 
 #import "TRPhoto.h"
 
+#import "TRImage.h"
+
 @implementation TRPhoto
 
 @synthesize uploader = mUploader;
 @synthesize URL = mURL;
+@synthesize image = mImage;
 
 - (id) initWithURL:(NSURL*)url uploader:(TRUser*)uploader {
     self = [super init];
     if (self) {
         mUploader = uploader;
         mURL = url;
+
+        mImage = [[TRImage alloc] initWithURL:mURL];
     }
     return self;
 }

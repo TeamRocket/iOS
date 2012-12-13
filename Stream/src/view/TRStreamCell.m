@@ -15,4 +15,11 @@
 @synthesize participantsLabel = mParticipantsLabel;
 @synthesize photosLabel = mPhotosLabel;
 
+- (void)setImage:(TRImage*)image {
+    [mImageView removeFromSuperview];
+    mImageView = [[TRImageView alloc] initWithTRImage:image
+                                              inFrame:mImageView.frame];
+    [self addSubview:mImageView];
+}
+
 @end

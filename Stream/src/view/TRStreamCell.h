@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TRImage.h"
+#import "TRImageView.h"
+
 @interface TRStreamCell : UITableViewCell {
-    IBOutlet UIImageView * mImageView;
+    IBOutlet TRImageView * mImageView;
     IBOutlet UILabel * mTitleLabel;
     IBOutlet UILabel * mParticipantsLabel;
     IBOutlet UILabel * mPhotosLabel;
@@ -19,5 +22,7 @@
 @property (nonatomic) UILabel * titleLabel;
 @property (nonatomic) UILabel * participantsLabel;
 @property (nonatomic) UILabel * photosLabel;
+
+- (void)setImage:(TRImage*)image;
 
 @end

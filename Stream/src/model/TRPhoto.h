@@ -9,14 +9,17 @@
 #import <Foundation/Foundation.h>
 
 @class TRUser;
+@class TRImage;
 
 @interface TRPhoto : NSObject {
     TRUser * mUploader;
     NSURL * mURL;
+    TRImage * mImage;
 }
 
 @property (nonatomic) TRUser * uploader;
 @property (nonatomic, readonly) NSURL * URL;
+@property (nonatomic) TRImage * image;
 
 - (id) initWithURL:(NSURL*)url uploader:(TRUser*)uploader;
 

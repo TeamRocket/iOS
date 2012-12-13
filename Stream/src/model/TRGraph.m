@@ -125,9 +125,9 @@ typedef enum {
                                                    photos:[[streamData objectForKey:@"numberOfPhotos"] intValue]];
             [self addStream:newStream];
         }
-        TRPhoto * latestPhoto = [self getPhotoWithURL:[NSURL URLWithString:[streamData objectForKey:@"latestPicture"]]];
+        TRPhoto * latestPhoto = [self getPhotoWithURL:[NSURL URLWithString:[streamData objectForKey:@"lastestPicture"]]];
         if (latestPhoto == nil) {
-            latestPhoto = [[TRPhoto alloc] initWithURL:[NSURL URLWithString:[streamData objectForKey:@"latestPicture"]]
+            latestPhoto = [[TRPhoto alloc] initWithURL:[NSURL URLWithString:[streamData objectForKey:@"lastestPicture"]]
                                               uploader:nil];
             [self addPhoto:latestPhoto];
         }

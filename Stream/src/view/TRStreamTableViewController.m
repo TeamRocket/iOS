@@ -10,6 +10,7 @@
 
 #import "TRAppDelegate.h"
 #import "TRGraph.h"
+#import "TRPhoto.h"
 #import "TRPhotoStream.h"
 #import "TRUser.h"
 
@@ -53,6 +54,7 @@
     [cell.titleLabel setText:stream.name];
     [cell.participantsLabel setText:[NSString stringWithFormat:@"%i Participants", [stream.participants count]]];
     [cell.photosLabel setText:[NSString stringWithFormat:@"%i Photos", [stream.photos count]]];
+    [cell setImage:((TRPhoto*)[stream.photos lastObject]).image];
     
     return cell;
 }

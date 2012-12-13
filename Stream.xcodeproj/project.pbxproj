@@ -37,6 +37,8 @@
 		0A4C6CCB16797753002DD362 /* TRPhotoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CCA16797753002DD362 /* TRPhotoStream.m */; };
 		0A4C6CCE16798A04002DD362 /* TRPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CCD16798A04002DD362 /* TRPhoto.m */; };
 		0A4C6CD116798AAF002DD362 /* TRUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CD016798AAF002DD362 /* TRUser.m */; };
+		0A4C6CD41679CB2B002DD362 /* TRImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CD31679CB2A002DD362 /* TRImageView.m */; };
+		0A4C6CD71679CB58002DD362 /* TRImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CD61679CB57002DD362 /* TRImage.m */; };
 		0A510AD7167842E000E2012F /* MuseoSans_500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD5167842E000E2012F /* MuseoSans_500.otf */; };
 		0A510AD8167842E000E2012F /* MuseoSans-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD6167842E000E2012F /* MuseoSans-300.otf */; };
 		0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A510AF416784B9F00E2012F /* TRLoginViewController.m */; };
@@ -115,6 +117,10 @@
 		0A4C6CCD16798A04002DD362 /* TRPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRPhoto.m; path = src/model/TRPhoto.m; sourceTree = "<group>"; };
 		0A4C6CCF16798AAE002DD362 /* TRUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRUser.h; path = src/model/TRUser.h; sourceTree = "<group>"; };
 		0A4C6CD016798AAF002DD362 /* TRUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRUser.m; path = src/model/TRUser.m; sourceTree = "<group>"; };
+		0A4C6CD21679CB2A002DD362 /* TRImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRImageView.h; path = src/view/TRImageView.h; sourceTree = "<group>"; };
+		0A4C6CD31679CB2A002DD362 /* TRImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRImageView.m; path = src/view/TRImageView.m; sourceTree = "<group>"; };
+		0A4C6CD51679CB57002DD362 /* TRImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRImage.h; path = src/model/TRImage.h; sourceTree = "<group>"; };
+		0A4C6CD61679CB57002DD362 /* TRImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRImage.m; path = src/model/TRImage.m; sourceTree = "<group>"; };
 		0A510AD5167842E000E2012F /* MuseoSans_500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSans_500.otf; path = img/Fonts/MuseoSans_500.otf; sourceTree = "<group>"; };
 		0A510AD6167842E000E2012F /* MuseoSans-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MuseoSans-300.otf"; path = "img/Fonts/MuseoSans-300.otf"; sourceTree = "<group>"; };
 		0A510AF316784B9F00E2012F /* TRLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRLoginViewController.h; path = src/view/TRLoginViewController.h; sourceTree = "<group>"; };
@@ -267,6 +273,8 @@
 				0A4C6CC416796772002DD362 /* TRNetwork.m */,
 				0A4C6CC6167971B7002DD362 /* TRGraph.h */,
 				0A4C6CC7167971B7002DD362 /* TRGraph.m */,
+				0A4C6CD51679CB57002DD362 /* TRImage.h */,
+				0A4C6CD61679CB57002DD362 /* TRImage.m */,
 				0A4C6CCC16798A04002DD362 /* TRPhoto.h */,
 				0A4C6CCD16798A04002DD362 /* TRPhoto.m */,
 				0A4C6CC916797753002DD362 /* TRPhotoStream.h */,
@@ -280,6 +288,8 @@
 		0AB19B4016780B040036E2BC /* view */ = {
 			isa = PBXGroup;
 			children = (
+				0A4C6CD21679CB2A002DD362 /* TRImageView.h */,
+				0A4C6CD31679CB2A002DD362 /* TRImageView.m */,
 				0A510AF316784B9F00E2012F /* TRLoginViewController.h */,
 				0A510AF416784B9F00E2012F /* TRLoginViewController.m */,
 				0A4C6C8D167930B2002DD362 /* TRSignupViewController.h */,
@@ -465,6 +475,8 @@
 				0A4C6CCB16797753002DD362 /* TRPhotoStream.m in Sources */,
 				0A4C6CCE16798A04002DD362 /* TRPhoto.m in Sources */,
 				0A4C6CD116798AAF002DD362 /* TRUser.m in Sources */,
+				0A4C6CD41679CB2B002DD362 /* TRImageView.m in Sources */,
+				0A4C6CD71679CB58002DD362 /* TRImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
