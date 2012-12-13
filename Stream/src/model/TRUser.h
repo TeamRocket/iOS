@@ -8,16 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
+@class TRPhotoStream;
+
 @interface TRUser : NSObject {
     NSString * mFirstName;
     NSString * mLastName;
     NSString * mPhone;
+
+    NSMutableArray * mStreams;
 }
 
 @property (nonatomic, readonly) NSString * firstName;
 @property (nonatomic, readonly) NSString * lastName;
 @property (nonatomic, readonly) NSString * phone;
+@property (nonatomic, readonly) NSArray * streams;
 
 - (id)initWithPhone:(NSString*)phone firstName:(NSString*)first lastName:(NSString*)last;
+
+- (void)addStream:(TRPhotoStream*)stream;
 
 @end

@@ -8,6 +8,9 @@
 
 #import "TRLoginViewController.h"
 
+#import "TRAppDelegate.h"
+#import "TRUser.h"
+
 #import "TRSplashViewController.h"
 #import "TRTextFieldCell.h"
 
@@ -31,6 +34,11 @@
 }
 
 - (IBAction)pressedSignin:(id)sender {
+    [AppDelegate.graph registerForDelegateCallback:self];
+    [AppDelegate.graph loginAsUser:mUsernameField.text password:mPasswordField.text];
+}
+
+- (void)dismissSplash {
     TRSplashViewController * splash = (TRSplashViewController*)self.presentingViewController;
     [self dismissViewControllerAnimated:YES completion:^{[splash authenitcated];}];
 }
@@ -64,10 +72,14 @@
     if (indexPath.row == 0) {
         [cell setCapType:TRTableViewCellCapTypeTop];
         [cell.textField setPlaceholder:@"Username"];
+        [cell.textField setText:@""];
+        mUsernameField = cell.textField;
     } else if (indexPath.row == sectionRows - 1) {
         [cell setCapType:TRTableViewCellCapTypeBot];
         [cell.textField setPlaceholder:@"Password"];
+        [cell.textField setText:@""];
         [cell.textField setSecureTextEntry:YES];
+        mPasswordField = cell.textField;
     }
     return cell;
 }
@@ -122,6 +134,16 @@
 - (BOOL)textFieldShouldReturn:(UITextField*)textField{
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)graphFinishedUpdating {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]) {
+        [AppDelegate.graph downloadUserPhotoStreams:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+        [self dismissSplash];
+        [AppDelegate.graph unregisterForDelegateCallback:self];
+    } else {
+        NSLog(@"Login error");
+    }
 }
 
 @end

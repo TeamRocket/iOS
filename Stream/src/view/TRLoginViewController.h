@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TRLoginViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
+#import "TRGraph.h"
+
+@interface TRLoginViewController : UIViewController <TRGraphDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     IBOutlet UINavigationBar * mNavBar;
     IBOutlet UIBarButtonItem * mBackBtn;
     IBOutlet UIBarButtonItem * mSigninBtn;
     IBOutlet UITableView * mTableView;
+
+    UITextField * mUsernameField;
+    UITextField * mPasswordField;
 }
 
 @end

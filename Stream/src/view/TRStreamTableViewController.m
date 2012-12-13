@@ -10,6 +10,8 @@
 
 #import "TRAppDelegate.h"
 #import "TRGraph.h"
+#import "TRPhotoStream.h"
+#import "TRUser.h"
 
 #import "TRStreamCell.h"
 
@@ -22,7 +24,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [AppDelegate.graph registerForDelegateCallback:self];
-    [AppDelegate.graph downloadUserPhotoStreams:@"18585238764"];
     self.title = @"STREAMS";
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -33,11 +34,12 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    TRUser * loggedInUser = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+    return [loggedInUser.streams count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -45,6 +47,12 @@
     if (cell == nil) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"TRStreamCell" owner:self options:nil][0];
     }
+
+    TRUser * loggedInUser = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+    TRPhotoStream * stream = [loggedInUser.streams objectAtIndex:indexPath.row];
+    [cell.titleLabel setText:stream.name];
+    [cell.participantsLabel setText:[NSString stringWithFormat:@"%i Participants", [stream.participants count]]];
+    [cell.photosLabel setText:[NSString stringWithFormat:@"%i Photos", [stream.photos count]]];
     
     return cell;
 }

@@ -12,9 +12,11 @@
 
 #import "TRPhoto.h"
 #import "TRPhotoStream.h"
+#import "TRUser.h"
 
 typedef enum {
     kTRGraphNetworkTaskDownloadUserPhotoStreams,
+    kTRGraphNetworkTaskUserLogin,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -28,6 +30,7 @@ typedef enum {
                                                        &kCFTypeDictionaryValueCallBacks);
         mDelegates = [[NSMutableArray alloc] init];
         mStreams = [[NSMutableDictionary alloc] init];
+        mUsers = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -52,6 +55,35 @@ typedef enum {
     return CFDictionaryGetCount(mActiveConnections) > 0;
 }
 
+#pragma mark User 
+
+- (void)loginAsUser:(NSString*)first password:(NSString*)password {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/signin.php?first=%@&password=%@", first, password]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskUserLogin]);
+}
+
+- (void)p_receivedLoginResponse:(NSDictionary*)info {
+    TRUser * user = [self getUserWithPhone:[info objectForKey:@"value"]];
+    if (user == nil && ![[info objectForKey:@"value"] isEqualToString:@"false"] && ![[info objectForKey:@"value"] isEqualToString:@""]) {
+        user = [[TRUser alloc] initWithPhone:[info objectForKey:@"value"] firstName:nil lastName:nil];
+        [self addUser:user];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:user.phone forKey:@"user_phone"];
+}
+
+- (void)addUser:(TRUser*)user {
+    if (![mUsers objectForKey:user.phone]) {
+        [mUsers setValue:user forKey:user.phone];
+    }
+}
+
+- (TRUser*)getUserWithPhone:(NSString*)phone {
+    return [mUsers objectForKey:phone];
+}
+
 #pragma mark Photo
 
 - (void)addPhoto:(TRPhoto*)photo {
@@ -63,7 +95,7 @@ typedef enum {
     return [mPhotos objectForKey:[url absoluteString]];
 }
 
-#pragma mark User Photo Stream
+#pragma mark Stream
 
 - (void)addStream:(TRPhotoStream *)stream {
     if (![mStreams objectForKey:stream.ID])
@@ -83,6 +115,7 @@ typedef enum {
 }
 
 - (void)p_downloadedUserPhotoStreams:(NSDictionary*)data {
+    TRUser * loggedInUser = [self getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
     for (NSString * ID in data) {
         NSDictionary * streamData = [data objectForKey:ID];
         TRPhotoStream * newStream = [self getStreamWithID:ID];
@@ -99,6 +132,7 @@ typedef enum {
             [self addPhoto:latestPhoto];
         }
         [newStream addPhotoAsLatest:latestPhoto];
+        [loggedInUser addStream:newStream];
     }
 }
 
@@ -114,13 +148,16 @@ typedef enum {
             case kTRGraphNetworkTaskDownloadUserPhotoStreams:
                 [self p_downloadedUserPhotoStreams:info];
                 break;
+            case kTRGraphNetworkTaskUserLogin:
+                [self p_receivedLoginResponse:info];
+                break;
             default:
                 break;
         }
         CFDictionaryRemoveValue(mActiveConnections, (__bridge const void *)connection);
     }
     if (![self updating]) {
-        for (id<TRGraphDelegate> delegate in mDelegates) {
+        for (id<TRGraphDelegate> delegate in [mDelegates copy]) {
             [delegate graphFinishedUpdating];
         }
     }
@@ -130,7 +167,7 @@ typedef enum {
     if (CFDictionaryContainsKey(mActiveConnections, (__bridge const void *)connection))
         CFDictionaryRemoveValue(mActiveConnections, (__bridge const void *)connection);
     if (![self updating]) {
-        for (id<TRGraphDelegate> delegate in mDelegates) {
+        for (id<TRGraphDelegate> delegate in [mDelegates copy]) {
             [delegate graphFinishedUpdating];
         }
     }

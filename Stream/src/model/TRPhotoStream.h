@@ -19,6 +19,7 @@
 
 @property (nonatomic) NSString * ID;
 @property (nonatomic) NSString * name;
+@property (nonatomic, readonly) NSArray * participants;
 @property (nonatomic, readonly) NSArray * photos;
 
 - (id) initWithID:(NSString*)ID name:(NSString*)name participants:(int)participants photos:(int)photos;

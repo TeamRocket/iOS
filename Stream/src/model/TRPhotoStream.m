@@ -14,6 +14,8 @@
 
 @synthesize ID = mID;
 @synthesize name = mName;
+@synthesize participants = mParticipants;
+@synthesize photos = mPhotos;
 
 - (id) initWithID:(NSString*)ID name:(NSString*)name participants:(int)participants photos:(int)photos {
     self = [super init];
@@ -24,10 +26,6 @@
         mPhotos = [[NSMutableArray alloc] initWithCapacity:photos];
     }
     return self;
-}
-
-- (NSArray*)photos {
-    return mPhotos;
 }
 
 - (void)addPhoto:(TRPhoto*)photo {

@@ -16,18 +16,25 @@
 
 @end
 
+@class TRUser;
+@class TRPhoto;
+
 @interface TRGraph : NSObject <TRConnectionDelegate> {
     NSMutableArray * mDelegates;
     CFMutableDictionaryRef mActiveConnections;
 
     NSMutableDictionary * mStreams;
     NSMutableDictionary * mPhotos;
+    NSMutableDictionary * mUsers;
 }
 
 - (id)initWithDelegate:(id<TRGraphDelegate>)delegate;
 - (void)registerForDelegateCallback:(id<TRGraphDelegate>)delegate;
 - (void)unregisterForDelegateCallback:(id<TRGraphDelegate>)delegate;
 
+- (void)loginAsUser:(NSString*)first password:(NSString*)password;
+- (TRUser*)getUserWithPhone:(NSString*)phone;
+- (TRPhoto*)getPhotoWithURL:(NSURL*)url;
 - (void)downloadUserPhotoStreams:(NSString*)phone;
 
 @end
