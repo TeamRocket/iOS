@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TRStreamViewController : UINavigationController
+@class TRStreamTableViewController;
+
+@interface TRStreamViewController : UINavigationController {
+    TRStreamTableViewController * mStreamTable;
+}
 
 @end

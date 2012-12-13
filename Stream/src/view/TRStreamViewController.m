@@ -8,6 +8,8 @@
 
 #import "TRStreamViewController.h"
 
+#import "TRStreamTableViewController.h"
+
 @interface TRStreamViewController ()
 
 @end
@@ -18,7 +20,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        mStreamTable = [[TRStreamTableViewController alloc] initWithNibName:@"TRStreamTableViewController" bundle:nil];
+        [self pushViewController:mStreamTable animated:NO];
     }
     return self;
 }
