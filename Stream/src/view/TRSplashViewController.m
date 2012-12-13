@@ -40,6 +40,10 @@
     [self presentViewController:mSignupView animated:YES completion:nil];
 }
 
+- (void)authenitcated {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class TRSplashViewController;
+@class TRStreamViewController;
 
 @interface TRAppDelegate : UIResponder <UIApplicationDelegate> {
     TRSplashViewController * mSplash;
+    TRStreamViewController * mStream;
 }
 
 @property (strong, nonatomic) UIWindow *window;

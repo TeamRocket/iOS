@@ -9,6 +9,7 @@
 #import "TRAppDelegate.h"
 
 #import "TRSplashViewController.h"
+#import "TRStreamViewController.h"
 
 @implementation TRAppDelegate
 
@@ -17,8 +18,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     mSplash = [[TRSplashViewController alloc] initWithNibName:@"TRSplashViewController" bundle:nil];
-    self.window.rootViewController = mSplash;
+    mStream = [[TRStreamViewController alloc] init];
+    self.window.rootViewController = mStream;
     [self.window makeKeyAndVisible];
+    [mStream presentViewController:mSplash animated:NO completion:nil];
     return YES;
 }
 

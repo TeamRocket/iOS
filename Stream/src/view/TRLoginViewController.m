@@ -6,10 +6,9 @@
 //  Copyright (c) 2012 TeamRocket. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
-
 #import "TRLoginViewController.h"
 
+#import "TRSplashViewController.h"
 #import "TRTextFieldCell.h"
 
 @interface TRLoginViewController ()
@@ -32,14 +31,12 @@
 }
 
 - (IBAction)pressedSignin:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    TRSplashViewController * splash = (TRSplashViewController*)self.presentingViewController;
+    [self dismissViewControllerAnimated:YES completion:^{[splash authenitcated];}];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [mNavBar setBackgroundImage:[UIImage imageNamed:@"navbarbg.png"] forBarMetrics:UIBarMetricsDefault];
-    [mNavBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"MuseoSans-300" size:22.0], UITextAttributeFont, nil]];
-
     [mBackBtn setBackgroundImage:[UIImage imageNamed:@"navbarback.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [mBackBtn setTitlePositionAdjustment:UIOffsetMake(5.0f, 0.0f) forBarMetrics:UIBarMetricsDefault];
     [mBackBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"MuseoSans-500" size:11.0], UITextAttributeFont, nil] forState:UIControlStateNormal];

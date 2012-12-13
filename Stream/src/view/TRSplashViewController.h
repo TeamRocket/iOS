@@ -22,4 +22,6 @@
     TRSignupViewController * mSignupView;
 }
 
+- (void)authenitcated;
+
 @end

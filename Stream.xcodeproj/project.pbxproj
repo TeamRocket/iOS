@@ -25,6 +25,7 @@
 		0A4C6C93167930D4002DD362 /* TRSignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C92167930D4002DD362 /* TRSignupViewController.xib */; };
 		0A4C6C96167935CF002DD362 /* navbaritem_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C94167935CF002DD362 /* navbaritem_orange.png */; };
 		0A4C6C97167935CF002DD362 /* navbaritem_orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C95167935CF002DD362 /* navbaritem_orange@2x.png */; };
+		0A4C6CAF16794C59002DD362 /* TRStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CAD16794C59002DD362 /* TRStreamViewController.m */; };
 		0A510AD7167842E000E2012F /* MuseoSans_500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD5167842E000E2012F /* MuseoSans_500.otf */; };
 		0A510AD8167842E000E2012F /* MuseoSans-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD6167842E000E2012F /* MuseoSans-300.otf */; };
 		0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A510AF416784B9F00E2012F /* TRLoginViewController.m */; };
@@ -83,6 +84,8 @@
 		0A4C6C92167930D4002DD362 /* TRSignupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRSignupViewController.xib; path = gui/TRSignupViewController.xib; sourceTree = "<group>"; };
 		0A4C6C94167935CF002DD362 /* navbaritem_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navbaritem_orange.png; path = img/UI/navbaritem_orange.png; sourceTree = "<group>"; };
 		0A4C6C95167935CF002DD362 /* navbaritem_orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navbaritem_orange@2x.png"; path = "img/UI/navbaritem_orange@2x.png"; sourceTree = "<group>"; };
+		0A4C6CAC16794C59002DD362 /* TRStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRStreamViewController.h; path = src/view/TRStreamViewController.h; sourceTree = "<group>"; };
+		0A4C6CAD16794C59002DD362 /* TRStreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRStreamViewController.m; path = src/view/TRStreamViewController.m; sourceTree = "<group>"; };
 		0A510AD5167842E000E2012F /* MuseoSans_500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSans_500.otf; path = img/Fonts/MuseoSans_500.otf; sourceTree = "<group>"; };
 		0A510AD6167842E000E2012F /* MuseoSans-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MuseoSans-300.otf"; path = "img/Fonts/MuseoSans-300.otf"; sourceTree = "<group>"; };
 		0A510AF316784B9F00E2012F /* TRLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRLoginViewController.h; path = src/view/TRLoginViewController.h; sourceTree = "<group>"; };
@@ -238,6 +241,8 @@
 				0A4C6C83167924EA002DD362 /* TRTableViewCell.m */,
 				0A4C6C8A167929C4002DD362 /* TRTextFieldCell.h */,
 				0A4C6C8B167929C4002DD362 /* TRTextFieldCell.m */,
+				0A4C6CAC16794C59002DD362 /* TRStreamViewController.h */,
+				0A4C6CAD16794C59002DD362 /* TRStreamViewController.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				0A4C6C84167924EA002DD362 /* TRTableViewCell.m in Sources */,
 				0A4C6C8C167929D3002DD362 /* TRTextFieldCell.m in Sources */,
 				0A4C6C90167930B3002DD362 /* TRSignupViewController.m in Sources */,
+				0A4C6CAF16794C59002DD362 /* TRStreamViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
