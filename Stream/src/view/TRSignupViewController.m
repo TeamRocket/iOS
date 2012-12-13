@@ -8,6 +8,8 @@
 
 #import "TRSignupViewController.h"
 
+#import "TRAppDelegate.h"
+
 #import "TRSplashViewController.h"
 #import "TRTextFieldCell.h"
 
@@ -31,6 +33,13 @@
 }
 
 - (IBAction)pressedSignup:(id)sender {
+    if (![mPasswordField.text isEqualToString:@""] && [mPasswordField.text isEqualToString:mConfirmPasswordField.text]) {
+        [AppDelegate.graph registerForDelegateCallback:self];
+        [AppDelegate.graph signupWithPhone:mPhoneField.text first:mFirstNameField.text last:mLastNameField.text password:mPasswordField.text];
+    }
+}
+
+- (void)dismissSplash {
     TRSplashViewController * splash = (TRSplashViewController*)self.presentingViewController;
     [self dismissViewControllerAnimated:YES completion:^{[splash authenitcated];}];
 }
@@ -121,16 +130,22 @@
                     [cell setCapType:TRTableViewCellCapTypeTop];
                     [cell.textField setPlaceholder:@"First Name"];
                     [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+                    [cell.textField setText:@""];
+                    mFirstNameField = cell.textField;
                     break;
                 case 1:
                     [cell setCapType:TRTableViewCellCapTypeNone];
                     [cell.textField setPlaceholder:@"Last Name"];
                     [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+                    [cell.textField setText:@""];
+                    mLastNameField = cell.textField;
                     break;
                 case 2:
                     [cell setCapType:TRTableViewCellCapTypeBot];
                     [cell.textField setPlaceholder:@"Phone Number"];
                     [cell.textField setKeyboardType:UIKeyboardTypePhonePad];
+                    [cell.textField setText:@""];
+                    mPhoneField = cell.textField;
                     break;
                 default:
                     break;
@@ -142,11 +157,15 @@
                     [cell setCapType:TRTableViewCellCapTypeTop];
                     [cell.textField setPlaceholder:@"Password"];
                     [cell.textField setSecureTextEntry:YES];
+                    [cell.textField setText:@""];
+                    mPasswordField = cell.textField;
                     break;
                 case 1:
                     [cell setCapType:TRTableViewCellCapTypeBot];
                     [cell.textField setPlaceholder:@"Confirm Password"];
                     [cell.textField setSecureTextEntry:YES];
+                    [cell.textField setText:@""];
+                    mConfirmPasswordField = cell.textField;
                     break;
                 default:
                     break;
@@ -222,6 +241,16 @@
 - (BOOL)textFieldShouldReturn:(UITextField*)textField{
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)graphFinishedUpdating {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]) {
+        [AppDelegate.graph downloadUserPhotoStreams:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+        [self dismissSplash];
+        [AppDelegate.graph unregisterForDelegateCallback:self];
+    } else {
+        NSLog(@"Signup error");
+    }
 }
 
 @end

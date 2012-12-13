@@ -17,6 +17,7 @@
 typedef enum {
     kTRGraphNetworkTaskDownloadUserPhotoStreams,
     kTRGraphNetworkTaskUserLogin,
+    kTRGraphNetworkTaskUserSignup,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -65,6 +66,14 @@ typedef enum {
                          (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskUserLogin]);
 }
 
+- (void)signupWithPhone:(NSString*)phone first:(NSString*)first last:(NSString*)last password:(NSString*)password {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/signup.php?first=%@&last=%@&phone=%@&password=%@", first, last, phone, password]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskUserSignup]);
+}
+
 - (void)p_receivedLoginResponse:(NSDictionary*)info {
     TRUser * user = [self getUserWithPhone:[info objectForKey:@"value"]];
     if (user == nil && ![[info objectForKey:@"value"] isEqualToString:@"false"] && ![[info objectForKey:@"value"] isEqualToString:@""]) {
@@ -72,6 +81,10 @@ typedef enum {
         [self addUser:user];
     }
     [[NSUserDefaults standardUserDefaults] setObject:user.phone forKey:@"user_phone"];
+}
+
+- (void)p_receivedSignupResponse:(NSDictionary*)info {
+    [self p_receivedLoginResponse:info];
 }
 
 - (void)addUser:(TRUser*)user {
@@ -150,6 +163,9 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskUserLogin:
                 [self p_receivedLoginResponse:info];
+                break;
+            case kTRGraphNetworkTaskUserSignup:
+                [self p_receivedSignupResponse:info];
                 break;
             default:
                 break;

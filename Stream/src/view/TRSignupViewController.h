@@ -8,13 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TRSignupViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
+#import "TRGraph.h"
+
+@interface TRSignupViewController : UIViewController <TRGraphDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     IBOutlet UINavigationBar * mNavBar;
     IBOutlet UIBarButtonItem * mBackBtn;
     IBOutlet UIBarButtonItem * mSignupBtn;
     IBOutlet UITableView * mTableView;
 
     UITextField * mActiveField;
+    UITextField * mFirstNameField;
+    UITextField * mLastNameField;
+    UITextField * mPhoneField;
+    UITextField * mPasswordField;
+    UITextField * mConfirmPasswordField;
 }
 
 @end
