@@ -17,6 +17,9 @@
 @synthesize participants = mParticipants;
 @synthesize photos = mPhotos;
 
+@synthesize numParticipants = mNumParticipants;
+@synthesize numPhotos = mNumPhotos;
+
 - (id) initWithID:(NSString*)ID name:(NSString*)name participants:(int)participants photos:(int)photos {
     self = [super init];
     if (self) {
@@ -24,6 +27,8 @@
         mName = name;
         mParticipants = [[NSMutableArray alloc] initWithCapacity:participants];
         mPhotos = [[NSMutableArray alloc] initWithCapacity:photos];
+        mNumParticipants = participants;
+        mNumPhotos = photos;
     }
     return self;
 }

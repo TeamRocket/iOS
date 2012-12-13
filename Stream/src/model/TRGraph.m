@@ -135,7 +135,7 @@ typedef enum {
         if (newStream == nil) {
             newStream = [[TRPhotoStream alloc] initWithID:ID name:[streamData objectForKey:@"streamName"]
                                              participants:[[streamData objectForKey:@"numberOfParticipants"] intValue]
-                                                   photos:[[streamData objectForKey:@"numberOfPhotos"] intValue]];
+                                                   photos:[[streamData objectForKey:@"numberOfPictures"] intValue]];
             [self addStream:newStream];
         }
         TRPhoto * latestPhoto = [self getPhotoWithURL:[NSURL URLWithString:[streamData objectForKey:@"lastestPicture"]]];

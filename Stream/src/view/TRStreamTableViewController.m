@@ -52,8 +52,8 @@
     TRUser * loggedInUser = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
     TRPhotoStream * stream = [loggedInUser.streams objectAtIndex:indexPath.row];
     [cell.titleLabel setText:stream.name];
-    [cell.participantsLabel setText:[NSString stringWithFormat:@"%i Participants", [stream.participants count]]];
-    [cell.photosLabel setText:[NSString stringWithFormat:@"%i Photos", [stream.photos count]]];
+    [cell.participantsLabel setText:[NSString stringWithFormat:@"%i Participants", stream.numParticipants]];
+    [cell.photosLabel setText:[NSString stringWithFormat:@"%i Photos", stream.numPhotos]];
     [cell setImage:((TRPhoto*)[stream.photos lastObject]).image];
     
     return cell;
