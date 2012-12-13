@@ -8,6 +8,7 @@
 
 #import "TRAppDelegate.h"
 
+#import "TRGraph.h"
 #import "TRNetwork.h"
 
 #import "TRSplashViewController.h"
@@ -15,12 +16,14 @@
 
 @implementation TRAppDelegate
 
+@synthesize graph = mGraph;
 @synthesize network = mNetwork;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    mGraph = [[TRGraph alloc] init];
     mNetwork = [[TRNetwork alloc] init];
     mSplash = [[TRSplashViewController alloc] initWithNibName:@"TRSplashViewController" bundle:nil];
     mStream = [[TRStreamViewController alloc] init];

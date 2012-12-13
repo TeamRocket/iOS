@@ -10,6 +10,7 @@
 
 @class TRSplashViewController;
 @class TRStreamViewController;
+@class TRGraph;
 @class TRNetwork;
 
 #define AppDelegate ((TRAppDelegate *)[[UIApplication sharedApplication] delegate])
@@ -18,10 +19,12 @@
     TRSplashViewController * mSplash;
     TRStreamViewController * mStream;
 
+    TRGraph * mGraph;
     TRNetwork * mNetwork;
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) TRGraph * graph;
 @property (strong, nonatomic) TRNetwork * network;
 
 @end

@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TRStreamTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+#import "TRGraph.h"
+
+@interface TRStreamTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TRGraphDelegate> {
     IBOutlet UITableView * mTableView;
 }
 

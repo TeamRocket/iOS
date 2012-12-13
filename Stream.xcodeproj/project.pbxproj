@@ -33,6 +33,10 @@
 		0A4C6CC0167956E4002DD362 /* streamcell.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6CBE167956E4002DD362 /* streamcell.png */; };
 		0A4C6CC1167956E4002DD362 /* streamcell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6CBF167956E4002DD362 /* streamcell@2x.png */; };
 		0A4C6CC516796772002DD362 /* TRNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CC416796772002DD362 /* TRNetwork.m */; };
+		0A4C6CC8167971B7002DD362 /* TRGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CC7167971B7002DD362 /* TRGraph.m */; };
+		0A4C6CCB16797753002DD362 /* TRPhotoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CCA16797753002DD362 /* TRPhotoStream.m */; };
+		0A4C6CCE16798A04002DD362 /* TRPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CCD16798A04002DD362 /* TRPhoto.m */; };
+		0A4C6CD116798AAF002DD362 /* TRUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C6CD016798AAF002DD362 /* TRUser.m */; };
 		0A510AD7167842E000E2012F /* MuseoSans_500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD5167842E000E2012F /* MuseoSans_500.otf */; };
 		0A510AD8167842E000E2012F /* MuseoSans-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A510AD6167842E000E2012F /* MuseoSans-300.otf */; };
 		0A510AF616784B9F00E2012F /* TRLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A510AF416784B9F00E2012F /* TRLoginViewController.m */; };
@@ -103,6 +107,14 @@
 		0A4C6CBF167956E4002DD362 /* streamcell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "streamcell@2x.png"; path = "img/UI/streamcell@2x.png"; sourceTree = "<group>"; };
 		0A4C6CC316796772002DD362 /* TRNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRNetwork.h; path = src/model/TRNetwork.h; sourceTree = "<group>"; };
 		0A4C6CC416796772002DD362 /* TRNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRNetwork.m; path = src/model/TRNetwork.m; sourceTree = "<group>"; };
+		0A4C6CC6167971B7002DD362 /* TRGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRGraph.h; path = src/model/TRGraph.h; sourceTree = "<group>"; };
+		0A4C6CC7167971B7002DD362 /* TRGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRGraph.m; path = src/model/TRGraph.m; sourceTree = "<group>"; };
+		0A4C6CC916797753002DD362 /* TRPhotoStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRPhotoStream.h; path = src/model/TRPhotoStream.h; sourceTree = "<group>"; };
+		0A4C6CCA16797753002DD362 /* TRPhotoStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRPhotoStream.m; path = src/model/TRPhotoStream.m; sourceTree = "<group>"; };
+		0A4C6CCC16798A04002DD362 /* TRPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRPhoto.h; path = src/model/TRPhoto.h; sourceTree = "<group>"; };
+		0A4C6CCD16798A04002DD362 /* TRPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRPhoto.m; path = src/model/TRPhoto.m; sourceTree = "<group>"; };
+		0A4C6CCF16798AAE002DD362 /* TRUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRUser.h; path = src/model/TRUser.h; sourceTree = "<group>"; };
+		0A4C6CD016798AAF002DD362 /* TRUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRUser.m; path = src/model/TRUser.m; sourceTree = "<group>"; };
 		0A510AD5167842E000E2012F /* MuseoSans_500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSans_500.otf; path = img/Fonts/MuseoSans_500.otf; sourceTree = "<group>"; };
 		0A510AD6167842E000E2012F /* MuseoSans-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MuseoSans-300.otf"; path = "img/Fonts/MuseoSans-300.otf"; sourceTree = "<group>"; };
 		0A510AF316784B9F00E2012F /* TRLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRLoginViewController.h; path = src/view/TRLoginViewController.h; sourceTree = "<group>"; };
@@ -253,6 +265,14 @@
 			children = (
 				0A4C6CC316796772002DD362 /* TRNetwork.h */,
 				0A4C6CC416796772002DD362 /* TRNetwork.m */,
+				0A4C6CC6167971B7002DD362 /* TRGraph.h */,
+				0A4C6CC7167971B7002DD362 /* TRGraph.m */,
+				0A4C6CCC16798A04002DD362 /* TRPhoto.h */,
+				0A4C6CCD16798A04002DD362 /* TRPhoto.m */,
+				0A4C6CC916797753002DD362 /* TRPhotoStream.h */,
+				0A4C6CCA16797753002DD362 /* TRPhotoStream.m */,
+				0A4C6CCF16798AAE002DD362 /* TRUser.h */,
+				0A4C6CD016798AAF002DD362 /* TRUser.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -441,6 +461,10 @@
 				0A4C6CB5167952E9002DD362 /* TRStreamTableViewController.m in Sources */,
 				0A4C6CBB1679559E002DD362 /* TRStreamCell.m in Sources */,
 				0A4C6CC516796772002DD362 /* TRNetwork.m in Sources */,
+				0A4C6CC8167971B7002DD362 /* TRGraph.m in Sources */,
+				0A4C6CCB16797753002DD362 /* TRPhotoStream.m in Sources */,
+				0A4C6CCE16798A04002DD362 /* TRPhoto.m in Sources */,
+				0A4C6CD116798AAF002DD362 /* TRUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

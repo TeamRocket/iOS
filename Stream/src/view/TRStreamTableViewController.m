@@ -8,6 +8,9 @@
 
 #import "TRStreamTableViewController.h"
 
+#import "TRAppDelegate.h"
+#import "TRGraph.h"
+
 #import "TRStreamCell.h"
 
 @interface TRStreamTableViewController ()
@@ -18,6 +21,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [AppDelegate.graph registerForDelegateCallback:self];
+    [AppDelegate.graph downloadUserPhotoStreams:@"18585238764"];
     self.title = @"STREAMS";
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -48,6 +53,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
+}
+
+#pragma mark - TRGraph 
+
+- (void)graphFinishedUpdating {
+    [mTableView reloadData];
 }
 
 @end
