@@ -37,5 +37,6 @@
 - (TRUser*)getUserWithPhone:(NSString*)phone;
 - (TRPhoto*)getPhotoWithURL:(NSURL*)url;
 - (void)downloadUserPhotoStreams:(NSString*)phone;
+- (void)downloadStreamInfo:(NSString*)stream forPhone:(NSString*)phone;
 
 @end

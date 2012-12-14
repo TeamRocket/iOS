@@ -18,6 +18,7 @@ typedef enum {
     kTRGraphNetworkTaskDownloadUserPhotoStreams,
     kTRGraphNetworkTaskUserLogin,
     kTRGraphNetworkTaskUserSignup,
+    kTRGraphNetworkTaskDownloadStreamInfo,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -32,6 +33,7 @@ typedef enum {
         mDelegates = [[NSMutableArray alloc] init];
         mStreams = [[NSMutableDictionary alloc] init];
         mUsers = [[NSMutableDictionary alloc] init];
+        mPhotos = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -149,6 +151,38 @@ typedef enum {
     }
 }
 
+- (void)downloadStreamInfo:(NSString*)stream forPhone:(NSString*)phone {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/populateStreamProfile.php?phone=%@&streamID=%@", phone, stream]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskDownloadStreamInfo]);
+}
+
+- (void)p_downloadedStreamInfo:(NSDictionary*)info {
+    NSLog(@"Downloaded stream info:");
+    NSArray * pictures = [info objectForKey:@"pictures"];
+    if (pictures != nil) {
+        for (NSString * photoURL in pictures) {
+            NSURL * url = [NSURL URLWithString:photoURL];
+            if (url) {
+                TRPhoto * newPhoto = [self getPhotoWithURL:url];
+                if (newPhoto == nil) {
+                    newPhoto = [[TRPhoto alloc] initWithURL:url uploader:nil];
+                    [self addPhoto:newPhoto];
+                }
+                //[stream addPhoto:newPhoto];
+            }
+        }
+        if ([pictures count] > 0) {
+            //[stream addPhotoAsLatest: [self getPhotoWithURL:[NSURL URLWithString:[pictures lastObject]]]];
+        }
+    }
+    /*for (NSString * key in info) {
+        NSLog(@"Key: %@,\tValue: %@", key, [info objectForKey:key]);
+    }*/
+}
+
 #pragma mark - TRConnectionDelegate
 
 - (void) connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data {
@@ -166,6 +200,9 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskUserSignup:
                 [self p_receivedSignupResponse:info];
+                break;
+            case kTRGraphNetworkTaskDownloadStreamInfo:
+                [self p_downloadedStreamInfo:info];
                 break;
             default:
                 break;
