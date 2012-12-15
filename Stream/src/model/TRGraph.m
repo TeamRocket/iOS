@@ -178,6 +178,7 @@ typedef enum {
                     [self addPhoto:newPhoto];
                 }
                 [stream addPhoto:newPhoto];
+                stream.numPhotos = [stream.photos count];
             }
         }
         if ([pictures count] > 0) {
