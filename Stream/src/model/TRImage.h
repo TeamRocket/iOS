@@ -24,6 +24,7 @@
 - (id) initWithData:(NSData *)data fromURL:(NSURL*)url;
 - (TRImage *)sizedTo:(CGSize)size;
 + (TRImage *) imageWithImage:(TRImage *)image scaledToSize:(CGSize)newSize;
++ (TRImage *) imageWithImage:(TRImage *)image fitToSize:(CGSize)newSize;
 
 @end
 
