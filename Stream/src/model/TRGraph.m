@@ -139,6 +139,10 @@ typedef enum {
                                              participants:[[streamData objectForKey:@"numberOfParticipants"] intValue]
                                                    photos:[[streamData objectForKey:@"numberOfPictures"] intValue]];
             [self addStream:newStream];
+        } else {
+            newStream.name = [streamData objectForKey:@"streamName"];
+            newStream.numParticipants = [[streamData objectForKey:@"numberOfParticipants"] intValue];
+            newStream.numPhotos = [[streamData objectForKey:@"numberOfPictures"] intValue];
         }
         if ([NSNull null] != [streamData objectForKey:@"lastestPicture"]) {
             TRPhoto * latestPhoto = [self getPhotoWithURL:[NSURL URLWithString:[streamData objectForKey:@"lastestPicture"]]];

@@ -29,5 +29,6 @@
 
 - (void)setImage:(TRImage*)image;
 - (void)setPhoto:(TRPhoto*)photo;
+- (void)setBlankPhoto;
 
 @end

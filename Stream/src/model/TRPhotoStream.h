@@ -25,8 +25,8 @@
 @property (nonatomic, readonly) NSArray * participants;
 @property (nonatomic, readonly) NSArray * photos;
 
-@property (nonatomic, readonly) int numParticipants;
-@property (nonatomic, readonly) int numPhotos;
+@property (nonatomic) int numParticipants;
+@property (nonatomic) int numPhotos;
 
 - (id) initWithID:(NSString*)ID name:(NSString*)name participants:(int)participants photos:(int)photos;
 

@@ -72,7 +72,12 @@
     } else {
         [cell.photosLabel setText:[NSString stringWithFormat:@"%i Photos", stream.numPhotos]];
     }
-    [cell setPhoto:[stream.photos lastObject]];
+    if (stream.numPhotos > 0) {
+        [cell setPhoto:[stream.photos lastObject]];
+    } else {
+        [cell setBlankPhoto];
+    }
+
     
     return cell;
 }

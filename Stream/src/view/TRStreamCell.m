@@ -30,4 +30,9 @@
     [self addSubview:mImageView];
 }
 
+- (void)setBlankPhoto {
+    mPhoto = nil;
+    [mImageView setBackgroundColor:[UIColor whiteColor]];
+}
+
 @end
