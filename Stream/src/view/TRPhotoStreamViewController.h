@@ -15,6 +15,7 @@
 @interface TRPhotoStreamViewController : UIViewController <TRGraphDelegate, UITableViewDataSource, UITableViewDelegate> {
     TRPhotoStream * mStream;
     IBOutlet UITableView * mTableView;
+    UIRefreshControl * mRefreshControl;
 }
 
 - (id)initWithPhotoStream:(TRPhotoStream *)stream;

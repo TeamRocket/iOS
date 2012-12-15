@@ -36,6 +36,10 @@
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [self.navigationItem setRightBarButtonItem:add];
     [mTableView registerNib:[UINib nibWithNibName:@"TRStreamCell" bundle:nil] forCellReuseIdentifier:@"TRStreamCell"];
+
+    mRefreshControl = [[UIRefreshControl alloc] init];
+    [mRefreshControl addTarget:self action:@selector(refreshStreams) forControlEvents:UIControlEventValueChanged];
+    [mTableView addSubview:mRefreshControl];
 }
 
 #pragma mark - Table view data source
@@ -85,7 +89,14 @@
 #pragma mark - TRGraph 
 
 - (void)graphFinishedUpdating {
+    if (mRefreshControl) {
+        [mRefreshControl endRefreshing];
+    }
     [mTableView reloadData];
+}
+
+- (void)refreshStreams {
+    [AppDelegate.graph downloadUserPhotoStreams:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
 }
 
 @end

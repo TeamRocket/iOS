@@ -40,6 +40,10 @@
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [mTableView registerNib:[UINib nibWithNibName:@"TRStreamGridViewCell" bundle:nil] forCellReuseIdentifier:@"TRStreamGridViewCell"];
     [self.navigationItem setRightBarButtonItem:add];
+
+    mRefreshControl = [[UIRefreshControl alloc] init];
+    [mRefreshControl addTarget:self action:@selector(refreshStream) forControlEvents:UIControlEventValueChanged];
+    [mTableView addSubview:mRefreshControl];
 }
 
 - (void)didReceiveMemoryWarning
@@ -136,7 +140,15 @@
 #pragma mark - TRGraphDelegate
 
 - (void)graphFinishedUpdating {
+    if (mRefreshControl) {
+        [mRefreshControl endRefreshing];
+    }
     [mTableView reloadData];
+}
+
+- (void)refreshStream {
+    [AppDelegate.graph downloadStreamInfo:mStream.ID
+                                 forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
 }
 
 @end

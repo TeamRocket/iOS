@@ -12,6 +12,7 @@
 
 @interface TRStreamTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TRGraphDelegate> {
     IBOutlet UITableView * mTableView;
+    UIRefreshControl * mRefreshControl;
 }
 
 @end
