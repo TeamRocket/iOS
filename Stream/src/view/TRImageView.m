@@ -46,6 +46,15 @@
     return self;
 }
 
+- (void)setTRImage:(TRImage*)image {
+    [self setBackgroundColor:[UIColor whiteColor]];
+    mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    mSpinner.center = self.center;
+    [mSpinner startAnimating];
+    [self addSubview:mSpinner];
+    [AppDelegate.network dataAtURL:image.url delegate:self];
+}
+
 #pragma mark - FCConnectionDelegate
 
 - (void)connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data {

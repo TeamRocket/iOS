@@ -20,4 +20,6 @@
 - (id)initWithTRImage:(TRImage *)image inFrame:(CGRect)frame;
 - (id)initWithURL:(NSURL *)url inFrame:(CGRect)frame;
 
+- (void)setTRImage:(TRImage*)image;
+
 @end

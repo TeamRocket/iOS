@@ -113,7 +113,6 @@
 								<string key="NSFrame">{{190, 30}, {48, 16}}</string>
 								<reference key="NSSuperview" ref="497575620"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="666881454"/>
 								<bool key="IBUIOpaque">NO</bool>
@@ -665,7 +664,7 @@
 					<string key="className">TRStreamCell</string>
 					<string key="superclassName">UITableViewCell</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="mImageView">UIImageView</string>
+						<string key="mImageView">TRImageView</string>
 						<string key="mParticipantsLabel">UILabel</string>
 						<string key="mPhotosLabel">UILabel</string>
 						<string key="mTitleLabel">UILabel</string>
@@ -673,7 +672,7 @@
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="mImageView">
 							<string key="name">mImageView</string>
-							<string key="candidateClassName">UIImageView</string>
+							<string key="candidateClassName">TRImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="mParticipantsLabel">
 							<string key="name">mParticipantsLabel</string>

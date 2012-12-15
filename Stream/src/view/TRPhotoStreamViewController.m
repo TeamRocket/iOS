@@ -9,7 +9,11 @@
 #import "TRPhotoStreamViewController.h"
 
 #import "TRAppDelegate.h"
+#import "TRPhoto.h"
 #import "TRPhotoStream.h"
+
+#import "TRImageView.h"
+#import "TRStreamGridViewCell.h"
 
 @interface TRPhotoStreamViewController ()
 
@@ -34,6 +38,7 @@
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:nil action:nil];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [mTableView registerNib:[UINib nibWithNibName:@"TRStreamGridViewCell" bundle:nil] forCellReuseIdentifier:@"TRStreamGridViewCell"];
     [self.navigationItem setRightBarButtonItem:add];
 }
 
@@ -58,13 +63,12 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    
+    UITableViewCell *cell;
     if (indexPath.section == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        }
         UIButton * participantsButton = [[UIButton alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 300.0f, 46.0f)];
         [participantsButton setBackgroundImage:[UIImage imageNamed:@"view_participants_normal.png"] forState:UIControlStateNormal];
         [participantsButton setBackgroundImage:[UIImage imageNamed:@"view_participants_highlighted.png"] forState:UIControlStateSelected];
@@ -81,9 +85,30 @@
         UIImageView * participants = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"participants.png"]];
         [participantsButton.titleLabel addSubview:participants];
         [cell addSubview:participantsButton];
+        return cell;
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"TRStreamGridViewCell"];
+        TRStreamGridViewCell * gridCell = (TRStreamGridViewCell*)cell;
+        if ([mStream.photos count] > 0) {
+            if (indexPath.row * 2 < [mStream.photos count]) {
+                TRPhoto * leftPhoto = [mStream.photos objectAtIndex:(indexPath.row * 2)];
+                [gridCell.leftFrame setTRImage:[[TRImage alloc] initWithURL:leftPhoto.URL]];
+                [gridCell.leftFrame setAlpha:1.0f];
+            }
+            if (indexPath.row * 2 + 1 < [mStream.photos count]) {
+                TRPhoto * rightPhoto = [mStream.photos objectAtIndex:(indexPath.row * 2) + 1];
+                [gridCell.rightFrame setTRImage:[[TRImage alloc] initWithURL:rightPhoto.URL]];
+                [gridCell.rightFrame setAlpha:1.0f];
+            } else {
+                [gridCell.rightFrame setAlpha:0.0f];
+            }
+        } else {
+            [gridCell.leftFrame setAlpha:0.0f];
+            [gridCell.rightFrame setAlpha:0.0f];
+        }
         
     }
-    
+
     return cell;
 }
 

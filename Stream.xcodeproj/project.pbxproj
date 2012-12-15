@@ -86,6 +86,8 @@
 		0AF7A1ED167AB6280040023D /* navbaritem_orange_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF7A1EB167AB6280040023D /* navbaritem_orange_highlighted@2x.png */; };
 		0AF7A1F0167ADC080040023D /* participants.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF7A1EE167ADC080040023D /* participants.png */; };
 		0AF7A1F1167ADC080040023D /* participants@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF7A1EF167ADC080040023D /* participants@2x.png */; };
+		0AF7A1F3167B01B40040023D /* TRStreamGridViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AF7A1F2167B01B40040023D /* TRStreamGridViewCell.xib */; };
+		0AF7A1F6167B2D450040023D /* TRStreamGridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF7A1F5167B2D440040023D /* TRStreamGridViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -188,6 +190,9 @@
 		0AF7A1EB167AB6280040023D /* navbaritem_orange_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navbaritem_orange_highlighted@2x.png"; path = "img/UI/navbaritem_orange_highlighted@2x.png"; sourceTree = "<group>"; };
 		0AF7A1EE167ADC080040023D /* participants.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = participants.png; path = img/UI/participants.png; sourceTree = "<group>"; };
 		0AF7A1EF167ADC080040023D /* participants@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "participants@2x.png"; path = "img/UI/participants@2x.png"; sourceTree = "<group>"; };
+		0AF7A1F2167B01B40040023D /* TRStreamGridViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRStreamGridViewCell.xib; path = gui/TRStreamGridViewCell.xib; sourceTree = "<group>"; };
+		0AF7A1F4167B2D440040023D /* TRStreamGridViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRStreamGridViewCell.h; path = src/view/TRStreamGridViewCell.h; sourceTree = "<group>"; };
+		0AF7A1F5167B2D440040023D /* TRStreamGridViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRStreamGridViewCell.m; path = src/view/TRStreamGridViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +258,7 @@
 				0A4C6CB71679533D002DD362 /* TRStreamTableViewController.xib */,
 				0A4C6C881679299C002DD362 /* TRTextFieldCell.xib */,
 				0ABAAE96167A674400DD9A8B /* TRPhotoStreamViewController.xib */,
+				0AF7A1F2167B01B40040023D /* TRStreamGridViewCell.xib */,
 			);
 			name = gui;
 			sourceTree = "<group>";
@@ -338,6 +344,8 @@
 				0A4C6CAD16794C59002DD362 /* TRStreamViewController.m */,
 				0A4C6CB2167952E8002DD362 /* TRStreamTableViewController.h */,
 				0A4C6CB3167952E8002DD362 /* TRStreamTableViewController.m */,
+				0AF7A1F4167B2D440040023D /* TRStreamGridViewCell.h */,
+				0AF7A1F5167B2D440040023D /* TRStreamGridViewCell.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -507,6 +515,7 @@
 				0AF7A1ED167AB6280040023D /* navbaritem_orange_highlighted@2x.png in Resources */,
 				0AF7A1F0167ADC080040023D /* participants.png in Resources */,
 				0AF7A1F1167ADC080040023D /* participants@2x.png in Resources */,
+				0AF7A1F3167B01B40040023D /* TRStreamGridViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,6 +544,7 @@
 				0A4C6CD41679CB2B002DD362 /* TRImageView.m in Sources */,
 				0A4C6CD71679CB58002DD362 /* TRImage.m in Sources */,
 				0A4C6CE61679E777002DD362 /* TRPhotoStreamViewController.m in Sources */,
+				0AF7A1F6167B2D450040023D /* TRStreamGridViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,9 +619,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Stream/misc/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Stream/misc/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "549AF642-A651-49CF-8A1F-CC71C26B9ED3";
+				PROVISIONING_PROFILE = "F2BEFFE9-E395-41D0-A151-68F5185CF864";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -624,9 +634,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Stream/misc/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Stream/misc/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "549AF642-A651-49CF-8A1F-CC71C26B9ED3";
+				PROVISIONING_PROFILE = "F2BEFFE9-E395-41D0-A151-68F5185CF864";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

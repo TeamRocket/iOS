@@ -140,19 +140,21 @@ typedef enum {
                                                    photos:[[streamData objectForKey:@"numberOfPictures"] intValue]];
             [self addStream:newStream];
         }
-        TRPhoto * latestPhoto = [self getPhotoWithURL:[NSURL URLWithString:[streamData objectForKey:@"lastestPicture"]]];
-        if (latestPhoto == nil) {
-            latestPhoto = [[TRPhoto alloc] initWithURL:[NSURL URLWithString:[streamData objectForKey:@"lastestPicture"]]
-                                              uploader:nil];
-            [self addPhoto:latestPhoto];
+        if ([NSNull null] != [streamData objectForKey:@"lastestPicture"]) {
+            TRPhoto * latestPhoto = [self getPhotoWithURL:[NSURL URLWithString:[streamData objectForKey:@"lastestPicture"]]];
+            if (latestPhoto == nil) {
+                latestPhoto = [[TRPhoto alloc] initWithURL:[NSURL URLWithString:[streamData objectForKey:@"lastestPicture"]]
+                                                  uploader:nil];
+                [self addPhoto:latestPhoto];
+            }
+            [newStream addPhotoAsLatest:latestPhoto];
         }
-        [newStream addPhotoAsLatest:latestPhoto];
         [loggedInUser addStream:newStream];
     }
 }
 
 - (void)downloadStreamInfo:(NSString*)stream forPhone:(NSString*)phone {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/populateStreamProfile.php?phone=%@&streamID=%@", phone, stream]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/populateStreamProfile1.php?phone=%@&streamID=%@", phone, stream]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -160,9 +162,9 @@ typedef enum {
 }
 
 - (void)p_downloadedStreamInfo:(NSDictionary*)info {
-    NSLog(@"Downloaded stream info:");
-    NSArray * pictures = [info objectForKey:@"pictures"];
-    if (pictures != nil) {
+    TRPhotoStream * stream = [self getStreamWithID:[info objectForKey:@"streamID"]];
+    if (stream != nil) {
+        NSArray * pictures = [info objectForKey:@"pictures"];
         for (NSString * photoURL in pictures) {
             NSURL * url = [NSURL URLWithString:photoURL];
             if (url) {
@@ -171,16 +173,13 @@ typedef enum {
                     newPhoto = [[TRPhoto alloc] initWithURL:url uploader:nil];
                     [self addPhoto:newPhoto];
                 }
-                //[stream addPhoto:newPhoto];
+                [stream addPhoto:newPhoto];
             }
         }
         if ([pictures count] > 0) {
-            //[stream addPhotoAsLatest: [self getPhotoWithURL:[NSURL URLWithString:[pictures lastObject]]]];
+            [stream addPhotoAsLatest: [self getPhotoWithURL:[NSURL URLWithString:[pictures lastObject]]]];
         }
     }
-    /*for (NSString * key in info) {
-        NSLog(@"Key: %@,\tValue: %@", key, [info objectForKey:key]);
-    }*/
 }
 
 #pragma mark - TRConnectionDelegate
