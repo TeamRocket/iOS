@@ -8,18 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TRImage.h"
 #import "TRNetwork.h"
+
+@class TRImage;
+@class TRPhoto;
 
 @interface TRImageView : UIImageView <TRConnectionDelegate> {
     TRImage * mImage;
+    TRPhoto * mPhoto;
     UIActivityIndicatorView * mSpinner;
 }
 
 - (id)initWithImage:(UIImage *)image;
 - (id)initWithTRImage:(TRImage *)image inFrame:(CGRect)frame;
+- (id)initWithTRPhoto:(TRPhoto*)photo inFrame:(CGRect)frame;
 - (id)initWithURL:(NSURL *)url inFrame:(CGRect)frame;
 
 - (void)setTRImage:(TRImage*)image;
+- (void)setTRPhoto:(TRPhoto*)photo;
 
 @end

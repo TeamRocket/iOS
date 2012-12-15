@@ -8,14 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TRImage.h"
 #import "TRImageView.h"
+
+@class TRImage;
+@class TRPhoto;
 
 @interface TRStreamCell : UITableViewCell {
     IBOutlet TRImageView * mImageView;
     IBOutlet UILabel * mTitleLabel;
     IBOutlet UILabel * mParticipantsLabel;
     IBOutlet UILabel * mPhotosLabel;
+
+    TRPhoto * mPhoto;
 }
 
 @property (nonatomic) UIImageView * imageView;
@@ -24,5 +28,6 @@
 @property (nonatomic) UILabel * photosLabel;
 
 - (void)setImage:(TRImage*)image;
+- (void)setPhoto:(TRPhoto*)photo;
 
 @end

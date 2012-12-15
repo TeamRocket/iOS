@@ -92,12 +92,12 @@
         if ([mStream.photos count] > 0) {
             if (indexPath.row * 2 < [mStream.photos count]) {
                 TRPhoto * leftPhoto = [mStream.photos objectAtIndex:(indexPath.row * 2)];
-                [gridCell.leftFrame setTRImage:[[TRImage alloc] initWithURL:leftPhoto.URL]];
+                [gridCell.leftFrame setTRPhoto:leftPhoto];
                 [gridCell.leftFrame setAlpha:1.0f];
             }
             if (indexPath.row * 2 + 1 < [mStream.photos count]) {
                 TRPhoto * rightPhoto = [mStream.photos objectAtIndex:(indexPath.row * 2) + 1];
-                [gridCell.rightFrame setTRImage:[[TRImage alloc] initWithURL:rightPhoto.URL]];
+                [gridCell.rightFrame setTRPhoto:rightPhoto];
                 [gridCell.rightFrame setAlpha:1.0f];
             } else {
                 [gridCell.rightFrame setAlpha:0.0f];

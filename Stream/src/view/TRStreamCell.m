@@ -22,4 +22,12 @@
     [self addSubview:mImageView];
 }
 
+- (void)setPhoto:(TRPhoto*)photo {
+    mPhoto = photo;
+    [mImageView removeFromSuperview];
+    mImageView = [[TRImageView alloc] initWithTRPhoto:photo
+                                              inFrame:mImageView.frame];
+    [self addSubview:mImageView];
+}
+
 @end

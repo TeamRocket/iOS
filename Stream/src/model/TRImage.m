@@ -17,12 +17,32 @@
     self = [super init];
     if (self) {
         mURL = url;
+        mSizedPhotos = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
+
+- (id) initWithData:(NSData *)data fromURL:(NSURL*)url {
+    self = [super initWithData:data];
+    if (self) {
+        mURL = url;
+        mSizedPhotos = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
 - (BOOL) loaded {
-    return self.CGImage || self.CIImage;
+    return self.CGImage || self.CIImage || [[mSizedPhotos allKeys] count] > 0;
+}
+
+- (TRImage *)sizedTo:(CGSize)size {
+    NSString * sizeKey = [NSString stringWithFormat:@"%fx%f", size.width, size.height];
+    TRImage * sizedPhoto = [mSizedPhotos objectForKey:sizeKey];
+    if (sizedPhoto == nil) {
+        sizedPhoto = [TRImage imageWithImage:self scaledToSize:size];
+        [mSizedPhotos setValue:sizedPhoto forKey:sizeKey];
+    }
+    return sizedPhoto;
 }
 
 + (TRImage *) imageWithImage:(TRImage *)image scaledToSize:(CGSize)newSize {

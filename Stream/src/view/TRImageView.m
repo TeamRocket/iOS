@@ -9,6 +9,8 @@
 #import "TRImageView.h"
 
 #import "TRAppDelegate.h"
+#import "TRImage.h"
+#import "TRPhoto.h"
 
 @implementation TRImageView
 
@@ -22,7 +24,7 @@
 
 - (id)initWithTRImage:(TRImage *)image inFrame:(CGRect)frame{
     if (image.loaded) {
-        self = [self initWithImage:(UIImage *)[TRImage imageWithImage:image scaledToSize:frame.size]];
+        self = [self initWithImage:(UIImage *)[image sizedTo:frame.size]];
         self.frame = frame;
     } else {
         self = [self initWithURL:image.url inFrame:frame];
@@ -30,6 +32,14 @@
 
     if (self) {
         mImage = image;
+    }
+    return self;
+}
+
+- (id)initWithTRPhoto:(TRPhoto*)photo inFrame:(CGRect)frame {
+    self = [self initWithTRImage:photo.image inFrame:frame];
+    if (self) {
+        mPhoto = photo;
     }
     return self;
 }
@@ -55,13 +65,24 @@
     [AppDelegate.network dataAtURL:image.url delegate:self];
 }
 
+- (void)setTRPhoto:(TRPhoto*)photo {
+    mPhoto = photo;
+    mImage = photo.image;
+    if ([photo.image loaded]) {
+        [self setBackgroundColor:[UIColor colorWithPatternImage:[mPhoto.image sizedTo:self.frame.size]]];
+    } else {
+        [self setTRImage:photo.image];
+    }
+}
+
 #pragma mark - FCConnectionDelegate
 
 - (void)connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data {
     [mSpinner stopAnimating];
-    TRImage * image = [[TRImage alloc] initWithData:data];
-    mImage = [TRImage imageWithImage:image scaledToSize:self.frame.size];
-    [self setBackgroundColor:[UIColor colorWithPatternImage:mImage]];
+    mImage = [[TRImage alloc] initWithData:data fromURL:mImage.url];
+    if (mPhoto != nil)
+        mPhoto.image = mImage;
+    [self setBackgroundColor:[UIColor colorWithPatternImage:[mImage sizedTo:self.frame.size]]];
 }
 
 - (void)connection:(TRConnection *)connection failedWithError:(NSError *)error {

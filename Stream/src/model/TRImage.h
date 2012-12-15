@@ -13,12 +13,16 @@
 @interface TRImage : UIImage {
     NSURL * mURL;
     BOOL mLoaded;
+
+    NSMutableDictionary * mSizedPhotos;
 }
 
 @property (nonatomic, readonly) BOOL loaded;
 @property (nonatomic, readonly) NSURL * url;
 
 - (id) initWithURL:(NSURL *)url;
+- (id) initWithData:(NSData *)data fromURL:(NSURL*)url;
+- (TRImage *)sizedTo:(CGSize)size;
 + (TRImage *) imageWithImage:(TRImage *)image scaledToSize:(CGSize)newSize;
 
 @end

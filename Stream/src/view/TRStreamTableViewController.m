@@ -68,7 +68,7 @@
     } else {
         [cell.photosLabel setText:[NSString stringWithFormat:@"%i Photos", stream.numPhotos]];
     }
-    [cell setImage:((TRPhoto*)[stream.photos lastObject]).image];
+    [cell setPhoto:[stream.photos lastObject]];
     
     return cell;
 }
