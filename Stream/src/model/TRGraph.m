@@ -80,9 +80,11 @@ typedef enum {
 }
 
 - (void)p_receivedLoginResponse:(NSDictionary*)info {
-    TRUser * user = [self getUserWithPhone:[info objectForKey:@"value"]];
+    TRUser * user = [self getUserWithPhone:[info objectForKey:@"phone"]];
     if (user == nil && ![[info objectForKey:@"value"] isEqualToString:@"false"] && ![[info objectForKey:@"value"] isEqualToString:@""]) {
-        user = [[TRUser alloc] initWithPhone:[info objectForKey:@"value"] firstName:nil lastName:nil];
+        user = [[TRUser alloc] initWithPhone:[info objectForKey:@"phone"]
+                                   firstName:[info objectForKey:@"first"]
+                                    lastName:[info objectForKey:@"last"]];
         [self addUser:user];
     }
     [[NSUserDefaults standardUserDefaults] setObject:user.phone forKey:@"user_phone"];
@@ -121,7 +123,7 @@ typedef enum {
 }
 
 - (void)downloadPhotoInfo:(NSString*)url {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/http://75.101.134.112/api/getPictureMetadata.php?picture=%@", url]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/getPictureMetadata.php?picture=%@", url]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -129,16 +131,26 @@ typedef enum {
 }
 
 - (void)p_downloadedPhotoInfo:(NSDictionary*)info {
-    if ([info objectForKey:@"uploaderPhone"]) {
-        TRUser * user = [self getUserWithPhone:[info objectForKey:@"uploaderPhone"]];
-        if (user == nil) {
-            user = [[TRUser alloc] initWithPhone:[info objectForKey:@"uploaderPhone"]
-                                       firstName:[info objectForKey:@"uploaderFirstName"]
-                                        lastName:[info objectForKey:@"uploaderLastName"]];
-        } else {
-            user.firstName = [info objectForKey:@"uploaderFirstName"];
-            user.lastName = [info objectForKey:@"uploaderLastName"];
+    if ([info objectForKey:@"picture_url"]) {
+        TRPhoto * photo = [self getPhotoWithURL:[NSURL URLWithString:[info objectForKey:@"picture_url"]]];
+        if (!photo) {
+            photo = [[TRPhoto alloc] initWithURL:[NSURL URLWithString:[info objectForKey:@"picture_url"]] uploader:nil];
+            [self addPhoto:photo];
         }
+        if ([info objectForKey:@"uploaderPhone"]) {
+            TRUser * user = [self getUserWithPhone:[info objectForKey:@"uploaderPhone"]];
+            if (user == nil) {
+                user = [[TRUser alloc] initWithPhone:[info objectForKey:@"uploaderPhone"]
+                                           firstName:[info objectForKey:@"uploaderFirstName"]
+                                            lastName:[info objectForKey:@"uploaderLastName"]];
+                [self addUser:user];
+            } else {
+                user.firstName = [info objectForKey:@"uploaderFirstName"];
+                user.lastName = [info objectForKey:@"uploaderLastName"];
+            }
+            photo.uploader = user;
+        }
+        photo.numLikes = [[info objectForKey:@"numberOfLikes"] intValue];
     }
 }
 
@@ -185,10 +197,10 @@ typedef enum {
             newStream.numParticipants = [[streamData objectForKey:@"numberOfParticipants"] intValue];
             newStream.numPhotos = [[streamData objectForKey:@"numberOfPictures"] intValue];
         }
-        if ([NSNull null] != [streamData objectForKey:@"lastestPicture"]) {
-            TRPhoto * latestPhoto = [self getPhotoWithURL:[NSURL URLWithString:[streamData objectForKey:@"lastestPicture"]]];
+        if ([NSNull null] != [streamData objectForKey:@"latestPicture"]) {
+            TRPhoto * latestPhoto = [self getPhotoWithURL:[NSURL URLWithString:[streamData objectForKey:@"latestPicture"]]];
             if (latestPhoto == nil) {
-                latestPhoto = [[TRPhoto alloc] initWithURL:[NSURL URLWithString:[streamData objectForKey:@"lastestPicture"]]
+                latestPhoto = [[TRPhoto alloc] initWithURL:[NSURL URLWithString:[streamData objectForKey:@"latestPicture"]]
                                                   uploader:nil];
                 [self addPhoto:latestPhoto];
             }
@@ -248,6 +260,9 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskDownloadStreamInfo:
                 [self p_downloadedStreamInfo:info];
+                break;
+            case kTRGraphNetworkTaskDownloadPhotoInfo:
+                [self p_downloadedPhotoInfo:info];
                 break;
             default:
                 break;

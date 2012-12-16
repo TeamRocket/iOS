@@ -24,7 +24,9 @@
 @property (nonatomic, readonly) NSURL * URL;
 @property (nonatomic) TRImage * image;
 @property (nonatomic) int numLikes;
+@property (nonatomic, readonly) NSArray * likers;
 
 - (id) initWithURL:(NSURL*)url uploader:(TRUser*)uploader;
+- (void) addLiker:(TRUser*)user;
 
 @end

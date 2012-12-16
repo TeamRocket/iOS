@@ -16,6 +16,7 @@
 @synthesize URL = mURL;
 @synthesize image = mImage;
 @synthesize numLikes = mNumLikes;
+@synthesize likers = mLikers;
 
 - (id) initWithURL:(NSURL*)url uploader:(TRUser*)uploader {
     self = [super init];
@@ -24,8 +25,14 @@
         mURL = url;
 
         mImage = [[TRImage alloc] initWithURL:mURL];
+        mLikers = [[NSMutableArray alloc] init];
     }
     return self;
+}
+
+- (void) addLiker:(TRUser*)user {
+    if (![mLikers containsObject:user])
+        [mLikers addObject:user];
 }
 
 @end
