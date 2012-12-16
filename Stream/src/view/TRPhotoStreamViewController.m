@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 TeamRocket. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "TRPhotoStreamViewController.h"
 
 #import "TRAppDelegate.h"
@@ -14,6 +16,7 @@
 
 #import "TRImageView.h"
 #import "TRStreamGridViewCell.h"
+#import "TRPhotoViewController.h"
 
 @interface TRPhotoStreamViewController ()
 
@@ -97,11 +100,21 @@
             if (indexPath.row * 2 < [mStream.photos count]) {
                 TRPhoto * leftPhoto = [mStream.photos objectAtIndex:(indexPath.row * 2)];
                 [gridCell.leftFrame setTRPhoto:leftPhoto];
+                if (!gridCell.leftFrame.tapRecognizer)
+                    gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
+                else
+                    [gridCell.leftFrame.tapRecognizer addTarget:self action:@selector(tappedPhoto:)];
+                [gridCell.leftFrame setUserInteractionEnabled:YES];
+                [gridCell.leftFrame.tapRecognizer setNumberOfTapsRequired:1];
                 [gridCell.leftFrame setAlpha:1.0f];
             }
             if (indexPath.row * 2 + 1 < [mStream.photos count]) {
                 TRPhoto * rightPhoto = [mStream.photos objectAtIndex:(indexPath.row * 2) + 1];
                 [gridCell.rightFrame setTRPhoto:rightPhoto];
+                if (!gridCell.rightFrame.tapRecognizer)
+                    gridCell.rightFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
+                else
+                    [gridCell.rightFrame.tapRecognizer addTarget:self action:@selector(tappedPhoto:)];
                 [gridCell.rightFrame setAlpha:1.0f];
             } else {
                 [gridCell.rightFrame setAlpha:0.0f];
@@ -124,17 +137,24 @@
     }
 }
 
-#pragma mark - Table view delegate
+- (void)tappedPhoto:(UITapGestureRecognizer*)recognizer {
+    TRImageView * frame = (TRImageView*)recognizer.view;
+    TRPhotoViewController * photoView = [[TRPhotoViewController alloc] initWithNibName:@"TRPhotoViewController" bundle:nil];
+    [photoView.view setBackgroundColor:[UIColor blackColor]];
+    TRImageView * largeFrame = [[TRImageView alloc] initWithTRPhoto:frame.TRPhoto
+                                                            inFrame:[frame.superview convertRect:frame.frame toView:self.view]];
+    [largeFrame setPictureFrame:YES];
+    largeFrame.center = CGPointMake(largeFrame.center.x,
+                                    largeFrame.center.y + self.navigationController.navigationBar.frame.size.height);
+    [photoView setPhotoView:largeFrame];
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.type = kCATransitionFade;
+
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.navigationController pushViewController:photoView animated:NO];
 }
 
 #pragma mark - TRGraphDelegate

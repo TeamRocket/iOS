@@ -17,7 +17,11 @@
     TRImage * mImage;
     TRPhoto * mPhoto;
     UIActivityIndicatorView * mSpinner;
+    UITapGestureRecognizer * mTapRecognizer;
 }
+
+@property (nonatomic) UITapGestureRecognizer * tapRecognizer;
+@property (nonatomic) TRPhoto * TRPhoto;
 
 - (id)initWithImage:(UIImage *)image;
 - (id)initWithTRImage:(TRImage *)image inFrame:(CGRect)frame;
@@ -26,5 +30,7 @@
 
 - (void)setTRImage:(TRImage*)image;
 - (void)setTRPhoto:(TRPhoto*)photo;
+
+- (void)setPictureFrame:(BOOL)frame;
 
 @end

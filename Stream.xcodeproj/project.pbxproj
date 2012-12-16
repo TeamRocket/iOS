@@ -10,6 +10,11 @@
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
+		0A457688167D4DBA00848D8E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A457686167D4DAE00848D8E /* QuartzCore.framework */; };
+		0A45768B167D59B400848D8E /* TRPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A45768A167D59B400848D8E /* TRPhotoViewController.m */; };
+		0A45768D167D62AA00848D8E /* TRPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A45768C167D62AA00848D8E /* TRPhotoViewController.xib */; };
+		0A457690167D651900848D8E /* closex.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A45768E167D651900848D8E /* closex.png */; };
+		0A457691167D651900848D8E /* closex@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A45768F167D651900848D8E /* closex@2x.png */; };
 		0A4C6C77167921E9002DD362 /* tableviewgrouped_bot.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C71167921E9002DD362 /* tableviewgrouped_bot.png */; };
 		0A4C6C78167921E9002DD362 /* tableviewgrouped_bot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C72167921E9002DD362 /* tableviewgrouped_bot@2x.png */; };
 		0A4C6C79167921E9002DD362 /* tableviewgrouped_cap.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C6C73167921E9002DD362 /* tableviewgrouped_cap.png */; };
@@ -95,6 +100,12 @@
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0A457686167D4DAE00848D8E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0A457689167D59B400848D8E /* TRPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRPhotoViewController.h; path = src/view/TRPhotoViewController.h; sourceTree = "<group>"; };
+		0A45768A167D59B400848D8E /* TRPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRPhotoViewController.m; path = src/view/TRPhotoViewController.m; sourceTree = "<group>"; };
+		0A45768C167D62AA00848D8E /* TRPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRPhotoViewController.xib; path = gui/TRPhotoViewController.xib; sourceTree = "<group>"; };
+		0A45768E167D651900848D8E /* closex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = closex.png; path = img/UI/closex.png; sourceTree = "<group>"; };
+		0A45768F167D651900848D8E /* closex@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "closex@2x.png"; path = "img/UI/closex@2x.png"; sourceTree = "<group>"; };
 		0A4C6C71167921E9002DD362 /* tableviewgrouped_bot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tableviewgrouped_bot.png; path = img/UI/tableviewgrouped_bot.png; sourceTree = "<group>"; };
 		0A4C6C72167921E9002DD362 /* tableviewgrouped_bot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tableviewgrouped_bot@2x.png"; path = "img/UI/tableviewgrouped_bot@2x.png"; sourceTree = "<group>"; };
 		0A4C6C73167921E9002DD362 /* tableviewgrouped_cap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tableviewgrouped_cap.png; path = img/UI/tableviewgrouped_cap.png; sourceTree = "<group>"; };
@@ -203,6 +214,7 @@
 				0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */,
 				0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */,
 				0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */,
+				0A457688167D4DBA00848D8E /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +244,7 @@
 				0A3890D31664AFC7002E8BC1 /* UIKit.framework */,
 				0A3890D51664AFC7002E8BC1 /* Foundation.framework */,
 				0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */,
+				0A457686167D4DAE00848D8E /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -259,6 +272,7 @@
 				0A4C6C881679299C002DD362 /* TRTextFieldCell.xib */,
 				0ABAAE96167A674400DD9A8B /* TRPhotoStreamViewController.xib */,
 				0AF7A1F2167B01B40040023D /* TRStreamGridViewCell.xib */,
+				0A45768C167D62AA00848D8E /* TRPhotoViewController.xib */,
 			);
 			name = gui;
 			sourceTree = "<group>";
@@ -326,6 +340,8 @@
 			children = (
 				0A4C6CD21679CB2A002DD362 /* TRImageView.h */,
 				0A4C6CD31679CB2A002DD362 /* TRImageView.m */,
+				0A457689167D59B400848D8E /* TRPhotoViewController.h */,
+				0A45768A167D59B400848D8E /* TRPhotoViewController.m */,
 				0A4C6CE41679E777002DD362 /* TRPhotoStreamViewController.h */,
 				0A4C6CE51679E777002DD362 /* TRPhotoStreamViewController.m */,
 				0A510AF316784B9F00E2012F /* TRLoginViewController.h */,
@@ -353,6 +369,8 @@
 		0AB19B49167812930036E2BC /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				0A45768E167D651900848D8E /* closex.png */,
+				0A45768F167D651900848D8E /* closex@2x.png */,
 				0A510B031678600D00E2012F /* navbaritem.png */,
 				0A510B041678600D00E2012F /* navbaritem@2x.png */,
 				0A510AFF16785D7300E2012F /* navbarback.png */,
@@ -516,6 +534,9 @@
 				0AF7A1F0167ADC080040023D /* participants.png in Resources */,
 				0AF7A1F1167ADC080040023D /* participants@2x.png in Resources */,
 				0AF7A1F3167B01B40040023D /* TRStreamGridViewCell.xib in Resources */,
+				0A45768D167D62AA00848D8E /* TRPhotoViewController.xib in Resources */,
+				0A457690167D651900848D8E /* closex.png in Resources */,
+				0A457691167D651900848D8E /* closex@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +566,7 @@
 				0A4C6CD71679CB58002DD362 /* TRImage.m in Sources */,
 				0A4C6CE61679E777002DD362 /* TRPhotoStreamViewController.m in Sources */,
 				0AF7A1F6167B2D450040023D /* TRStreamGridViewCell.m in Sources */,
+				0A45768B167D59B400848D8E /* TRPhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

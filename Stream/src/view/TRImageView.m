@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 TeamRocket. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "TRImageView.h"
 
 #import "TRAppDelegate.h"
@@ -13,6 +15,9 @@
 #import "TRPhoto.h"
 
 @implementation TRImageView
+
+@synthesize tapRecognizer = mTapRecognizer;
+@synthesize TRPhoto = mPhoto;
 
 - (id)initWithImage:(UIImage *)image {
     self = [self initWithFrame:CGRectMake(0.0f, 0.0f, image.size.width, image.size.height)];
@@ -73,6 +78,27 @@
     } else {
         [self setTRImage:photo.image];
     }
+}
+
+- (void)setPictureFrame:(BOOL)frame {
+    if (frame) {
+        [self.layer setShadowColor:[UIColor blackColor].CGColor];
+        [self.layer setShadowOpacity:0.5];
+        [self.layer setShadowRadius:2.0];
+        [self.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
+        [self.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [self.layer setBorderWidth:5.0f];
+    } else {
+        [self.layer setShadowOpacity:0.0f];
+        [self.layer setShadowRadius:0.0f];
+        [self.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
+        [self.layer setBorderWidth:0.0f];
+    }
+}
+
+- (void)setTapRecognizer:(UITapGestureRecognizer *)tapRecognizer {
+    [self addGestureRecognizer:tapRecognizer];
+    mTapRecognizer = tapRecognizer;
 }
 
 #pragma mark - FCConnectionDelegate

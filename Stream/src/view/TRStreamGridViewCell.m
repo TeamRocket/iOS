@@ -19,19 +19,8 @@
 @synthesize rightFrame = mRightFrame;
 
 - (void)awakeFromNib {
-    [mLeftFrame.layer setShadowColor:[UIColor blackColor].CGColor];
-    [mLeftFrame.layer setShadowOpacity:0.5];
-    [mLeftFrame.layer setShadowRadius:2.0];
-    [mLeftFrame.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
-    [mLeftFrame.layer setBorderColor:[UIColor whiteColor].CGColor];
-    [mLeftFrame.layer setBorderWidth:5.0f];
-
-    [mRightFrame.layer setShadowColor:[UIColor blackColor].CGColor];
-    [mRightFrame.layer setShadowOpacity:0.5];
-    [mRightFrame.layer setShadowRadius:2.0];
-    [mRightFrame.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
-    [mRightFrame.layer setBorderColor:[UIColor whiteColor].CGColor];
-    [mRightFrame.layer setBorderWidth:5.0f];
+    [mLeftFrame setPictureFrame:YES];
+    [mRightFrame setPictureFrame:YES];
 }
 
 @end
