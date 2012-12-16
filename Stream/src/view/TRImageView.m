@@ -88,11 +88,13 @@
         [self.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
         [self.layer setBorderColor:[UIColor whiteColor].CGColor];
         [self.layer setBorderWidth:5.0f];
+        [self.layer setShouldRasterize:YES];
     } else {
         [self.layer setShadowOpacity:0.0f];
         [self.layer setShadowRadius:0.0f];
         [self.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
         [self.layer setBorderWidth:0.0f];
+        [self.layer setShouldRasterize:YES];
     }
 }
 
