@@ -36,8 +36,11 @@
 - (void)signupWithPhone:(NSString*)phone first:(NSString*)first last:(NSString*)last password:(NSString*)password;
 - (TRUser*)getUserWithPhone:(NSString*)phone;
 - (TRPhoto*)getPhotoWithURL:(NSURL*)url;
+
 - (void)downloadUserPhotoStreams:(NSString*)phone;
 - (void)downloadStreamInfo:(NSString*)stream forPhone:(NSString*)phone;
 - (void)downloadPhotoInfo:(NSString*)url;
+- (void)sendLikePhoto:(NSString*)url forPhone:(NSString*)phone;
+- (void)sendUnlikePhoto:(NSString*)url forPhone:(NSString*)phone;
 
 @end

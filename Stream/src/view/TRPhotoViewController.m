@@ -104,12 +104,16 @@
         [mLikeOverlayImage setImage:[UIImage imageNamed:@"heart_red_large.png"]];
         [mLikeOverlayLabel setText:@"Liked!"];
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_red_small.png"]];
+        [AppDelegate.graph sendLikePhoto:[mPhoto.URL absoluteString]
+                                forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
         mPhoto.numLikes++;
     } else {
         [mLikeButton setTitle:@"Like" forState:UIControlStateNormal];
         [mLikeOverlayImage setImage:[UIImage imageNamed:@"heart_unlike_large.png"]];
         [mLikeOverlayLabel setText:@"Unliked..."];
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
+        [AppDelegate.graph sendUnlikePhoto:[mPhoto.URL absoluteString]
+                                  forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
         mPhoto.numLikes--;
     }
     [self graphFinishedUpdating];

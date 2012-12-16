@@ -20,6 +20,8 @@ typedef enum {
     kTRGraphNetworkTaskUserSignup,
     kTRGraphNetworkTaskDownloadStreamInfo,
     kTRGraphNetworkTaskDownloadPhotoInfo,
+    kTRGraphNetworkTaskSendLikePhoto,
+    kTRGraphNetworkTaskSendUnlikePhoto,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -101,6 +103,22 @@ typedef enum {
 }
 
 #pragma mark Photo
+
+- (void)sendLikePhoto:(NSString*)url forPhone:(NSString*)phone{
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/likePicture.php?phone=%@&picture=%@", phone, url]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskSendLikePhoto]);
+}
+
+- (void)sendUnlikePhoto:(NSString*)url forPhone:(NSString*)phone{
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/unlikePicture.php?phone=%@&picture=%@", phone, url]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskSendUnlikePhoto]);
+}
 
 - (void)downloadPhotoInfo:(NSString*)url {
     TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/http://75.101.134.112/api/getPictureMetadata.php?picture=%@", url]
