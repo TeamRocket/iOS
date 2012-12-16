@@ -21,6 +21,12 @@
     IBOutlet UIButton * mCloseButton;
     IBOutlet UIButton * mLikeButton;
     IBOutlet UILabel * mLikeCountLabel;
+
+    UIView * mLikeOverlayView;
+    UIImageView * mLikeIndicator;
+
+    UIImageView * mLikeOverlayImage;
+    UILabel * mLikeOverlayLabel;
 }
 
 - (void)setPhotoView:(TRImageView*)photoView;
