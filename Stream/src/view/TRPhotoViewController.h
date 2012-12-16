@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TRGraph.h"
+
 @class TRPhoto;
 @class TRImageView;
 
-@interface TRPhotoViewController : UIViewController {
+@interface TRPhotoViewController : UIViewController <TRGraphDelegate> {
     TRImageView * mImageView;
     TRPhoto * mPhoto;
 

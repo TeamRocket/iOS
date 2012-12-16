@@ -18,8 +18,8 @@
     NSMutableArray * mStreams;
 }
 
-@property (nonatomic, readonly) NSString * firstName;
-@property (nonatomic, readonly) NSString * lastName;
+@property (nonatomic) NSString * firstName;
+@property (nonatomic) NSString * lastName;
 @property (nonatomic, readonly) NSString * phone;
 @property (nonatomic, readonly) NSArray * streams;
 

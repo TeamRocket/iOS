@@ -10,6 +10,8 @@
 
 #import "TRPhotoViewController.h"
 
+#import "TRAppDelegate.h"
+
 #import "TRImageView.h"
 #import "TRPhoto.h"
 #import "TRUser.h"
@@ -31,8 +33,9 @@
 
 - (void)setPhotoView:(TRImageView*)photoView {
     mPhoto = photoView.TRPhoto;
+    [AppDelegate.graph registerForDelegateCallback:self];
+    [AppDelegate.graph downloadPhotoInfo:[mPhoto.URL absoluteString]];
     mImageView = photoView;
-    [mUploaderLabel setText:[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName]];
     [self.view addSubview:photoView];
 }
 
@@ -59,6 +62,7 @@
     mPhoto = nil;
     mImageView = nil;
     mCloseButton = nil;
+    [AppDelegate.graph unregisterForDelegateCallback:self];
 }
 
 - (void)loadFullImage {
@@ -86,6 +90,17 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController popViewControllerAnimated:NO];
+}
+
+#pragma mark - TRGraphDelegate
+
+- (void)graphFinishedUpdating {
+    [mUploaderLabel setText:[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName]];
+    if (mPhoto.numLikes == 1) {
+        [mLikeCountLabel setText:@"1 Like"];
+    } else {
+        [mLikeCountLabel setText:[NSString stringWithFormat:@"%i Likes", mPhoto.numLikes]];
+    }
 }
 
 @end

@@ -15,6 +15,7 @@
 @synthesize uploader = mUploader;
 @synthesize URL = mURL;
 @synthesize image = mImage;
+@synthesize numLikes = mNumLikes;
 
 - (id) initWithURL:(NSURL*)url uploader:(TRUser*)uploader {
     self = [super init];

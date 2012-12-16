@@ -15,11 +15,15 @@
     TRUser * mUploader;
     NSURL * mURL;
     TRImage * mImage;
+
+    int mNumLikes;
+    NSMutableArray * mLikers;
 }
 
 @property (nonatomic) TRUser * uploader;
 @property (nonatomic, readonly) NSURL * URL;
 @property (nonatomic) TRImage * image;
+@property (nonatomic) int numLikes;
 
 - (id) initWithURL:(NSURL*)url uploader:(TRUser*)uploader;
 

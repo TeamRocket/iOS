@@ -38,5 +38,6 @@
 - (TRPhoto*)getPhotoWithURL:(NSURL*)url;
 - (void)downloadUserPhotoStreams:(NSString*)phone;
 - (void)downloadStreamInfo:(NSString*)stream forPhone:(NSString*)phone;
+- (void)downloadPhotoInfo:(NSString*)url;
 
 @end

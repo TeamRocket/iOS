@@ -19,6 +19,7 @@ typedef enum {
     kTRGraphNetworkTaskUserLogin,
     kTRGraphNetworkTaskUserSignup,
     kTRGraphNetworkTaskDownloadStreamInfo,
+    kTRGraphNetworkTaskDownloadPhotoInfo,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -100,6 +101,28 @@ typedef enum {
 }
 
 #pragma mark Photo
+
+- (void)downloadPhotoInfo:(NSString*)url {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/http://75.101.134.112/api/getPictureMetadata.php?picture=%@", url]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskDownloadPhotoInfo]);
+}
+
+- (void)p_downloadedPhotoInfo:(NSDictionary*)info {
+    if ([info objectForKey:@"uploaderPhone"]) {
+        TRUser * user = [self getUserWithPhone:[info objectForKey:@"uploaderPhone"]];
+        if (user == nil) {
+            user = [[TRUser alloc] initWithPhone:[info objectForKey:@"uploaderPhone"]
+                                       firstName:[info objectForKey:@"uploaderFirstName"]
+                                        lastName:[info objectForKey:@"uploaderLastName"]];
+        } else {
+            user.firstName = [info objectForKey:@"uploaderFirstName"];
+            user.lastName = [info objectForKey:@"uploaderLastName"];
+        }
+    }
+}
 
 - (void)addPhoto:(TRPhoto*)photo {
     if (![mPhotos objectForKey:[photo.URL absoluteString]])
