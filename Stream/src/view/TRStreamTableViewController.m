@@ -16,6 +16,7 @@
 
 #import "TRPhotoStreamViewController.h"
 #import "TRStreamCell.h"
+#import "TRStreamSetupViewController.h"
 
 @interface TRStreamTableViewController ()
 
@@ -34,12 +35,19 @@
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [add setTarget:self];
+    [add setAction:@selector(presentSetup:)];
     [self.navigationItem setRightBarButtonItem:add];
     [mTableView registerNib:[UINib nibWithNibName:@"TRStreamCell" bundle:nil] forCellReuseIdentifier:@"TRStreamCell"];
 
     mRefreshControl = [[UIRefreshControl alloc] init];
     [mRefreshControl addTarget:self action:@selector(refreshStreams) forControlEvents:UIControlEventValueChanged];
     [mTableView addSubview:mRefreshControl];
+}
+
+- (void)presentSetup:(id)sender {
+    TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithNibName:@"TRStreamSetupViewController" bundle:nil];
+    [self.navigationController presentViewController:setup animated:YES completion:nil];
 }
 
 #pragma mark - Table view data source

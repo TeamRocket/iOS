@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "TRTokenField.h"
+
 @class TRPhotoStream;
 
-@interface TRUser : NSObject {
+@interface TRUser : NSObject <TRTokenObject> {
     NSString * mFirstName;
     NSString * mLastName;
     NSString * mPhone;

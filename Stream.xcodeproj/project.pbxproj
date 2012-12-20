@@ -63,6 +63,15 @@
 		0A510B0216785D7300E2012F /* navbarback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A510B0016785D7300E2012F /* navbarback@2x.png */; };
 		0A510B051678600D00E2012F /* navbaritem.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A510B031678600D00E2012F /* navbaritem.png */; };
 		0A510B061678600D00E2012F /* navbaritem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A510B041678600D00E2012F /* navbaritem@2x.png */; };
+		0A6276741682AE8900827101 /* TRStreamSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6276721682AE8900827101 /* TRStreamSetupViewController.m */; };
+		0A6276781682AEC600827101 /* TRStreamSetupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A6276771682AEC600827101 /* TRStreamSetupViewController.xib */; };
+		0A62767F1682BBC600827101 /* TRTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A62767E1682BBC600827101 /* TRTokenField.m */; };
+		0A6276861682C2DA00827101 /* token_container.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6276841682C2DA00827101 /* token_container.png */; };
+		0A6276871682C2DA00827101 /* token_container@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6276851682C2DA00827101 /* token_container@2x.png */; };
+		0A62768A1682C5B800827101 /* add_token.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6276881682C5B800827101 /* add_token.png */; };
+		0A62768B1682C5B800827101 /* add_token@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6276891682C5B800827101 /* add_token@2x.png */; };
+		0A6276951682CFF800827101 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6276911682CFEC00827101 /* AddressBook.framework */; };
+		0A6276961682CFF800827101 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6276921682CFEC00827101 /* AddressBookUI.framework */; };
 		0AB19B38167805900036E2BC /* iPadIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B34167805900036E2BC /* iPadIcon.png */; };
 		0AB19B39167805900036E2BC /* iPadIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B35167805900036E2BC /* iPadIcon@2x.png */; };
 		0AB19B3A167805900036E2BC /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B36167805900036E2BC /* iPhoneIcon.png */; };
@@ -177,6 +186,17 @@
 		0A510B0016785D7300E2012F /* navbarback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navbarback@2x.png"; path = "img/UI/navbarback@2x.png"; sourceTree = "<group>"; };
 		0A510B031678600D00E2012F /* navbaritem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navbaritem.png; path = img/UI/navbaritem.png; sourceTree = "<group>"; };
 		0A510B041678600D00E2012F /* navbaritem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navbaritem@2x.png"; path = "img/UI/navbaritem@2x.png"; sourceTree = "<group>"; };
+		0A6276711682AE8800827101 /* TRStreamSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRStreamSetupViewController.h; path = src/view/TRStreamSetupViewController.h; sourceTree = "<group>"; };
+		0A6276721682AE8900827101 /* TRStreamSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRStreamSetupViewController.m; path = src/view/TRStreamSetupViewController.m; sourceTree = "<group>"; };
+		0A6276771682AEC600827101 /* TRStreamSetupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRStreamSetupViewController.xib; path = gui/TRStreamSetupViewController.xib; sourceTree = "<group>"; };
+		0A62767D1682BBC600827101 /* TRTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRTokenField.h; path = src/view/TRTokenField.h; sourceTree = "<group>"; };
+		0A62767E1682BBC600827101 /* TRTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRTokenField.m; path = src/view/TRTokenField.m; sourceTree = "<group>"; };
+		0A6276841682C2DA00827101 /* token_container.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = token_container.png; path = img/UI/token_container.png; sourceTree = "<group>"; };
+		0A6276851682C2DA00827101 /* token_container@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "token_container@2x.png"; path = "img/UI/token_container@2x.png"; sourceTree = "<group>"; };
+		0A6276881682C5B800827101 /* add_token.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_token.png; path = img/UI/add_token.png; sourceTree = "<group>"; };
+		0A6276891682C5B800827101 /* add_token@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_token@2x.png"; path = "img/UI/add_token@2x.png"; sourceTree = "<group>"; };
+		0A6276911682CFEC00827101 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		0A6276921682CFEC00827101 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		0AB19B34167805900036E2BC /* iPadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPadIcon.png; path = img/iPadIcon.png; sourceTree = "<group>"; };
 		0AB19B35167805900036E2BC /* iPadIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPadIcon@2x.png"; path = "img/iPadIcon@2x.png"; sourceTree = "<group>"; };
 		0AB19B36167805900036E2BC /* iPhoneIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPhoneIcon.png; path = img/iPhoneIcon.png; sourceTree = "<group>"; };
@@ -227,6 +247,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A6276951682CFF800827101 /* AddressBook.framework in Frameworks */,
+				0A6276961682CFF800827101 /* AddressBookUI.framework in Frameworks */,
 				0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */,
 				0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */,
 				0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */,
@@ -257,6 +279,8 @@
 		0A3890D21664AFC7002E8BC1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A6276911682CFEC00827101 /* AddressBook.framework */,
+				0A6276921682CFEC00827101 /* AddressBookUI.framework */,
 				0A3890D31664AFC7002E8BC1 /* UIKit.framework */,
 				0A3890D51664AFC7002E8BC1 /* Foundation.framework */,
 				0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */,
@@ -287,6 +311,7 @@
 				0A4C6CB71679533D002DD362 /* TRStreamTableViewController.xib */,
 				0A4C6C881679299C002DD362 /* TRTextFieldCell.xib */,
 				0ABAAE96167A674400DD9A8B /* TRPhotoStreamViewController.xib */,
+				0A6276771682AEC600827101 /* TRStreamSetupViewController.xib */,
 				0AF7A1F2167B01B40040023D /* TRStreamGridViewCell.xib */,
 				0A45768C167D62AA00848D8E /* TRPhotoViewController.xib */,
 			);
@@ -370,6 +395,8 @@
 				0A4C6C83167924EA002DD362 /* TRTableViewCell.m */,
 				0A4C6C8A167929C4002DD362 /* TRTextFieldCell.h */,
 				0A4C6C8B167929C4002DD362 /* TRTextFieldCell.m */,
+				0A62767D1682BBC600827101 /* TRTokenField.h */,
+				0A62767E1682BBC600827101 /* TRTokenField.m */,
 				0A4C6CB91679559E002DD362 /* TRStreamCell.h */,
 				0A4C6CBA1679559E002DD362 /* TRStreamCell.m */,
 				0A4C6CAC16794C59002DD362 /* TRStreamViewController.h */,
@@ -378,6 +405,8 @@
 				0A4C6CB3167952E8002DD362 /* TRStreamTableViewController.m */,
 				0AF7A1F4167B2D440040023D /* TRStreamGridViewCell.h */,
 				0AF7A1F5167B2D440040023D /* TRStreamGridViewCell.m */,
+				0A6276711682AE8800827101 /* TRStreamSetupViewController.h */,
+				0A6276721682AE8900827101 /* TRStreamSetupViewController.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -385,6 +414,8 @@
 		0AB19B49167812930036E2BC /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				0A6276881682C5B800827101 /* add_token.png */,
+				0A6276891682C5B800827101 /* add_token@2x.png */,
 				0A45768E167D651900848D8E /* closex.png */,
 				0A45768F167D651900848D8E /* closex@2x.png */,
 				0A457692167D7F5600848D8E /* heart_red_large.png */,
@@ -429,6 +460,8 @@
 				0A4C6C7F16792346002DD362 /* tableviewgrouped_mid@2x.png */,
 				0A4C6C75167921E9002DD362 /* tableviewgrouped_top.png */,
 				0A4C6C76167921E9002DD362 /* tableviewgrouped_top@2x.png */,
+				0A6276841682C2DA00827101 /* token_container.png */,
+				0A6276851682C2DA00827101 /* token_container@2x.png */,
 				0AF7A1D9167AAFA40040023D /* view_participants_highlighted@2x.png */,
 				0AF7A1DE167AB01A0040023D /* view_participants_highlighted.png */,
 				0AF7A1DF167AB01A0040023D /* view_participants_normal.png */,
@@ -569,6 +602,11 @@
 				0A45769F167D7F5600848D8E /* heart_unlike_large@2x.png in Resources */,
 				0A4576A0167D7F5600848D8E /* heart_white_small.png in Resources */,
 				0A4576A1167D7F5600848D8E /* heart_white_small@2x.png in Resources */,
+				0A6276781682AEC600827101 /* TRStreamSetupViewController.xib in Resources */,
+				0A6276861682C2DA00827101 /* token_container.png in Resources */,
+				0A6276871682C2DA00827101 /* token_container@2x.png in Resources */,
+				0A62768A1682C5B800827101 /* add_token.png in Resources */,
+				0A62768B1682C5B800827101 /* add_token@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,6 +637,8 @@
 				0A4C6CE61679E777002DD362 /* TRPhotoStreamViewController.m in Sources */,
 				0AF7A1F6167B2D450040023D /* TRStreamGridViewCell.m in Sources */,
 				0A45768B167D59B400848D8E /* TRPhotoViewController.m in Sources */,
+				0A6276741682AE8900827101 /* TRStreamSetupViewController.m in Sources */,
+				0A62767F1682BBC600827101 /* TRTokenField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
