@@ -200,7 +200,8 @@
             image = [TRImage imageWithImage:image scaledToSize:CGSizeMake(MAX_UPLOAD_DIMENTION*aspect, MAX_UPLOAD_DIMENTION)];
         }
     }
-    newPhoto.image = image;
+
+    newPhoto.image = [TRImage orientImage:image];
     [AppDelegate.graph uploadPhoto:newPhoto toStream:mStream];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
