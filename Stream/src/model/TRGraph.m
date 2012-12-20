@@ -173,7 +173,7 @@ typedef enum {
         TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"upload/upload_file.php"
                                                                     relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
                                                    arguments:args
-                                                        data:UIImageJPEGRepresentation((UIImage*)photo.image, 1.0)
+                                                        data:UIImageJPEGRepresentation((UIImage*)photo.image, 0.75)
                                                     delegate:self];
         CFDictionaryAddValue(mActiveConnections,
                              (__bridge const void *)conn,

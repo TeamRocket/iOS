@@ -19,6 +19,8 @@
 #import "TRStreamGridViewCell.h"
 #import "TRPhotoViewController.h"
 
+#define MAX_UPLOAD_DIMENTION 1024
+
 @interface TRPhotoStreamViewController ()
 
 @end
@@ -188,6 +190,16 @@
     TRImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     if(!image)
         image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    float aspect = image.size.width/image.size.height;
+    if (aspect > 1) {
+        if (image.size.width > MAX_UPLOAD_DIMENTION) {
+            image = [TRImage imageWithImage:image scaledToSize:CGSizeMake(MAX_UPLOAD_DIMENTION, MAX_UPLOAD_DIMENTION/aspect)];
+        }
+    } else  {
+        if (image.size.height > MAX_UPLOAD_DIMENTION) {
+            image = [TRImage imageWithImage:image scaledToSize:CGSizeMake(MAX_UPLOAD_DIMENTION*aspect, MAX_UPLOAD_DIMENTION)];
+        }
+    }
     newPhoto.image = image;
     [AppDelegate.graph uploadPhoto:newPhoto toStream:mStream];
     [self dismissViewControllerAnimated:YES completion:nil];
