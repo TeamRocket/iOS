@@ -61,9 +61,23 @@
 }
 
 - (void)showPhotoPicker {
-    UIImagePickerController * picker = [[UIImagePickerController alloc] init];
-    [picker setDelegate:self];
-    [self presentViewController:picker animated:YES completion:nil];
+    if (!mPicker) {
+        mPicker = [[UIImagePickerController alloc] init];
+        [mPicker setDelegate:self];
+    }
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        [mPicker setSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+        [self presentViewController:mPicker animated:YES completion:nil];
+    } else {
+        UIActionSheet *popupQuery = [[UIActionSheet alloc] initWithTitle:nil
+                                                                delegate:self
+                                                       cancelButtonTitle:@"Cancel"
+                                                  destructiveButtonTitle:nil
+                                                       otherButtonTitles:@"Take Photo", @"Choose Existing", nil];
+
+        popupQuery.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+        [popupQuery showInView:self.view];
+    }
 }
 
 #pragma mark - Table view data source
@@ -208,6 +222,23 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UIActionSheetDelegate 
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            mPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self presentViewController:mPicker animated:YES completion:nil];
+            break;
+        case 1:
+            mPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:mPicker animated:YES completion:nil];
+            break;
+        default:
+            break;
+    }
 }
 
 @end
