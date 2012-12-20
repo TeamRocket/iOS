@@ -34,5 +34,6 @@
 }
 
 - (TRConnection *)dataAtURL:(NSURL *)url delegate:(id<TRConnectionDelegate>) delegate;
+- (TRConnection *)postToURL:(NSURL *)url arguments:(NSDictionary*)args data:(NSData*)data delegate:(id<TRConnectionDelegate>) delegate;
 
 @end

@@ -18,6 +18,7 @@
 
 @class TRUser;
 @class TRPhoto;
+@class TRPhotoStream;
 
 @interface TRGraph : NSObject <TRConnectionDelegate> {
     NSMutableArray * mDelegates;
@@ -42,5 +43,6 @@
 - (void)downloadPhotoInfo:(NSString*)url;
 - (void)sendLikePhoto:(NSString*)url forPhone:(NSString*)phone;
 - (void)sendUnlikePhoto:(NSString*)url forPhone:(NSString*)phone;
+- (void)uploadPhoto:(TRPhoto*)photo toStream:(TRPhotoStream*)stream;
 
 @end

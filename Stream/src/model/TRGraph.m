@@ -22,6 +22,7 @@ typedef enum {
     kTRGraphNetworkTaskDownloadPhotoInfo,
     kTRGraphNetworkTaskSendLikePhoto,
     kTRGraphNetworkTaskSendUnlikePhoto,
+    kTRGraphNetworkTaskUploadPhoto,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -163,6 +164,30 @@ typedef enum {
     return [mPhotos objectForKey:[url absoluteString]];
 }
 
+- (void)uploadPhoto:(TRPhoto*)photo toStream:(TRPhotoStream*)stream {
+    if (photo.uploader.phone && photo.image && stream.ID) {
+        NSDictionary * args = [NSDictionary dictionaryWithObjectsAndKeys:
+                               photo.uploader.phone, @"phoneNumber",
+                               stream.ID, @"streamID",
+                               nil];
+        TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"upload/upload_file.php"
+                                                                    relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
+                                                   arguments:args
+                                                        data:UIImageJPEGRepresentation((UIImage*)photo.image, 1.0)
+                                                    delegate:self];
+        CFDictionaryAddValue(mActiveConnections,
+                             (__bridge const void *)conn,
+                             (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskUploadPhoto]);
+    }
+}
+
+- (void) p_uploadedPhoto:(NSDictionary*)info {
+    NSLog(@"Uploaded photo");
+    for (NSString * key in info) {
+        NSLog(@"Key: %@,\t Value: %@", key, [info objectForKey:key]);
+    }
+}
+
 #pragma mark Stream
 
 - (void)addStream:(TRPhotoStream *)stream {
@@ -263,6 +288,9 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskDownloadPhotoInfo:
                 [self p_downloadedPhotoInfo:info];
+                break;
+            case kTRGraphNetworkTaskUploadPhoto:
+                [self p_uploadedPhoto:info];
                 break;
             default:
                 break;

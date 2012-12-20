@@ -11,6 +11,7 @@
 #import "TRPhotoStreamViewController.h"
 
 #import "TRAppDelegate.h"
+#import "TRImage.h"
 #import "TRPhoto.h"
 #import "TRPhotoStream.h"
 
@@ -41,6 +42,8 @@
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:nil action:nil];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [add setTarget:self];
+    [add setAction:@selector(showPhotoPicker)];
     [mTableView registerNib:[UINib nibWithNibName:@"TRStreamGridViewCell" bundle:nil] forCellReuseIdentifier:@"TRStreamGridViewCell"];
     [self.navigationItem setRightBarButtonItem:add];
 
@@ -53,6 +56,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)showPhotoPicker {
+    UIImagePickerController * picker = [[UIImagePickerController alloc] init];
+    [picker setDelegate:self];
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
@@ -169,6 +178,23 @@
 - (void)refreshStream {
     [AppDelegate.graph downloadStreamInfo:mStream.ID
                                  forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    TRPhoto * newPhoto = [[TRPhoto alloc] initWithURL:nil
+                                             uploader:[AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]]];
+    TRImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    if(!image)
+        image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    newPhoto.image = image;
+    [AppDelegate.graph uploadPhoto:newPhoto toStream:mStream];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

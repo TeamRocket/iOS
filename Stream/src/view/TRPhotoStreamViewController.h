@@ -12,7 +12,7 @@
 
 @class TRPhotoStream;
 
-@interface TRPhotoStreamViewController : UIViewController <TRGraphDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface TRPhotoStreamViewController : UIViewController <TRGraphDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate> {
     TRPhotoStream * mStream;
     IBOutlet UITableView * mTableView;
     UIRefreshControl * mRefreshControl;
