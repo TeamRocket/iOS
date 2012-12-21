@@ -10,6 +10,7 @@
 
 #import "TRAppDelegate.h"
 
+#import "TRImage.h"
 #import "TRPhoto.h"
 #import "TRPhotoStream.h"
 #import "TRUser.h"
@@ -311,6 +312,13 @@ typedef enum {
         for (id<TRGraphDelegate> delegate in [mDelegates copy]) {
             [delegate graphFinishedUpdating];
         }
+    }
+}
+
+- (void) didReceiveMemoryWarning {
+    for (TRPhoto * photo in [mPhotos allValues]) {
+        [photo.image flushCache];
+        photo.image = nil;
     }
 }
 

@@ -45,4 +45,6 @@
 - (void)sendUnlikePhoto:(NSString*)url forPhone:(NSString*)phone;
 - (void)uploadPhoto:(TRPhoto*)photo toStream:(TRPhotoStream*)stream;
 
+- (void)didReceiveMemoryWarning;
+
 @end

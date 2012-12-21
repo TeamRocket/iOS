@@ -36,13 +36,17 @@
     }
 
     if (self) {
-        mImage = image;
+        
     }
     return self;
 }
 
 - (id)initWithTRPhoto:(TRPhoto*)photo inFrame:(CGRect)frame {
-    self = [self initWithTRImage:photo.image inFrame:frame];
+    if (photo.image) {
+        self = [self initWithTRImage:photo.image inFrame:frame];
+    } else {
+        self = [self initWithURL:photo.URL inFrame:frame];
+    }
     if (self) {
         mPhoto = photo;
     }
@@ -72,11 +76,18 @@
 
 - (void)setTRPhoto:(TRPhoto*)photo {
     mPhoto = photo;
-    mImage = photo.image;
     if ([photo.image loaded]) {
         [self setBackgroundColor:[UIColor colorWithPatternImage:[mPhoto.image sizedTo:self.frame.size]]];
     } else {
-        [self setTRImage:photo.image];
+        if (!photo.image) {
+            [self setBackgroundColor:[UIColor whiteColor]];
+            mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            mSpinner.center = self.center;
+            [mSpinner startAnimating];
+            [self addSubview:mSpinner];
+            [AppDelegate.network dataAtURL:photo.URL delegate:self];
+        } else 
+            [self setTRImage:photo.image];
     }
 }
 
@@ -107,6 +118,7 @@
 
 - (void)connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data {
     [mSpinner stopAnimating];
+    mSpinner = nil;
     mImage = [[TRImage alloc] initWithData:data fromURL:mImage.url];
     if (mPhoto != nil)
         mPhoto.image = mImage;
@@ -115,6 +127,7 @@
 
 - (void)connection:(TRConnection *)connection failedWithError:(NSError *)error {
     [mSpinner stopAnimating];
+    mSpinner = nil;
     NSLog(@"Image load error: %@", error);
 }
 
