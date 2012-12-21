@@ -82,14 +82,18 @@ typedef enum {
 }
 
 - (void)p_receivedLoginResponse:(NSDictionary*)info {
-    TRUser * user = [self getUserWithPhone:[info objectForKey:@"phone"]];
-    if (user == nil && ![[info objectForKey:@"value"] isEqualToString:@"false"] && ![[info objectForKey:@"value"] isEqualToString:@""]) {
-        user = [[TRUser alloc] initWithPhone:[info objectForKey:@"phone"]
-                                   firstName:[info objectForKey:@"first"]
-                                    lastName:[info objectForKey:@"last"]];
-        [self addUser:user];
+    if (info) {
+        TRUser * user = [self getUserWithPhone:[info objectForKey:@"phone"]];
+        if (user == nil && ![[info objectForKey:@"value"] isEqualToString:@"false"] && ![[info objectForKey:@"value"] isEqualToString:@""]) {
+            user = [[TRUser alloc] initWithPhone:[info objectForKey:@"phone"]
+                                       firstName:[info objectForKey:@"first"]
+                                        lastName:[info objectForKey:@"last"]];
+            [self addUser:user];
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:user.phone forKey:@"user_phone"];
+    } else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user_phone"];
     }
-    [[NSUserDefaults standardUserDefaults] setObject:user.phone forKey:@"user_phone"];
 }
 
 - (void)p_receivedSignupResponse:(NSDictionary*)info {
