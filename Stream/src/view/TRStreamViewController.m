@@ -8,6 +8,9 @@
 
 #import "TRStreamViewController.h"
 
+#import "TRAppDelegate.h"
+#import "TRGraph.h"
+
 #import "TRStreamTableViewController.h"
 
 @interface TRStreamViewController ()
@@ -41,6 +44,11 @@
     [[UIBarButtonItem appearance] setBackgroundImage:[UIImage imageNamed:@"navbaritem.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setBackgroundImage:[UIImage imageNamed:@"navbaritem_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"MuseoSans-500" size:11.0], UITextAttributeFont, nil] forState:UIControlStateNormal];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    [AppDelegate.graph didReceiveMemoryWarning];
 }
 
 @end

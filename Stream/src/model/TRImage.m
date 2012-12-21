@@ -45,6 +45,10 @@
     return sizedPhoto;
 }
 
+- (void)flushCache {
+    [mSizedPhotos removeAllObjects];
+}
+
 + (TRImage *) imageWithImage:(TRImage *)image croppedToRect:(CGRect)rect {
     CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], rect);
     TRImage * rv = (TRImage *)[TRImage imageWithCGImage:imageRef];

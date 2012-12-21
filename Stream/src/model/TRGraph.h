@@ -43,4 +43,6 @@
 - (void)sendLikePhoto:(NSString*)url forPhone:(NSString*)phone;
 - (void)sendUnlikePhoto:(NSString*)url forPhone:(NSString*)phone;
 
+- (void)didReceiveMemoryWarning;
+
 @end
