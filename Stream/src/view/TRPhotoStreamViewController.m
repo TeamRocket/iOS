@@ -11,12 +11,15 @@
 #import "TRPhotoStreamViewController.h"
 
 #import "TRAppDelegate.h"
+#import "TRImage.h"
 #import "TRPhoto.h"
 #import "TRPhotoStream.h"
 
 #import "TRImageView.h"
 #import "TRStreamGridViewCell.h"
 #import "TRPhotoViewController.h"
+
+#define MAX_UPLOAD_DIMENTION 1024
 
 @interface TRPhotoStreamViewController ()
 
@@ -41,6 +44,8 @@
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:nil action:nil];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [add setTarget:self];
+    [add setAction:@selector(showPhotoPicker)];
     [mTableView registerNib:[UINib nibWithNibName:@"TRStreamGridViewCell" bundle:nil] forCellReuseIdentifier:@"TRStreamGridViewCell"];
     [self.navigationItem setRightBarButtonItem:add];
 
@@ -53,6 +58,26 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)showPhotoPicker {
+    if (!mPicker) {
+        mPicker = [[UIImagePickerController alloc] init];
+        [mPicker setDelegate:self];
+    }
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        [mPicker setSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+        [self presentViewController:mPicker animated:YES completion:nil];
+    } else {
+        UIActionSheet *popupQuery = [[UIActionSheet alloc] initWithTitle:nil
+                                                                delegate:self
+                                                       cancelButtonTitle:@"Cancel"
+                                                  destructiveButtonTitle:nil
+                                                       otherButtonTitles:@"Take Photo", @"Choose Existing", nil];
+
+        popupQuery.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+        [popupQuery showInView:self.view];
+    }
 }
 
 #pragma mark - Table view data source
@@ -169,6 +194,51 @@
 - (void)refreshStream {
     [AppDelegate.graph downloadStreamInfo:mStream.ID
                                  forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    TRPhoto * newPhoto = [[TRPhoto alloc] initWithURL:nil
+                                             uploader:[AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]]];
+    TRImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    if(!image)
+        image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    float aspect = image.size.width/image.size.height;
+    if (aspect > 1) {
+        if (image.size.width > MAX_UPLOAD_DIMENTION) {
+            image = [TRImage imageWithImage:image scaledToSize:CGSizeMake(MAX_UPLOAD_DIMENTION, MAX_UPLOAD_DIMENTION/aspect)];
+        }
+    } else  {
+        if (image.size.height > MAX_UPLOAD_DIMENTION) {
+            image = [TRImage imageWithImage:image scaledToSize:CGSizeMake(MAX_UPLOAD_DIMENTION*aspect, MAX_UPLOAD_DIMENTION)];
+        }
+    }
+
+    newPhoto.image = [TRImage orientImage:image];
+    [AppDelegate.graph uploadPhoto:newPhoto toStream:mStream];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UIActionSheetDelegate 
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            mPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self presentViewController:mPicker animated:YES completion:nil];
+            break;
+        case 1:
+            mPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:mPicker animated:YES completion:nil];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

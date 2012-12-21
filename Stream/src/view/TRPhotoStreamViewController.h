@@ -12,10 +12,11 @@
 
 @class TRPhotoStream;
 
-@interface TRPhotoStreamViewController : UIViewController <TRGraphDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface TRPhotoStreamViewController : UIViewController <TRGraphDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate> {
     TRPhotoStream * mStream;
     IBOutlet UITableView * mTableView;
     UIRefreshControl * mRefreshControl;
+    UIImagePickerController * mPicker;
 }
 
 - (id)initWithPhotoStream:(TRPhotoStream *)stream;
