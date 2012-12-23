@@ -34,6 +34,11 @@
     [mTableView registerNib:[UINib nibWithNibName:@"TRParticipantCell" bundle:nil] forCellReuseIdentifier:@"TRParticipantCell"];
     [AppDelegate.graph registerForDelegateCallback:self];
     [AppDelegate.graph downloadParticipantsInStream:mStream.ID];
+    if (mRefreshControl == nil) {
+        mRefreshControl = [[UIRefreshControl alloc] init];
+        [mRefreshControl addTarget:self action:@selector(refreshParticipants) forControlEvents:UIControlEventValueChanged];
+        [mTableView addSubview:mRefreshControl];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -56,7 +61,14 @@
 }
 
 - (void)graphFinishedUpdating {
+    if (mRefreshControl) {
+        [mRefreshControl endRefreshing];
+    }
     [mTableView reloadData];
+}
+
+- (void)refreshParticipants {
+    [AppDelegate.graph downloadParticipantsInStream:mStream.ID];
 }
 
 @end

@@ -15,6 +15,7 @@
 @interface TRParticipantsViewController : UIViewController <TRGraphDelegate, UITableViewDataSource, UITableViewDelegate> {
     TRPhotoStream * mStream;
     IBOutlet UITableView * mTableView;
+    UIRefreshControl * mRefreshControl;
 }
 
 - (id)initWithStream:(TRPhotoStream*)stream;
