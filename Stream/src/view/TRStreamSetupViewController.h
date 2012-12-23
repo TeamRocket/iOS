@@ -11,11 +11,15 @@
 
 #import "TRTokenField.h"
 
-@interface TRStreamSetupViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, TRTokenFieldDelegate, UITableViewDataSource, UITableViewDelegate> {
+@class TRTextFieldCell;
+
+@interface TRStreamSetupViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, TRTokenFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
     IBOutlet UIBarButtonItem * mCreateButton;
 
     IBOutlet UITableView * mTableView;
     TRTokenField * mUsersField;
+    NSMutableArray * mParticipants;
+    TRTextFieldCell * mStreamNameField;
 }
 
 @end

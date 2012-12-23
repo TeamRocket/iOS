@@ -33,17 +33,3 @@
 - (void)addTokenObject:(id<TRTokenObject>)object;
 
 @end
-
-@interface TRToken : UIButton {
-    NSString * mTitle;
-    id <TRTokenObject> mObject;
-
-}
-
-@property (nonatomic) NSString * title;
-@property (nonatomic) id <TRTokenObject> object;
-
-- (id)initWithTokenObject:(id<TRTokenObject>)object;
-- (id)initWithTitle:(NSString*)title;
-
-@end

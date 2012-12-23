@@ -26,41 +26,13 @@
 }
 
 - (void)addTokenObject:(id<TRTokenObject>)object {
-    TRToken * newToken = [[TRToken alloc] initWithTokenObject:object];
-    [self addSubview:newToken];
+    
 }
 
 - (void)pressedAddButton {
     if (mDelegate) {
         [mDelegate pressedAddButton:self];
     }
-}
-
-@end
-
-@implementation TRToken
-
-#define TOKEN_PADDING 15.0f
-
-- (id)initWithTokenObject:(id<TRTokenObject>)object {
-    self = [self initWithTitle:[object title]];
-    if (self) {
-        mObject = object;
-    }
-    return self;
-}
-
-- (id)initWithTitle:(NSString*)title {
-    CGSize labelSize = [title sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:15.0f]];
-    self = [super initWithFrame:CGRectMake(0.0f, 0.0f, labelSize.width + TOKEN_PADDING + 28.0f, 25.0f)];
-    if (self) {
-        mTitle = title;
-        [self setTitle:[NSString stringWithFormat:@"   %@", mTitle] forState:UIControlStateNormal];
-        [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:15.0f]];
-        [self setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-        [self setBackgroundImage:[[UIImage imageNamed:@"token_container.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 15.0f, 13.0f, 13.0f)] forState:UIControlStateNormal];
-    }
-    return self;
 }
 
 @end

@@ -10,8 +10,10 @@
 
 #import "TRUser.h"
 
+#import "TRAppDelegate.h"
+#import "TRGraph.h"
+#import "TRTableViewCell.h"
 #import "TRTextFieldCell.h"
-#import "TRTokenField.h"
 
 @interface TRStreamSetupViewController ()
 
@@ -24,6 +26,12 @@
 
     [mCreateButton setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [mCreateButton setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [mCreateButton setTarget:self];
+    [mCreateButton setAction:@selector(createStreamTapped:)];
+    if (mParticipants == nil) {
+        mParticipants = [[NSMutableArray alloc] init];
+    }
+    [mTableView registerNib:[UINib nibWithNibName:@"TRTextFieldCell" bundle:nil] forCellReuseIdentifier:@"TRTextFieldCell"];
 }
 
 - (IBAction)pressedCancel:(id)sender {
@@ -43,22 +51,72 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    switch (section) {
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return [mParticipants count] + 1;
+            break;
+        default:
+            break;
+    }
+    return 0;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TRTextFieldCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TRTextFieldCell"];
-    if (!cell)
-        cell = [[NSBundle mainBundle] loadNibNamed:@"TRTextFieldCell" owner:self options:nil][0];
-
-    [cell setCapType:TRTableViewCellCapTypeTopBot];
-
+    TRTableViewCell * cell;
+    int sectionRows = [tableView numberOfRowsInSection:[indexPath section]];
+    if (indexPath.section == 1 && indexPath.row == sectionRows - 1) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell"];
+        if (!cell) {
+            cell = [[TRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddCell"];
+            [cell.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Italic" size:14.0f]];
+            [cell.textLabel setTextColor:[UIColor lightGrayColor]];
+            [cell.textLabel setText:@"Add a participant"];
+            UIImageView * add = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"add_token.png"]];
+            add.center = CGPointMake(cell.frame.size.width - add.frame.size.width, cell.center.y);
+            [cell addSubview:add];
+        }
+    } else if (indexPath.section == 0) {
+        if (mStreamNameField == nil) {
+            mStreamNameField = [tableView dequeueReusableCellWithIdentifier:@"TRTextViewCell"];
+            if (mStreamNameField == nil) {
+                mStreamNameField = [[NSBundle mainBundle] loadNibNamed:@"TRTextFieldCell" owner:self options:nil][0];
+            }
+            [mStreamNameField setCapType:TRTableViewCellCapTypeTopBot];
+            [mStreamNameField.textField setDelegate:self];
+        }
+        return mStreamNameField;
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+        if (!cell) {
+            cell = [[TRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+            UIButton * remove = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 35.0, 35.0f)];
+            [remove setBackgroundImage:[UIImage imageNamed:@"remove_token.png"] forState:UIControlStateNormal];
+            remove.center = CGPointMake(cell.frame.size.width - remove.frame.size.width, cell.center.y);
+            [remove addTarget:self action:@selector(removeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:remove];
+        }
+    }
+    
+    if (indexPath.row == 0 && sectionRows == 1) {
+        [cell setCapType:TRTableViewCellCapTypeTopBot];
+    } else if (indexPath.row == 0 && sectionRows > 1) {
+        [cell setCapType:TRTableViewCellCapTypeTop];
+    } else if (indexPath.row == sectionRows - 1) {
+        [cell setCapType:TRTableViewCellCapTypeBot];
+    } else {
+        [cell setCapType:TRTableViewCellCapTypeNone];
+    }
     if (indexPath.section == 1) {
-        [cell.textField removeFromSuperview];
-        mUsersField = [[TRTokenField alloc] initWithFrame:cell.textField.frame];
-        cell.textField = (UITextField*)mUsersField;
-        mUsersField.delegate = self;
-        [cell addSubview:cell.textField];
+        [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+        if (indexPath.row == sectionRows - 1) {
+            
+        } else {
+            TRUser * user = [mParticipants objectAtIndex:indexPath.row];
+            [cell.textLabel setText:[NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName]];
+        }
     }
     return cell;
 }
@@ -83,7 +141,7 @@
             return @"Stream Details";
             break;
         case 1:
-            return @"Receipients";
+            return @"Participants";
             break;
         default:
             break;
@@ -129,10 +187,33 @@
     return footerView;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1 && indexPath.row == [tableView numberOfRowsInSection:[indexPath section]] - 1) {
+        [self pressedAddButton:nil];
+    }
+}
 
-- (BOOL)textFieldShouldReturn:(UITextField*)textField{
-    [textField resignFirstResponder];
-    return YES;
+- (void)addParticipant:(TRUser*)newUser {
+    if (mParticipants == nil) {
+        mParticipants = [[NSMutableArray alloc] init];
+    }
+    BOOL userAdded = NO;
+    for (TRUser * user in mParticipants) {
+        userAdded = userAdded || [user.phone isEqualToString:newUser.phone];
+    }
+    if (!userAdded) {
+        [mParticipants addObject:newUser];
+    }
+}
+
+- (void)removeButtonTapped:(id)sender {
+    NSIndexPath * index = [mTableView indexPathForCell:(UITableViewCell*)[sender superview]];
+    [mParticipants removeObjectAtIndex:index.row];
+    [mTableView reloadData];
+}
+
+- (void)createStreamTapped:(id)sender {
+    
 }
 
 #pragma mark - ABPeoplePickerDelegate
@@ -170,11 +251,11 @@
         newUser = [[TRUser alloc] initWithPhone:phone
                                       firstName:first
                                        lastName:last];
-
-        [mUsersField addTokenObject:newUser];
+        [self addParticipant:newUser];
     } else {
         
     }
+    [mTableView reloadData];
 
     CFRelease(phones);
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -183,6 +264,11 @@
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier {
     return NO;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

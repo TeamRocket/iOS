@@ -22,6 +22,7 @@ typedef enum {
     kTRGraphNetworkTaskDownloadPhotoInfo,
     kTRGraphNetworkTaskSendLikePhoto,
     kTRGraphNetworkTaskSendUnlikePhoto,
+    kTRGraphNetworkTaskCreateStream,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -240,6 +241,14 @@ typedef enum {
     }
 }
 
+- (void)createdStreamNamed:(NSString*)streamName forPhone:(NSString*)phone withParticipants:(NSArray*)participants {
+    
+}
+
+- (void)p_createdStream:(NSDictionary*)info {
+    
+}
+
 #pragma mark - TRConnectionDelegate
 
 - (void) connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data {
@@ -263,6 +272,9 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskDownloadPhotoInfo:
                 [self p_downloadedPhotoInfo:info];
+                break;
+            case kTRGraphNetworkTaskCreateStream:
+                [self p_createdStream:info];
                 break;
             default:
                 break;
