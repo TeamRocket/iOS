@@ -24,6 +24,7 @@ typedef enum {
     kTRGraphNetworkTaskSendLikePhoto,
     kTRGraphNetworkTaskSendUnlikePhoto,
     kTRGraphNetworkTaskUploadPhoto,
+    kTRGraphNetworkTaskDownloadParticipants,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -270,6 +271,31 @@ typedef enum {
     }
 }
 
+- (void)downloadParticipantsInStream:(NSString*)streamID {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/getPeopleInStream1.php?streamID=%@", streamID]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskDownloadParticipants]);
+}
+
+- (void)p_downloadedParticipants:(NSDictionary*)info {
+    if (info != nil) {
+        TRPhotoStream * stream = [self getStreamWithID:[info objectForKey:@"streamID"]];
+        NSArray * participants = [info objectForKey:@"participants"];
+        for (NSDictionary * participantInfo in participants) {
+            TRUser * user = [self getUserWithPhone:[participantInfo objectForKey:@"phone"]];
+            if (user == nil) {
+                user = [[TRUser alloc] initWithPhone:[participantInfo objectForKey:@"phone"]
+                                           firstName:[participantInfo objectForKey:@"first"]
+                                            lastName:[participantInfo objectForKey:@"last"]];
+            }
+            [user setCountOfPhotos:[[participantInfo objectForKey:@"numberOfPhotos"] intValue] inStream:stream];
+            [stream addParticipant:user];
+        }
+    }
+}
+
 #pragma mark - TRConnectionDelegate
 
 - (void) connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data {
@@ -296,6 +322,9 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskUploadPhoto:
                 [self p_uploadedPhoto:info];
+                break;
+            case kTRGraphNetworkTaskDownloadParticipants:
+                [self p_downloadedParticipants:info];
                 break;
             default:
                 break;

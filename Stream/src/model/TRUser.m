@@ -24,6 +24,7 @@
         mLastName = last;
 
         mStreams = [[NSMutableArray alloc] init];
+        mPhotos = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -39,6 +40,32 @@
 - (void)addStream:(TRPhotoStream*)stream {
     if (![mStreams containsObject:stream])
         [mStreams addObject:stream];
+}
+
+- (void)setCountOfPhotos:(int)photos inStream:(TRPhotoStream*)stream {
+    if ([mPhotos objectForKey:stream.ID] == nil) {
+        NSMutableDictionary * metadata = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                          [NSNumber numberWithInt:photos], @"count",
+                                          nil];
+        [mPhotos setObject:metadata forKey:stream.ID];
+    } else {
+        NSMutableDictionary * metadata = [mPhotos objectForKey:stream.ID];
+        [metadata setObject:[NSNumber numberWithInt:photos] forKey:@"count"];
+    }
+}
+
+- (int)getCountOfPhotosInStream:(TRPhotoStream*)stream{
+    NSDictionary * metadata = [mPhotos objectForKey:stream.ID];
+    if (metadata != nil) {
+        NSNumber * count = [metadata objectForKey:@"count"];
+        if (count != nil) {
+            return [count intValue];
+        } else {
+            return 0;
+        }
+    } else {
+        return 0;
+    }
 }
 
 @end

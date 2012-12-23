@@ -17,6 +17,7 @@
 
 #import "TRImageView.h"
 #import "TRStreamGridViewCell.h"
+#import "TRParticipantsViewController.h"
 #import "TRPhotoViewController.h"
 
 #define MAX_UPLOAD_DIMENTION 1024
@@ -35,6 +36,10 @@
         [AppDelegate.graph registerForDelegateCallback:self];
         [AppDelegate.graph downloadStreamInfo:mStream.ID
                                      forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"back"
+                                                                                 style:UIBarButtonItemStyleBordered
+                                                                                target:nil
+                                                                                action:nil];
     }
     return self;
 }
@@ -114,6 +119,7 @@
         [participantsButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0f]];
         [participantsButton setTitleShadowColor:[UIColor colorWithWhite:1.0 alpha:0.5] forState:UIControlStateNormal];
         [participantsButton.titleLabel setShadowOffset:CGSizeMake(0.0, 1.0)];
+        [participantsButton addTarget:self action:@selector(tappedParticipantsButton:) forControlEvents:UIControlEventTouchUpInside];
         UIImageView * participants = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"participants.png"]];
         [participantsButton.titleLabel addSubview:participants];
         [cell addSubview:participantsButton];
@@ -180,6 +186,11 @@
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self.navigationController pushViewController:photoView animated:NO];
+}
+
+- (void)tappedParticipantsButton:(id)sender {
+    TRParticipantsViewController * participants = [[TRParticipantsViewController alloc] initWithStream:mStream];
+    [self.navigationController pushViewController:participants animated:YES];
 }
 
 #pragma mark - TRGraphDelegate

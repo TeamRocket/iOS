@@ -9,6 +9,7 @@
 #import "TRPhotoStream.h"
 
 #import "TRPhoto.h"
+#import "TRUser.h"
 
 @implementation TRPhotoStream
 
@@ -31,6 +32,16 @@
         mNumPhotos = photos;
     }
     return self;
+}
+
+- (void)addParticipant:(TRUser*)newUser {
+    BOOL exists = NO;
+    for (TRUser * user in mParticipants) {
+        exists = exists || [newUser.phone isEqualToString:user.phone];
+    }
+    if (!exists) {
+        [mParticipants addObject:newUser];
+    }
 }
 
 - (void)addPhoto:(TRPhoto*)photo {
