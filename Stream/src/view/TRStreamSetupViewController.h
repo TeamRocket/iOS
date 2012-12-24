@@ -11,15 +11,24 @@
 
 #import "TRTokenField.h"
 
+@class TRPhotoStream;
 @class TRTextFieldCell;
 
-@interface TRStreamSetupViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, TRTokenFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
-    IBOutlet UIBarButtonItem * mCreateButton;
+typedef enum {
+    kTRPhotoStreamSetupModeCreate,
+    kTRPhotoStreamSetupModeInvite,
+} TRPhotoStreamSetupMode;
 
+@interface TRStreamSetupViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, TRTokenFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
+    IBOutlet UINavigationItem * mTitleItem;
+    IBOutlet UIBarButtonItem * mCreateButton;
     IBOutlet UITableView * mTableView;
-    TRTokenField * mUsersField;
     NSMutableArray * mParticipants;
     TRTextFieldCell * mStreamNameField;
+    TRPhotoStreamSetupMode mMode;
+    TRPhotoStream * mStream;
 }
+
+- (id)initWithStream:(TRPhotoStream*)stream;
 
 @end

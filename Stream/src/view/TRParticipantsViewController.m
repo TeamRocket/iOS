@@ -12,6 +12,7 @@
 #import "TRPhotoStream.h"
 #import "TRUser.h"
 
+#import "TRStreamSetupViewController.h"
 #import "TRParticipantCell.h"
 #import "TRPhotoStreamViewController.h"
 
@@ -39,6 +40,12 @@
     [mTableView registerNib:[UINib nibWithNibName:@"TRParticipantCell" bundle:nil] forCellReuseIdentifier:@"TRParticipantCell"];
     [AppDelegate.graph registerForDelegateCallback:self];
     [AppDelegate.graph downloadParticipantsInStream:mStream.ID];
+    UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
+    [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [add setTarget:self];
+    [add setAction:@selector(presentSetup:)];
+    [self.navigationItem setRightBarButtonItem:add];
     if (mRefreshControl == nil) {
         mRefreshControl = [[UIRefreshControl alloc] init];
         [mRefreshControl addTarget:self action:@selector(refreshParticipants) forControlEvents:UIControlEventValueChanged];
@@ -75,6 +82,11 @@
         [mRefreshControl endRefreshing];
     }
     [mTableView reloadData];
+}
+
+- (void)presentSetup:(id)sender {
+    TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithStream:mStream];
+    [self presentViewController:setup animated:YES completion:nil];
 }
 
 - (void)refreshParticipants {
