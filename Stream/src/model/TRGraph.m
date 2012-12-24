@@ -96,8 +96,12 @@ typedef enum {
             [self addUser:user];
         }
         [[NSUserDefaults standardUserDefaults] setObject:user.phone forKey:@"user_phone"];
+        [[NSUserDefaults standardUserDefaults] setObject:user.firstName forKey:@"user_first"];
+        [[NSUserDefaults standardUserDefaults] setObject:user.lastName forKey:@"user_last"];
     } else {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user_phone"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user_first"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user_last"];
     }
 }
 
