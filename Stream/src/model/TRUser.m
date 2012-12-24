@@ -8,6 +8,7 @@
 
 #import "TRUser.h"
 
+#import "TRPhoto.h"
 #import "TRPhotoStream.h"
 
 @implementation TRUser
@@ -43,15 +44,17 @@
 }
 
 - (void)setCountOfPhotos:(int)photos inStream:(TRPhotoStream*)stream {
+    NSMutableDictionary * metadata;
     if ([mPhotos objectForKey:stream.ID] == nil) {
-        NSMutableDictionary * metadata = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                          [NSNumber numberWithInt:photos], @"count",
-                                          nil];
-        [mPhotos setObject:metadata forKey:stream.ID];
+        metadata = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                        [NSNumber numberWithInt:photos], @"count",
+                                        nil];
+        
     } else {
         NSMutableDictionary * metadata = [mPhotos objectForKey:stream.ID];
         [metadata setObject:[NSNumber numberWithInt:photos] forKey:@"count"];
     }
+    [mPhotos setObject:metadata forKey:stream.ID];
 }
 
 - (int)getCountOfPhotosInStream:(TRPhotoStream*)stream{
@@ -65,6 +68,38 @@
         }
     } else {
         return 0;
+    }
+}
+
+- (void)addPhoto:(TRPhoto*)newPhoto toStream:(TRPhotoStream*)stream {
+    NSDictionary * metadata = [mPhotos objectForKey:stream.ID];
+    if (metadata != nil) {
+        NSMutableArray * photosInStream = [metadata objectForKey:@"photos"];
+        if (photosInStream != nil) {
+            BOOL inStream = NO;
+            for (TRPhoto * photo in photosInStream) {
+                inStream = inStream || [[photo.URL absoluteString] isEqualToString:[newPhoto.URL absoluteString]];
+            }
+            if (!inStream) {
+                [photosInStream addObject:newPhoto];
+            }
+        } else {
+            photosInStream = [[NSMutableArray alloc] initWithObjects:newPhoto, nil];
+        }
+        [metadata setValue:photosInStream forKey:@"photos"];
+    } else {
+        NSMutableDictionary * metadata = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                          [[NSMutableArray alloc] initWithObjects:newPhoto, nil], @"photos", nil];
+        [mPhotos setValue:metadata forKey:stream.ID];
+    }
+}
+
+- (NSArray*)photosInStream:(TRPhotoStream*)stream {
+    NSDictionary * metadata = [mPhotos objectForKey:stream.ID];
+    if (metadata != nil) {
+        return [metadata objectForKey:@"photos"];
+    } else {
+        return nil;
     }
 }
 

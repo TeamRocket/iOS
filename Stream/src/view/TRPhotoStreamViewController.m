@@ -14,6 +14,7 @@
 #import "TRImage.h"
 #import "TRPhoto.h"
 #import "TRPhotoStream.h"
+#import "TRUser.h"
 
 #import "TRImageView.h"
 #import "TRStreamGridViewCell.h"
@@ -28,14 +29,21 @@
 
 @implementation TRPhotoStreamViewController
 
-- (id)initWithPhotoStream:(TRPhotoStream *)stream{
+- (id)initWithPhotoStream:(TRPhotoStream *)stream mode:(TRPhotoStreamViewMode)mode{
     self = [super initWithNibName:@"TRPhotoStreamViewController" bundle:nil];
     if (self) {
         mStream = stream;
+        mMode = mode;
         self.title = mStream.name;
         [AppDelegate.graph registerForDelegateCallback:self];
-        [AppDelegate.graph downloadStreamInfo:mStream.ID
-                                     forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+        if (mMode == kTRPhotoStreamViewModeAll) {
+            [AppDelegate.graph downloadStreamInfo:mStream.ID
+                                         forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+        } else {
+            [AppDelegate.graph downloadUserPhotos:mUser.phone
+                                         inStream:mStream.ID];
+        }
+
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"back"
                                                                                  style:UIBarButtonItemStyleBordered
                                                                                 target:nil
@@ -44,19 +52,36 @@
     return self;
 }
 
+- (id)initWithPhotoStream:(TRPhotoStream *)stream forUser:(TRUser *)user {
+    mUser = user;
+    self = [self initWithPhotoStream:stream mode:kTRPhotoStreamViewModeUserFilter];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (id)initWithPhotoStream:(TRPhotoStream *)stream{
+    self = [self initWithPhotoStream:stream mode:kTRPhotoStreamViewModeAll];
+    return self;
+}
+
 - (void)viewDidLoad{
     [super viewDidLoad];
-    UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:nil action:nil];
-    [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    [add setTarget:self];
-    [add setAction:@selector(showPhotoPicker)];
-    [mTableView registerNib:[UINib nibWithNibName:@"TRStreamGridViewCell" bundle:nil] forCellReuseIdentifier:@"TRStreamGridViewCell"];
-    [self.navigationItem setRightBarButtonItem:add];
-
-    mRefreshControl = [[UIRefreshControl alloc] init];
-    [mRefreshControl addTarget:self action:@selector(refreshStream) forControlEvents:UIControlEventValueChanged];
-    [mTableView addSubview:mRefreshControl];
+    if (mMode == kTRPhotoStreamViewModeAll) {
+        UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:nil action:nil];
+        [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+        [add setTarget:self];
+        [add setAction:@selector(showPhotoPicker)];
+        [mTableView registerNib:[UINib nibWithNibName:@"TRStreamGridViewCell" bundle:nil] forCellReuseIdentifier:@"TRStreamGridViewCell"];
+        [self.navigationItem setRightBarButtonItem:add];
+    }
+    if (mRefreshControl == nil) {
+        mRefreshControl = [[UIRefreshControl alloc] init];
+        [mRefreshControl addTarget:self action:@selector(refreshStream) forControlEvents:UIControlEventValueChanged];
+        [mTableView addSubview:mRefreshControl];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,11 +117,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 1;
-    } else {
-        return (mStream.numPhotos + 2 - 1)/2;
+    if (section == 0) return 1;
+    else {
+        if (mMode == kTRPhotoStreamViewModeAll) {
+            return (mStream.numPhotos + 2 - 1)/2;
+        } else {
+            return ([mUser getCountOfPhotosInStream:mStream] + 2 - 1)/2;
+        }
     }
+        
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -105,31 +134,48 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+            if (mMode == kTRPhotoStreamViewModeAll) {
+                UIButton * participantsButton = [[UIButton alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 300.0f, 46.0f)];
+                [participantsButton setBackgroundImage:[UIImage imageNamed:@"view_participants_normal.png"] forState:UIControlStateNormal];
+                [participantsButton setBackgroundImage:[UIImage imageNamed:@"view_participants_highlighted.png"] forState:UIControlStateSelected];
+                if (mStream.numParticipants == 1) {
+                    [participantsButton setTitle:@"       1 Participant" forState:UIControlStateNormal];
+                } else {
+                    [participantsButton setTitle:[NSString stringWithFormat:@"       %i Participants", mStream.numParticipants] forState:UIControlStateNormal];
+                }
+
+                [participantsButton setTitleColor:[UIColor colorWithRed:0.281f green:0.285f blue:0.297f alpha:1.0] forState:UIControlStateNormal];
+                [participantsButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0f]];
+                [participantsButton setTitleShadowColor:[UIColor colorWithWhite:1.0 alpha:0.5] forState:UIControlStateNormal];
+                [participantsButton.titleLabel setShadowOffset:CGSizeMake(0.0, 1.0)];
+                [participantsButton addTarget:self action:@selector(tappedParticipantsButton:) forControlEvents:UIControlEventTouchUpInside];
+                UIImageView * participants = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"participants.png"]];
+                [participantsButton.titleLabel addSubview:participants];
+                [cell addSubview:participantsButton];
+            } else if (mMode == kTRPhotoStreamViewModeUserFilter) {
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width-40, 18)];
+                label.text = [NSString stringWithFormat:@"%@ %@'s photos", mUser.firstName, mUser.lastName];
+                label.font = [UIFont boldSystemFontOfSize:16.0];
+                label.shadowOffset = CGSizeMake(0, 1);
+                label.shadowColor = [UIColor whiteColor];
+                label.backgroundColor = [UIColor clearColor];
+                label.textColor = [UIColor colorWithRed:0.298 green:0.2980 blue:0.2980 alpha:1.000];
+                
+                label.center = cell.center;
+                [cell addSubview:label];
+            }
         }
-        UIButton * participantsButton = [[UIButton alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 300.0f, 46.0f)];
-        [participantsButton setBackgroundImage:[UIImage imageNamed:@"view_participants_normal.png"] forState:UIControlStateNormal];
-        [participantsButton setBackgroundImage:[UIImage imageNamed:@"view_participants_highlighted.png"] forState:UIControlStateSelected];
-        if (mStream.numParticipants == 1) {
-            [participantsButton setTitle:@"       1 Participant" forState:UIControlStateNormal];
-        } else {
-            [participantsButton setTitle:[NSString stringWithFormat:@"       %i Participants", mStream.numParticipants] forState:UIControlStateNormal];
-        }
-        
-        [participantsButton setTitleColor:[UIColor colorWithRed:0.281f green:0.285f blue:0.297f alpha:1.0] forState:UIControlStateNormal];
-        [participantsButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0f]];
-        [participantsButton setTitleShadowColor:[UIColor colorWithWhite:1.0 alpha:0.5] forState:UIControlStateNormal];
-        [participantsButton.titleLabel setShadowOffset:CGSizeMake(0.0, 1.0)];
-        [participantsButton addTarget:self action:@selector(tappedParticipantsButton:) forControlEvents:UIControlEventTouchUpInside];
-        UIImageView * participants = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"participants.png"]];
-        [participantsButton.titleLabel addSubview:participants];
-        [cell addSubview:participantsButton];
         return cell;
     } else {
+        NSArray * photoArray = mMode == kTRPhotoStreamViewModeAll ? mStream.photos : [mUser photosInStream:mStream];
         cell = [tableView dequeueReusableCellWithIdentifier:@"TRStreamGridViewCell"];
+        if (cell == nil) {
+            cell = [[NSBundle mainBundle] loadNibNamed:@"TRStreamGridViewCell" owner:self options:nil][0];
+        }
         TRStreamGridViewCell * gridCell = (TRStreamGridViewCell*)cell;
-        if ([mStream.photos count] > 0) {
-            if (indexPath.row * 2 < [mStream.photos count]) {
-                TRPhoto * leftPhoto = [mStream.photos objectAtIndex:(indexPath.row * 2)];
+        if ([photoArray count] > 0) {
+            if (indexPath.row * 2 < [photoArray count]) {
+                TRPhoto * leftPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
                 [gridCell.leftFrame setTRPhoto:leftPhoto];
                 if (!gridCell.leftFrame.tapRecognizer)
                     gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
@@ -139,8 +185,8 @@
                 [gridCell.leftFrame.tapRecognizer setNumberOfTapsRequired:1];
                 [gridCell.leftFrame setAlpha:1.0f];
             }
-            if (indexPath.row * 2 + 1 < [mStream.photos count]) {
-                TRPhoto * rightPhoto = [mStream.photos objectAtIndex:(indexPath.row * 2) + 1];
+            if (indexPath.row * 2 + 1 < [photoArray count]) {
+                TRPhoto * rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2) + 1];
                 [gridCell.rightFrame setTRPhoto:rightPhoto];
                 if (!gridCell.rightFrame.tapRecognizer)
                     gridCell.rightFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
@@ -162,7 +208,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 65.0f; 
+        switch (mMode) {
+            case kTRPhotoStreamViewModeAll:
+                return 65.0f; 
+                break;
+            case kTRPhotoStreamViewModeUserFilter:
+                return 35.0f;
+            default:
+                return 0.0f;
+                break;
+        }
     } else {
         return 155.0f;
     }

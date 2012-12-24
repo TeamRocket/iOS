@@ -25,6 +25,7 @@ typedef enum {
     kTRGraphNetworkTaskSendUnlikePhoto,
     kTRGraphNetworkTaskUploadPhoto,
     kTRGraphNetworkTaskDownloadParticipants,
+    kTRGraphNetworkTaskDownloadUserPhotos,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -194,6 +195,38 @@ typedef enum {
     }
 }
 
+- (void)downloadUserPhotos:(NSString*)phone inStream:(NSString*)streamID {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/getUserPhotos.php?phone=%@&streamID=%@", phone, streamID]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskDownloadUserPhotos]);
+}
+
+- (void)p_downloadedUserPhotos:(NSDictionary*)info {
+    if (info != nil) {
+        TRPhotoStream * stream = [self getStreamWithID:[info objectForKey:@"streamID"]];
+        if (stream != nil) {
+            TRUser * user = [self getUserWithPhone:[info objectForKey:@"phone"]];
+            if (user == nil) {
+                user = [[TRUser alloc] initWithPhone:[info objectForKey:@"phone"]
+                                           firstName:nil lastName:nil];
+                [self addUser:user];
+            }
+            NSArray * photos = [info objectForKey:@"pictures"];
+            for (NSString * photoURL in photos) {
+                TRPhoto * photo = [self getPhotoWithURL:[NSURL URLWithString:photoURL]];
+                if (photo == nil) {
+                    photo = [[TRPhoto alloc] initWithURL:[NSURL URLWithString:photoURL] uploader:user];
+                    [self addPhoto:photo];
+                    [stream addPhoto:photo];
+                }
+                [user addPhoto:photo toStream:stream];
+            }
+        }
+    }
+}
+
 #pragma mark Stream
 
 - (void)addStream:(TRPhotoStream *)stream {
@@ -289,6 +322,7 @@ typedef enum {
                 user = [[TRUser alloc] initWithPhone:[participantInfo objectForKey:@"phone"]
                                            firstName:[participantInfo objectForKey:@"first"]
                                             lastName:[participantInfo objectForKey:@"last"]];
+                [self addUser:user];
             }
             [user setCountOfPhotos:[[participantInfo objectForKey:@"numberOfPhotos"] intValue] inStream:stream];
             [stream addParticipant:user];
@@ -326,6 +360,8 @@ typedef enum {
             case kTRGraphNetworkTaskDownloadParticipants:
                 [self p_downloadedParticipants:info];
                 break;
+            case kTRGraphNetworkTaskDownloadUserPhotos:
+                [self p_downloadedUserPhotos:info];
             default:
                 break;
         }

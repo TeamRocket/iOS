@@ -13,6 +13,7 @@
 #import "TRUser.h"
 
 #import "TRParticipantCell.h"
+#import "TRPhotoStreamViewController.h"
 
 @interface TRParticipantsViewController ()
 
@@ -25,6 +26,10 @@
     if (self) {
         self.title = @"PARTICIPANTS";
         mStream = stream;
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"back"
+                                                                                 style:UIBarButtonItemStyleBordered
+                                                                                target:nil
+                                                                                action:nil];
     }
     return self;
 }
@@ -58,6 +63,11 @@
     [cell setUser:user];
     [cell setNumPhotos:[user getCountOfPhotosInStream:mStream]];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    TRPhotoStreamViewController * streamView = [[TRPhotoStreamViewController alloc] initWithPhotoStream:mStream forUser:[mStream.participants objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:streamView animated:YES];
 }
 
 - (void)graphFinishedUpdating {

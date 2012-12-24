@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class TRPhoto;
 @class TRPhotoStream;
 
 @interface TRUser : NSObject {
@@ -29,5 +30,7 @@
 - (void)addStream:(TRPhotoStream*)stream;
 - (void)setCountOfPhotos:(int)photos inStream:(TRPhotoStream*)stream;
 - (int)getCountOfPhotosInStream:(TRPhotoStream*)stream;
+- (void)addPhoto:(TRPhoto*)newPhoto toStream:(TRPhotoStream*)stream;
+- (NSArray*)photosInStream:(TRPhotoStream*)stream;
 
 @end

@@ -45,6 +45,7 @@
 - (void)sendUnlikePhoto:(NSString*)url forPhone:(NSString*)phone;
 - (void)uploadPhoto:(TRPhoto*)photo toStream:(TRPhotoStream*)stream;
 - (void)downloadParticipantsInStream:(NSString*)streamID;
+- (void)downloadUserPhotos:(NSString*)phone inStream:(NSString*)streamID;
 
 - (void)didReceiveMemoryWarning;
 

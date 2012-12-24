@@ -12,13 +12,22 @@
 
 @class TRPhotoStream;
 
+typedef enum {
+    kTRPhotoStreamViewModeAll,
+    kTRPhotoStreamViewModeUserFilter,
+} TRPhotoStreamViewMode;
+
 @interface TRPhotoStreamViewController : UIViewController <TRGraphDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate> {
     TRPhotoStream * mStream;
     IBOutlet UITableView * mTableView;
     UIRefreshControl * mRefreshControl;
     UIImagePickerController * mPicker;
+    TRPhotoStreamViewMode mMode;
+    TRUser * mUser;
 }
 
 - (id)initWithPhotoStream:(TRPhotoStream *)stream;
+- (id)initWithPhotoStream:(TRPhotoStream *)stream mode:(TRPhotoStreamViewMode)mode;
+- (id)initWithPhotoStream:(TRPhotoStream *)stream forUser:(TRUser*)user;
 
 @end
