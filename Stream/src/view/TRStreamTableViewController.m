@@ -46,7 +46,7 @@
 }
 
 - (void)presentSetup:(id)sender {
-    TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithNibName:@"TRStreamSetupViewController" bundle:nil];
+    TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithStream:nil];
     [self.navigationController presentViewController:setup animated:YES completion:nil];
 }
 

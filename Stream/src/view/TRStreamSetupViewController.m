@@ -8,6 +8,7 @@
 
 #import "TRStreamSetupViewController.h"
 
+#import "TRPhotoStream.h"
 #import "TRUser.h"
 
 #import "TRAppDelegate.h"
@@ -21,13 +22,33 @@
 
 @implementation TRStreamSetupViewController
 
+- (id)initWithStream:(TRPhotoStream*)stream {
+    self = [self initWithNibName:@"TRStreamSetupViewController" bundle:nil];
+    if (self) {
+        mStream = stream;
+        if (stream == nil) {
+            mMode = kTRPhotoStreamSetupModeCreate;
+        } else {
+            mMode = kTRPhotoStreamSetupModeInvite;
+            mParticipants = [mStream.participants mutableCopy];
+        }
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     [mCreateButton setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [mCreateButton setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [mCreateButton setTarget:self];
-    [mCreateButton setAction:@selector(createStreamTapped:)];
+    if (mMode == kTRPhotoStreamSetupModeInvite) {
+        [mTitleItem setTitle:@"INVITE"];
+        [mCreateButton setTitle:@"update"];
+        [mCreateButton setAction:@selector(updateStreamTapped:)];
+    } else {
+        [mCreateButton setAction:@selector(createStreamTapped:)];
+    }
     if (mParticipants == nil) {
         mParticipants = [[NSMutableArray alloc] init];
     }
@@ -83,8 +104,14 @@
             mStreamNameField = [tableView dequeueReusableCellWithIdentifier:@"TRTextViewCell"];
             if (mStreamNameField == nil) {
                 mStreamNameField = [[NSBundle mainBundle] loadNibNamed:@"TRTextFieldCell" owner:self options:nil][0];
-                mStreamNameField.textField.text = @"";
-                mStreamNameField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+                if (mMode == kTRPhotoStreamSetupModeCreate) {
+                    mStreamNameField.textField.text = @"";
+                    mStreamNameField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+                    [mStreamNameField.textField setEnabled:YES];
+                } else {
+                    mStreamNameField.textField.text = mStream.name;
+                    [mStreamNameField.textField setEnabled:NO];
+                }
             }
             [mStreamNameField setCapType:TRTableViewCellCapTypeTopBot];
             [mStreamNameField.textField setDelegate:self];
@@ -94,11 +121,13 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
         if (!cell) {
             cell = [[TRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-            UIButton * remove = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 35.0, 35.0f)];
-            [remove setBackgroundImage:[UIImage imageNamed:@"remove_token.png"] forState:UIControlStateNormal];
-            remove.center = CGPointMake(cell.frame.size.width - remove.frame.size.width, cell.center.y);
-            [remove addTarget:self action:@selector(removeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            [cell addSubview:remove];
+            if (!(mMode == kTRPhotoStreamSetupModeInvite && indexPath.row < [mStream.participants count])) {
+                UIButton * remove = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 35.0, 35.0f)];
+                [remove setBackgroundImage:[UIImage imageNamed:@"remove_token.png"] forState:UIControlStateNormal];
+                remove.center = CGPointMake(cell.frame.size.width - remove.frame.size.width, cell.center.y);
+                [remove addTarget:self action:@selector(removeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:remove];
+            }
             [cell.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f]];
         }
     }
@@ -223,6 +252,16 @@
     [AppDelegate.graph createStreamNamed:mStreamNameField.textField.text
                                 forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]
                         withParticipants:participantPhones];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)updateStreamTapped:(id)sender {
+    NSMutableArray * participantPhones = [[NSMutableArray alloc] init];
+    for (TRUser * user in [mParticipants subarrayWithRange:NSMakeRange([mStream.participants count],
+                                                                       [mParticipants count] - [mStream.participants count])]) {
+        [participantPhones addObject:user.phone];
+    }
+    [AppDelegate.graph sendInviteUsers:participantPhones toStream:mStream.ID];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

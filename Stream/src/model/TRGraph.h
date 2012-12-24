@@ -48,6 +48,7 @@
 - (void)downloadParticipantsInStream:(NSString*)streamID;
 - (void)downloadUserPhotos:(NSString*)phone inStream:(NSString*)streamID;
 - (void)downloadLikesForPhoto:(NSString*)url;
+- (void)sendInviteUsers:(NSArray*)invitees toStream:(NSString*)streamID;
 
 - (void)didReceiveMemoryWarning;
 

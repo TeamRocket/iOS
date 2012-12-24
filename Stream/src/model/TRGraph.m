@@ -28,6 +28,7 @@ typedef enum {
     kTRGraphNetworkTaskDownloadParticipants,
     kTRGraphNetworkTaskDownloadUserPhotos,
     kTRGraphNetworkTaskDownloadLikes,
+    kTRGraphNetworkTaskSendInvite,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -361,6 +362,35 @@ typedef enum {
     
 }
 
+- (void)sendInviteUsers:(NSArray*)invitees toStream:(NSString*)streamID {
+    NSString * participantCSV = [invitees componentsJoinedByString:@","];
+    NSMutableString *strippedString = [NSMutableString
+                                       stringWithCapacity:participantCSV.length];
+
+    NSScanner *scanner = [NSScanner scannerWithString:participantCSV];
+    NSCharacterSet *numbers = [NSCharacterSet
+                               characterSetWithCharactersInString:@"0123456789,"];
+    while ([scanner isAtEnd] == NO) {
+        NSString *buffer;
+        if ([scanner scanCharactersFromSet:numbers intoString:&buffer]) {
+            [strippedString appendString:buffer];
+
+        } else {
+            [scanner setScanLocation:([scanner scanLocation] + 1)];
+        }
+    }
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/invitePeople.php?phone=%@&streamID=%@", strippedString, streamID]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskSendInvite]);
+    
+}
+
+- (void)p_sentInvite:(NSDictionary*)info {
+    
+}
+
 - (void)downloadParticipantsInStream:(NSString*)streamID {
     TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/getPeopleInStream1.php?streamID=%@", streamID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
@@ -421,8 +451,13 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskDownloadUserPhotos:
                 [self p_downloadedUserPhotos:info];
+                break;
             case kTRGraphNetworkTaskDownloadLikes:
                 [self p_downloadedLikes:info];
+                break;
+            case kTRGraphNetworkTaskSendInvite:
+                [self p_sentInvite:info];
+                break;
             default:
                 break;
         }
