@@ -32,7 +32,7 @@
 
 - (void)setBlankPhoto {
     mPhoto = nil;
-    [mImageView setBackgroundColor:[UIColor whiteColor]];
+    [mImageView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"empty_stream.png"]]];
 }
 
 @end
