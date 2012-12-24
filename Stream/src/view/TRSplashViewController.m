@@ -58,6 +58,7 @@
         [AppDelegate.graph addUser:me];
         [AppDelegate.graph downloadUserPhotoStreams:me.phone];
         [self dismissViewControllerAnimated:NO completion:nil];
+        [TestFlight passCheckpoint:@"Automatically Logged In"];
     }
 }
 
