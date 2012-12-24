@@ -27,6 +27,7 @@ typedef enum {
     kTRGraphNetworkTaskCreateStream,
     kTRGraphNetworkTaskDownloadParticipants,
     kTRGraphNetworkTaskDownloadUserPhotos,
+    kTRGraphNetworkTaskDownloadLikes,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -228,6 +229,33 @@ typedef enum {
     }
 }
 
+- (void)downloadLikesForPhoto:(NSString*)url {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/getPeopleWhoLike1.php?picture=%@", url]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskDownloadLikes]);
+}
+
+- (void)p_downloadedLikes:(NSDictionary*)info {
+    if (info != nil) {
+        TRPhoto * photo = [self getPhotoWithURL:[NSURL URLWithString:[info objectForKey:@"picture"]]];
+        NSArray * likers = [info objectForKey:@"likers"];
+        if (photo != nil) {
+            for (NSDictionary * likerInfo in likers) {
+                TRUser * user = [self getUserWithPhone:[likerInfo objectForKey:@"phone"]];
+                if (user == nil) {
+                    user = [[TRUser alloc] initWithPhone:[likerInfo objectForKey:@"phone"]
+                                               firstName:[likerInfo objectForKey:@"first"]
+                                                lastName:[likerInfo objectForKey:@"last"]];
+                    [self addUser:user];
+                }
+                [photo addLiker:user];
+            }
+        }
+    }
+}
+
 #pragma mark Stream
 
 - (void)addStream:(TRPhotoStream *)stream {
@@ -393,6 +421,8 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskDownloadUserPhotos:
                 [self p_downloadedUserPhotos:info];
+            case kTRGraphNetworkTaskDownloadLikes:
+                [self p_downloadedLikes:info];
             default:
                 break;
         }

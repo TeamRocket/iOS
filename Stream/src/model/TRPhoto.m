@@ -9,6 +9,7 @@
 #import "TRPhoto.h"
 
 #import "TRImage.h"
+#import "TRUser.h"
 
 @implementation TRPhoto
 
@@ -30,9 +31,20 @@
     return self;
 }
 
-- (void) addLiker:(TRUser*)user {
-    if (![mLikers containsObject:user])
+- (void)addLiker:(TRUser*)user {
+    BOOL exists = NO;
+    for (TRUser * liker in mLikers) {
+        exists = exists || [liker.phone isEqualToString:user.phone];
+    }
+    if (!exists) {
         [mLikers addObject:user];
+    }
+}
+
+- (void)removeLiker:(TRUser*)user {
+    if ([mLikers containsObject:user]) {
+        [mLikers removeObject:user];
+    }
 }
 
 @end
