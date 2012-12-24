@@ -251,6 +251,7 @@
         [AppDelegate.graph downloadUserPhotoStreams:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
         [self dismissSplash];
         [AppDelegate.graph unregisterForDelegateCallback:self];
+        [TestFlight passCheckpoint:@"Signed Up"];
     } else {
         NSLog(@"Signup error");
     }

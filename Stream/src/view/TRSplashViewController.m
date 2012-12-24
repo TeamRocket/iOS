@@ -41,6 +41,7 @@
 }
 
 - (void)authenitcated {
+    [TestFlight passCheckpoint:@"Authenticated"];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

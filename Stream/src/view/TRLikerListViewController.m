@@ -23,6 +23,7 @@
         mPhoto = photo;
         self.title = @"LIKES";
     }
+    [TestFlight passCheckpoint:@"Viewed Likers"];
     return self;
 }
 

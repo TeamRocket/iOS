@@ -23,6 +23,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    [TestFlight takeOff:@"c5a032ea808bb992ba0e2063fd719860_MTYwMTg0MjAxMi0xMi0xNSAwMjozNjo1My40MzM0MDM"];
     mGraph = [[TRGraph alloc] init];
     mNetwork = [[TRNetwork alloc] init];
     mSplash = [[TRSplashViewController alloc] initWithNibName:@"TRSplashViewController" bundle:nil];
