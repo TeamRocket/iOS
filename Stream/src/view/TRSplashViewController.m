@@ -8,6 +8,10 @@
 
 #import "TRSplashViewController.h"
 
+#import "TRAppDelegate.h"
+#import "TRGraph.h"
+#import "TRUser.h"
+
 #import "TRLoginViewController.h"
 #import "TRSignupViewController.h"
 
@@ -43,6 +47,18 @@
 - (void)authenitcated {
     [TestFlight passCheckpoint:@"Authenticated"];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if ([[NSUserDefaults alloc] objectForKey:@"user_phone"] != nil && [NSNull null] != [[NSUserDefaults alloc] objectForKey:@"user_phone"]) {
+        TRUser * me = [[TRUser alloc] initWithPhone:[[NSUserDefaults alloc] objectForKey:@"user_phone"]
+                                          firstName:[[NSUserDefaults alloc] objectForKey:@"user_first"]
+                                           lastName:[[NSUserDefaults alloc] objectForKey:@"user_last"]];
+        [AppDelegate.graph addUser:me];
+        [AppDelegate.graph downloadUserPhotoStreams:me.phone];
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }
 }
 
 - (void)viewDidLoad
