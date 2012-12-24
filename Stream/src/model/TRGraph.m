@@ -24,6 +24,7 @@ typedef enum {
     kTRGraphNetworkTaskSendLikePhoto,
     kTRGraphNetworkTaskSendUnlikePhoto,
     kTRGraphNetworkTaskUploadPhoto,
+    kTRGraphNetworkTaskCreateStream,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -270,6 +271,19 @@ typedef enum {
     }
 }
 
+- (void)createStreamNamed:(NSString*)streamName forPhone:(NSString*)phone withParticipants:(NSArray*)participants {
+    NSString * participantCSV = [[participants componentsJoinedByString:@","] stringByReplacingOccurrencesOfString:@"+" withString:@""];
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/createStream.php?phone=%@&streamName=%@&invitees=%@", phone, streamName, participantCSV]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskCreateStream]);
+}
+
+- (void)p_createdStream:(NSDictionary*)info {
+    
+}
+
 #pragma mark - TRConnectionDelegate
 
 - (void) connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data {
@@ -296,6 +310,8 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskUploadPhoto:
                 [self p_uploadedPhoto:info];
+            case kTRGraphNetworkTaskCreateStream:
+                [self p_createdStream:info];
                 break;
             default:
                 break;

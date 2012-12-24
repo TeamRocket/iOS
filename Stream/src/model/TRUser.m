@@ -41,4 +41,8 @@
         [mStreams addObject:stream];
 }
 
+- (NSString*)title {
+    return [NSString stringWithFormat:@"%@ %@", mFirstName, mLastName];
+}
+
 @end
