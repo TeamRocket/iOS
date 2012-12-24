@@ -55,7 +55,7 @@
                                         nil];
         
     } else {
-        NSMutableDictionary * metadata = [mPhotos objectForKey:stream.ID];
+        metadata = [mPhotos objectForKey:stream.ID];
         [metadata setObject:[NSNumber numberWithInt:photos] forKey:@"count"];
     }
     [mPhotos setObject:metadata forKey:stream.ID];
