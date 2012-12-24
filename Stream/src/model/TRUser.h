@@ -10,6 +10,7 @@
 
 #import "TRTokenField.h"
 
+@class TRPhoto;
 @class TRPhotoStream;
 
 @interface TRUser : NSObject <TRTokenObject> {
@@ -18,6 +19,7 @@
     NSString * mPhone;
 
     NSMutableArray * mStreams;
+    NSMutableDictionary * mPhotos;
 }
 
 @property (nonatomic) NSString * firstName;
@@ -28,5 +30,9 @@
 - (id)initWithPhone:(NSString*)phone firstName:(NSString*)first lastName:(NSString*)last;
 
 - (void)addStream:(TRPhotoStream*)stream;
+- (void)setCountOfPhotos:(int)photos inStream:(TRPhotoStream*)stream;
+- (int)getCountOfPhotosInStream:(TRPhotoStream*)stream;
+- (void)addPhoto:(TRPhoto*)newPhoto toStream:(TRPhotoStream*)stream;
+- (NSArray*)photosInStream:(TRPhotoStream*)stream;
 
 @end

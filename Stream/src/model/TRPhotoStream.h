@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class TRPhoto;
+@class TRUser;
 
 @interface TRPhotoStream : NSObject {
     NSMutableArray * mParticipants;
@@ -32,5 +33,7 @@
 
 - (void)addPhoto:(TRPhoto*)photo;
 - (void)addPhotoAsLatest:(TRPhoto*)photo;
+
+- (void)addParticipant:(TRUser*)newUser;
 
 @end
