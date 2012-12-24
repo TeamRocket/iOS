@@ -13,6 +13,7 @@
 #import "TRAppDelegate.h"
 
 #import "TRImageView.h"
+#import "TRLikerListViewController.h"
 #import "TRPhoto.h"
 #import "TRUser.h"
 
@@ -150,6 +151,18 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController popViewControllerAnimated:NO];
+}
+
+- (IBAction)showLikers:(id)sender {
+    TRLikerListViewController * likers = [[TRLikerListViewController alloc] initWithPhoto:mPhoto];
+
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.type = kCATransitionFade;
+
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    [self.navigationController pushViewController:likers animated:NO];
 }
 
 #pragma mark - TRGraphDelegate
