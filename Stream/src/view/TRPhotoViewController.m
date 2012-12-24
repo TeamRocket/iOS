@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [mUploaderLabel setFont:[UIFont fontWithName:@"MuseoSans-300" size:22.0]];
     [mLikeButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:20.0]];
-    [mLikeCountLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:20.0]];
+    [mLikeCountButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:20.0]];
     mLikeOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, IMAGE_SIZE - 10.0f, IMAGE_SIZE - 10.0f)];
     [mLikeOverlayView setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.8f]];
     
@@ -48,7 +48,7 @@
     [self.view addSubview:mLikeOverlayView];
 
     mLikeIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart_white_small.png"]];
-    mLikeIndicator.center = mLikeCountLabel.center;
+    mLikeIndicator.center = mLikeCountButton.center;
     [self.view addSubview:mLikeIndicator];
 }
 
@@ -56,6 +56,7 @@
     mPhoto = photoView.TRPhoto;
     [AppDelegate.graph registerForDelegateCallback:self];
     [AppDelegate.graph downloadPhotoInfo:[mPhoto.URL absoluteString]];
+    [AppDelegate.graph downloadLikesForPhoto:[mPhoto.URL absoluteString]];
     mImageView = photoView;
     [self.view addSubview:photoView];
     
@@ -98,6 +99,7 @@
 - (IBAction)likeButtonPressed:(id)sender {
     mLikeOverlayView.center = self.view.center;
     [self.view bringSubviewToFront:mLikeOverlayView];
+    TRUser * me = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
     
     if ([mLikeButton.titleLabel.text isEqualToString:@"Like"]) {
         [mLikeButton setTitle:@"Unlike" forState:UIControlStateNormal];
@@ -106,12 +108,14 @@
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_red_small.png"]];
         [AppDelegate.graph sendLikePhoto:[mPhoto.URL absoluteString]
                                 forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+        [mPhoto addLiker:me];
         mPhoto.numLikes++;
     } else {
         [mLikeButton setTitle:@"Like" forState:UIControlStateNormal];
         [mLikeOverlayImage setImage:[UIImage imageNamed:@"heart_unlike_large.png"]];
         [mLikeOverlayLabel setText:@"Unliked..."];
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
+        [mPhoto removeLiker:me];
         [AppDelegate.graph sendUnlikePhoto:[mPhoto.URL absoluteString]
                                   forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
         mPhoto.numLikes--;
@@ -153,12 +157,17 @@
 - (void)graphFinishedUpdating {
     [mUploaderLabel setText:[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName]];
     if (mPhoto.numLikes == 1) {
-        [mLikeCountLabel setText:@"1 Like"];
+        [mLikeCountButton setTitle:@"1 Like" forState:UIControlStateNormal];
     } else {
-        [mLikeCountLabel setText:[NSString stringWithFormat:@"%i Likes", mPhoto.numLikes]];
+        [mLikeCountButton setTitle:[NSString stringWithFormat:@"%i Likes", mPhoto.numLikes] forState:UIControlStateNormal];
     }
-    CGSize labelSize = [mLikeCountLabel.text sizeWithFont:mLikeCountLabel.font];
-    mLikeIndicator.center = CGPointMake(mLikeCountLabel.frame.origin.x + mLikeCountLabel.frame.size.width - labelSize.width - mLikeIndicator.frame.size.width, mLikeCountLabel.center.y);
+    CGSize labelSize = [mLikeCountButton.titleLabel.text sizeWithFont:mLikeCountButton.titleLabel.font];
+    mLikeIndicator.center = CGPointMake(mLikeCountButton.frame.origin.x + mLikeCountButton.frame.size.width - labelSize.width - mLikeIndicator.frame.size.width, mLikeCountButton.center.y);
+    TRUser * me = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+    if ([mPhoto.likers containsObject:me]) {
+        [mLikeIndicator setImage:[UIImage imageNamed:@"heart_red_small.png"]];
+        [mLikeButton setTitle:@"Unlike" forState:UIControlStateNormal];
+    }
 }
 
 @end
