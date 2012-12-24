@@ -8,8 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TRAppDelegate : UIResponder <UIApplicationDelegate>
+@class TRSplashViewController;
+@class TRStreamViewController;
+@class TRGraph;
+@class TRNetwork;
+
+#define AppDelegate ((TRAppDelegate *)[[UIApplication sharedApplication] delegate])
+
+@interface TRAppDelegate : UIResponder <UIApplicationDelegate> {
+    TRSplashViewController * mSplash;
+    TRStreamViewController * mStream;
+
+    TRGraph * mGraph;
+    TRNetwork * mNetwork;
+}
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) TRGraph * graph;
+@property (strong, nonatomic) TRNetwork * network;
 
 @end

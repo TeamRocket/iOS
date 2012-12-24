@@ -8,14 +8,28 @@
 
 #import "TRAppDelegate.h"
 
+#import "TRGraph.h"
+#import "TRNetwork.h"
+
+#import "TRSplashViewController.h"
+#import "TRStreamViewController.h"
+
 @implementation TRAppDelegate
+
+@synthesize graph = mGraph;
+@synthesize network = mNetwork;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    mGraph = [[TRGraph alloc] init];
+    mNetwork = [[TRNetwork alloc] init];
+    mSplash = [[TRSplashViewController alloc] initWithNibName:@"TRSplashViewController" bundle:nil];
+    mStream = [[TRStreamViewController alloc] init];
+    self.window.rootViewController = mStream;
     [self.window makeKeyAndVisible];
+    [mStream presentViewController:mSplash animated:NO completion:nil];
     return YES;
 }
 
