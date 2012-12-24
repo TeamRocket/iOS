@@ -297,8 +297,6 @@
 			children = (
 				0A3890D91664AFC7002E8BC1 /* Stream */,
 				0A3890D21664AFC7002E8BC1 /* Frameworks */,
-				0A92F6921689068400803DA1 /* libTestFlight.a */,
-				0A92F6941689069400803DA1 /* libz.dylib */,
 				0A3890D01664AFC7002E8BC1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -316,10 +314,12 @@
 			children = (
 				0A6276911682CFEC00827101 /* AddressBook.framework */,
 				0A6276921682CFEC00827101 /* AddressBookUI.framework */,
-				0A3890D31664AFC7002E8BC1 /* UIKit.framework */,
-				0A3890D51664AFC7002E8BC1 /* Foundation.framework */,
 				0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */,
+				0A3890D51664AFC7002E8BC1 /* Foundation.framework */,
 				0A457686167D4DAE00848D8E /* QuartzCore.framework */,
+				0A3890D31664AFC7002E8BC1 /* UIKit.framework */,
+				0A92F6921689068400803DA1 /* libTestFlight.a */,
+				0A92F6941689069400803DA1 /* libz.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
