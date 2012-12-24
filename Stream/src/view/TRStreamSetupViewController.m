@@ -83,6 +83,7 @@
             mStreamNameField = [tableView dequeueReusableCellWithIdentifier:@"TRTextViewCell"];
             if (mStreamNameField == nil) {
                 mStreamNameField = [[NSBundle mainBundle] loadNibNamed:@"TRTextFieldCell" owner:self options:nil][0];
+                mStreamNameField.textField.text = @"";
             }
             [mStreamNameField setCapType:TRTableViewCellCapTypeTopBot];
             [mStreamNameField.textField setDelegate:self];
@@ -213,7 +214,14 @@
 }
 
 - (void)createStreamTapped:(id)sender {
-    
+    NSMutableArray * participantPhones = [[NSMutableArray alloc] init];
+    for (TRUser * user in mParticipants) {
+        [participantPhones addObject:user.phone];
+    }
+    [AppDelegate.graph createStreamNamed:mStreamNameField.textField.text
+                                forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]
+                        withParticipants:participantPhones];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - ABPeoplePickerDelegate

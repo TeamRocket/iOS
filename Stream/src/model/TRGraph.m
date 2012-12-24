@@ -241,8 +241,13 @@ typedef enum {
     }
 }
 
-- (void)createdStreamNamed:(NSString*)streamName forPhone:(NSString*)phone withParticipants:(NSArray*)participants {
-    
+- (void)createStreamNamed:(NSString*)streamName forPhone:(NSString*)phone withParticipants:(NSArray*)participants {
+    NSString * participantCSV = [[participants componentsJoinedByString:@","] stringByReplacingOccurrencesOfString:@"+" withString:@""];
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/createStream.php?phone=%@&streamName=%@&invitees=%@", phone, streamName, participantCSV]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskCreateStream]);
 }
 
 - (void)p_createdStream:(NSDictionary*)info {

@@ -42,6 +42,6 @@
 - (void)downloadPhotoInfo:(NSString*)url;
 - (void)sendLikePhoto:(NSString*)url forPhone:(NSString*)phone;
 - (void)sendUnlikePhoto:(NSString*)url forPhone:(NSString*)phone;
-- (void)createdStreamNamed:(NSString*)streamName forPhone:(NSString*)phone withParticipants:(NSArray*)participants;
+- (void)createStreamNamed:(NSString*)streamName forPhone:(NSString*)phone withParticipants:(NSArray*)participants;
 
 @end
