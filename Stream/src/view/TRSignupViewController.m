@@ -122,59 +122,60 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TRTextFieldCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TRTextFieldCell"];
-    if (!cell)
+    if (!cell) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"TRTextFieldCell" owner:self options:nil][0];
 
-    switch (indexPath.section) {
-        case 0:
-            switch (indexPath.row) {
-                case 0:
-                    [cell setCapType:TRTableViewCellCapTypeTop];
-                    [cell.textField setPlaceholder:@"First Name"];
-                    [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
-                    [cell.textField setText:@""];
-                    mFirstNameField = cell.textField;
-                    break;
-                case 1:
-                    [cell setCapType:TRTableViewCellCapTypeNone];
-                    [cell.textField setPlaceholder:@"Last Name"];
-                    [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
-                    [cell.textField setText:@""];
-                    mLastNameField = cell.textField;
-                    break;
-                case 2:
-                    [cell setCapType:TRTableViewCellCapTypeBot];
-                    [cell.textField setPlaceholder:@"Phone Number"];
-                    [cell.textField setKeyboardType:UIKeyboardTypePhonePad];
-                    [cell.textField setText:@""];
-                    mPhoneField = cell.textField;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    [cell setCapType:TRTableViewCellCapTypeTop];
-                    [cell.textField setPlaceholder:@"Password"];
-                    [cell.textField setSecureTextEntry:YES];
-                    [cell.textField setText:@""];
-                    mPasswordField = cell.textField;
-                    break;
-                case 1:
-                    [cell setCapType:TRTableViewCellCapTypeBot];
-                    [cell.textField setPlaceholder:@"Confirm Password"];
-                    [cell.textField setSecureTextEntry:YES];
-                    [cell.textField setText:@""];
-                    mConfirmPasswordField = cell.textField;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        default:
-            break;
+        switch (indexPath.section) {
+            case 0:
+                switch (indexPath.row) {
+                    case 0:
+                        [cell setCapType:TRTableViewCellCapTypeTop];
+                        [cell.textField setPlaceholder:@"First Name"];
+                        [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+                        [cell.textField setText:@""];
+                        mFirstNameField = cell.textField;
+                        break;
+                    case 1:
+                        [cell setCapType:TRTableViewCellCapTypeNone];
+                        [cell.textField setPlaceholder:@"Last Name"];
+                        [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+                        [cell.textField setText:@""];
+                        mLastNameField = cell.textField;
+                        break;
+                    case 2:
+                        [cell setCapType:TRTableViewCellCapTypeBot];
+                        [cell.textField setPlaceholder:@"Phone Number"];
+                        [cell.textField setKeyboardType:UIKeyboardTypePhonePad];
+                        [cell.textField setText:@""];
+                        mPhoneField = cell.textField;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 1:
+                switch (indexPath.row) {
+                    case 0:
+                        [cell setCapType:TRTableViewCellCapTypeTop];
+                        [cell.textField setPlaceholder:@"Password"];
+                        [cell.textField setSecureTextEntry:YES];
+                        [cell.textField setText:@""];
+                        mPasswordField = cell.textField;
+                        break;
+                    case 1:
+                        [cell setCapType:TRTableViewCellCapTypeBot];
+                        [cell.textField setPlaceholder:@"Confirm Password"];
+                        [cell.textField setSecureTextEntry:YES];
+                        [cell.textField setText:@""];
+                        mConfirmPasswordField = cell.textField;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
     }
     return cell;
 }
