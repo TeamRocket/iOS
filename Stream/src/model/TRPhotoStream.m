@@ -52,9 +52,8 @@
 - (void)addPhotoAsLatest:(TRPhoto*)photo {
     if ([mPhotos containsObject:photo]) {
         [mPhotos removeObject:photo];
-        [mPhotos addObject:photo];
-    } else
-        [self addPhoto:photo];
+    }
+    [mPhotos insertObject:photo atIndex:0];
 }
 
 @end
