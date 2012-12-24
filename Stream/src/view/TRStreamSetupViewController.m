@@ -84,6 +84,7 @@
             if (mStreamNameField == nil) {
                 mStreamNameField = [[NSBundle mainBundle] loadNibNamed:@"TRTextFieldCell" owner:self options:nil][0];
                 mStreamNameField.textField.text = @"";
+                mStreamNameField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             }
             [mStreamNameField setCapType:TRTableViewCellCapTypeTopBot];
             [mStreamNameField.textField setDelegate:self];
@@ -98,6 +99,7 @@
             remove.center = CGPointMake(cell.frame.size.width - remove.frame.size.width, cell.center.y);
             [remove addTarget:self action:@selector(removeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
             [cell addSubview:remove];
+            [cell.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f]];
         }
     }
     

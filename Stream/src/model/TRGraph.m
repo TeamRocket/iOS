@@ -300,14 +300,29 @@ typedef enum {
             }
         }
         if ([pictures count] > 0) {
-            [stream addPhotoAsLatest: [self getPhotoWithURL:[NSURL URLWithString:[pictures lastObject]]]];
+            [stream addPhotoAsLatest: [self getPhotoWithURL:[NSURL URLWithString:[pictures objectAtIndex:0]]]];
         }
     }
 }
 
 - (void)createStreamNamed:(NSString*)streamName forPhone:(NSString*)phone withParticipants:(NSArray*)participants {
-    NSString * participantCSV = [[participants componentsJoinedByString:@","] stringByReplacingOccurrencesOfString:@"+" withString:@""];
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/createStream.php?phone=%@&streamName=%@&invitees=%@", phone, streamName, participantCSV]
+    NSString * participantCSV = [participants componentsJoinedByString:@","];
+    NSMutableString *strippedString = [NSMutableString
+                                       stringWithCapacity:participantCSV.length];
+
+    NSScanner *scanner = [NSScanner scannerWithString:participantCSV];
+    NSCharacterSet *numbers = [NSCharacterSet
+                               characterSetWithCharactersInString:@"0123456789,"];
+    while ([scanner isAtEnd] == NO) {
+        NSString *buffer;
+        if ([scanner scanCharactersFromSet:numbers intoString:&buffer]) {
+            [strippedString appendString:buffer];
+
+        } else {
+            [scanner setScanLocation:([scanner scanLocation] + 1)];
+        }
+    }
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/createStream.php?phone=%@&streamName=%@&invitees=%@", phone, streamName, strippedString]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
