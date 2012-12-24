@@ -32,6 +32,7 @@
                                                                                 target:nil
                                                                                 action:nil];
     }
+    [TestFlight passCheckpoint:@"Viewed Participants"];
     return self;
 }
 

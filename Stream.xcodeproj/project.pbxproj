@@ -84,6 +84,8 @@
 		0A6ADB821687B35400A3C1AE /* participantsCellBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6ADB801687B35400A3C1AE /* participantsCellBG@2x.png */; };
 		0A92F67E1689012B00803DA1 /* empty_stream.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A92F67C1689012B00803DA1 /* empty_stream.png */; };
 		0A92F67F1689012B00803DA1 /* empty_stream@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A92F67D1689012B00803DA1 /* empty_stream@2x.png */; };
+		0A92F6931689068400803DA1 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A92F6921689068400803DA1 /* libTestFlight.a */; };
+		0A92F6951689069400803DA1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A92F6941689069400803DA1 /* libz.dylib */; };
 		0AB19B38167805900036E2BC /* iPadIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B34167805900036E2BC /* iPadIcon.png */; };
 		0AB19B39167805900036E2BC /* iPadIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B35167805900036E2BC /* iPadIcon@2x.png */; };
 		0AB19B3A167805900036E2BC /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB19B36167805900036E2BC /* iPhoneIcon.png */; };
@@ -224,6 +226,8 @@
 		0A6ADB801687B35400A3C1AE /* participantsCellBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "participantsCellBG@2x.png"; path = "img/UI/participantsCellBG@2x.png"; sourceTree = "<group>"; };
 		0A92F67C1689012B00803DA1 /* empty_stream.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = empty_stream.png; path = img/UI/empty_stream.png; sourceTree = "<group>"; };
 		0A92F67D1689012B00803DA1 /* empty_stream@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "empty_stream@2x.png"; path = "img/UI/empty_stream@2x.png"; sourceTree = "<group>"; };
+		0A92F6921689068400803DA1 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestFlight.a; path = Stream/misc/libTestFlight.a; sourceTree = "<group>"; };
+		0A92F6941689069400803DA1 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		0AB19B34167805900036E2BC /* iPadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPadIcon.png; path = img/iPadIcon.png; sourceTree = "<group>"; };
 		0AB19B35167805900036E2BC /* iPadIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPadIcon@2x.png"; path = "img/iPadIcon@2x.png"; sourceTree = "<group>"; };
 		0AB19B36167805900036E2BC /* iPhoneIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPhoneIcon.png; path = img/iPhoneIcon.png; sourceTree = "<group>"; };
@@ -280,6 +284,8 @@
 				0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */,
 				0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */,
 				0A457688167D4DBA00848D8E /* QuartzCore.framework in Frameworks */,
+				0A92F6931689068400803DA1 /* libTestFlight.a in Frameworks */,
+				0A92F6951689069400803DA1 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,10 +314,12 @@
 			children = (
 				0A6276911682CFEC00827101 /* AddressBook.framework */,
 				0A6276921682CFEC00827101 /* AddressBookUI.framework */,
-				0A3890D31664AFC7002E8BC1 /* UIKit.framework */,
-				0A3890D51664AFC7002E8BC1 /* Foundation.framework */,
 				0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */,
+				0A3890D51664AFC7002E8BC1 /* Foundation.framework */,
 				0A457686167D4DAE00848D8E /* QuartzCore.framework */,
+				0A3890D31664AFC7002E8BC1 /* UIKit.framework */,
+				0A92F6921689068400803DA1 /* libTestFlight.a */,
+				0A92F6941689069400803DA1 /* libz.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -769,6 +777,10 @@
 				GCC_PREFIX_HEADER = Stream/misc/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Stream/misc/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Stream/misc\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "DA8D4838-813A-464C-AE03-16486B90835F";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -785,6 +797,10 @@
 				GCC_PREFIX_HEADER = Stream/misc/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Stream/misc/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Stream/misc\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "DA8D4838-813A-464C-AE03-16486B90835F";
 				TARGETED_DEVICE_FAMILY = 1;

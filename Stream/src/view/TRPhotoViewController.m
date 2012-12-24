@@ -51,6 +51,7 @@
     mLikeIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart_white_small.png"]];
     mLikeIndicator.center = mLikeCountButton.center;
     [self.view addSubview:mLikeIndicator];
+    [TestFlight passCheckpoint:@"Viewed Picture"];
 }
 
 - (void)setPhotoView:(TRImageView*)photoView {
@@ -141,6 +142,7 @@
                                     [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut], nil];
     
     [mLikeOverlayView.layer addAnimation:fadeInAndOut forKey:@"FadeOverlay"];
+    [TestFlight passCheckpoint:@"Liked Photo"];
 }
 
 - (IBAction)closePhotoView:(id)sender {
