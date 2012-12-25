@@ -45,6 +45,7 @@
 }
 
 - (void)authenitcated {
+    [TestFlight passCheckpoint:@"Authenticated"];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -57,6 +58,7 @@
         [AppDelegate.graph addUser:me];
         [AppDelegate.graph downloadUserPhotoStreams:me.phone];
         [self dismissViewControllerAnimated:NO completion:nil];
+        [TestFlight passCheckpoint:@"Automatically Logged In"];
     }
 }
 

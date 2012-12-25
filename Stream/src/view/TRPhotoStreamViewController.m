@@ -58,11 +58,13 @@
     if (self) {
         
     }
+    [TestFlight passCheckpoint:@"Viewed Stream by User"];
     return self;
 }
 
 - (id)initWithPhotoStream:(TRPhotoStream *)stream{
     self = [self initWithPhotoStream:stream mode:kTRPhotoStreamViewModeAll];
+    [TestFlight passCheckpoint:@"Viewed Stream"];
     return self;
 }
 
@@ -284,6 +286,7 @@
     newPhoto.image = [TRImage orientImage:image];
     [AppDelegate.graph uploadPhoto:newPhoto toStream:mStream];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [TestFlight passCheckpoint:@"Uploaded Picture"];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

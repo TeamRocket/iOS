@@ -253,6 +253,7 @@
                                 forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]
                         withParticipants:participantPhones];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [TestFlight passCheckpoint:@"Created Stream"];
 }
 
 - (void)updateStreamTapped:(id)sender {
@@ -263,6 +264,7 @@
     }
     [AppDelegate.graph sendInviteUsers:participantPhones toStream:mStream.ID];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [TestFlight passCheckpoint:@"Updated Stream Info"];
 }
 
 #pragma mark - ABPeoplePickerDelegate
