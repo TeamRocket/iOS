@@ -29,6 +29,7 @@ typedef enum {
     kTRGraphNetworkTaskDownloadUserPhotos,
     kTRGraphNetworkTaskDownloadLikes,
     kTRGraphNetworkTaskSendInvite,
+    kTRGraphNetworkTaskRegisterPushToken,
 } TRGraphNetworkTask;
 
 @implementation TRGraph
@@ -117,6 +118,15 @@ typedef enum {
 
 - (TRUser*)getUserWithPhone:(NSString*)phone {
     return [mUsers objectForKey:phone];
+}
+
+- (void)registerPushToken:(NSString*)token forPhone:(NSString*)phone {
+    NSLog(@"Registering push token %@ for %@", token, phone);
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/registerPushToken.php?phone=%@&token=%@", phone, token]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskRegisterPushToken]);
 }
 
 #pragma mark Photo

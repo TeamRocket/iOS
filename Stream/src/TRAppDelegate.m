@@ -18,6 +18,7 @@
 
 @synthesize graph = mGraph;
 @synthesize network = mNetwork;
+@synthesize pushToken = mPushToken;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -31,7 +32,20 @@
     self.window.rootViewController = mStream;
     [self.window makeKeyAndVisible];
     [mStream presentViewController:mSplash animated:NO completion:nil];
+
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:( UIRemoteNotificationTypeAlert |
+                                                                            UIRemoteNotificationTypeBadge |
+                                                                            UIRemoteNotificationTypeSound )];
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    mPushToken = [[deviceToken description] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    mPushToken = [mPushToken substringWithRange:NSMakeRange(1, mPushToken.length-2)];
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
+    NSLog(@"Push error: %@", err);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
