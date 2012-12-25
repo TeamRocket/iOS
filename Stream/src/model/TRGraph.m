@@ -121,7 +121,6 @@ typedef enum {
 }
 
 - (void)registerPushToken:(NSString*)token forPhone:(NSString*)phone {
-    NSLog(@"Registering push token %@ for %@", token, phone);
     TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/registerPushToken.php?phone=%@&token=%@", phone, token]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,

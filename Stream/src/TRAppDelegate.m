@@ -42,6 +42,9 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     mPushToken = [[deviceToken description] stringByReplacingOccurrencesOfString:@" " withString:@""];
     mPushToken = [mPushToken substringWithRange:NSMakeRange(1, mPushToken.length-2)];
+    if ([[NSUserDefaults alloc] objectForKey:@"user_phone"] != nil && [NSNull null] != [[NSUserDefaults alloc] objectForKey:@"user_phone"]) {
+        [mGraph registerPushToken:mPushToken forPhone:[[NSUserDefaults alloc] objectForKey:@"user_phone"]];
+    }
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
