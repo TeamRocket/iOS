@@ -106,6 +106,7 @@
                 mStreamNameField = [[NSBundle mainBundle] loadNibNamed:@"TRTextFieldCell" owner:self options:nil][0];
                 if (mMode == kTRPhotoStreamSetupModeCreate) {
                     mStreamNameField.textField.text = @"";
+                    mStreamNameField.textField.placeholder = @"Name of stream";
                     mStreamNameField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
                     [mStreamNameField.textField setEnabled:YES];
                 } else {
