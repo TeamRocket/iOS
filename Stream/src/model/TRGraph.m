@@ -32,6 +32,15 @@ typedef enum {
     kTRGraphNetworkTaskRegisterPushToken,
 } TRGraphNetworkTask;
 
+@implementation NSString (encode)
+- (NSString *)encodeString:(NSStringEncoding)encoding
+{
+    return (__bridge NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)self,
+                                                                NULL, (CFStringRef)@";/!?:@&=$+{}<>,.^*()",
+                                                                CFStringConvertNSStringEncodingToEncoding(encoding));
+}  
+@end
+
 @implementation TRGraph
 
 - (id) init{
@@ -72,7 +81,7 @@ typedef enum {
 #pragma mark User 
 
 - (void)loginAsUser:(NSString*)first password:(NSString*)password {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/signin.php?first=%@&password=%@", first, password]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/signin.php?first=%@&password=%@", [first encodeString:NSASCIIStringEncoding], [password encodeString:NSASCIIStringEncoding]]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -80,7 +89,11 @@ typedef enum {
 }
 
 - (void)signupWithPhone:(NSString*)phone first:(NSString*)first last:(NSString*)last password:(NSString*)password {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/signup.php?first=%@&last=%@&phone=%@&password=%@", first, last, phone, password]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/signup.php?first=%@&last=%@&phone=%@&password=%@",
+                                                                               [first encodeString:NSASCIIStringEncoding],
+                                                                               [last encodeString:NSASCIIStringEncoding],
+                                                                               [phone encodeString:NSASCIIStringEncoding],
+                                                                               [password encodeString:NSASCIIStringEncoding]]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -364,7 +377,7 @@ typedef enum {
             [scanner setScanLocation:([scanner scanLocation] + 1)];
         }
     }
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/createStream.php?phone=%@&streamName=%@&invitees=%@", phone, streamName, strippedString]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/createStream.php?phone=%@&streamName=%@&invitees=%@", phone, [streamName encodeString:NSASCIIStringEncoding], strippedString]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
