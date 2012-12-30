@@ -50,6 +50,7 @@
 - (void)downloadUserPhotos:(NSString*)phone inStream:(NSString*)streamID;
 - (void)downloadLikesForPhoto:(NSString*)url;
 - (void)sendInviteUsers:(NSArray*)invitees toStream:(NSString*)streamID;
+- (void)registerPushToken:(NSString*)token forPhone:(NSString*)phone;
 
 - (void)didReceiveMemoryWarning;
 
