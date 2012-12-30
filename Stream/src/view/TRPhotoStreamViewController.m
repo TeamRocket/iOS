@@ -267,8 +267,9 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    TRPhoto * newPhoto = [[TRPhoto alloc] initWithURL:nil
-                                             uploader:[AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]]];
+    TRPhoto * newPhoto = [[TRPhoto alloc] initWithID:nil
+                                                 URL:nil
+                                            uploader:[AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]]];
     TRImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     if(!image)
         image = [info objectForKey:UIImagePickerControllerOriginalImage];

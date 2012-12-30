@@ -15,15 +15,17 @@
 
 @synthesize uploader = mUploader;
 @synthesize URL = mURL;
+@synthesize ID = mID;
 @synthesize image = mImage;
 @synthesize numLikes = mNumLikes;
 @synthesize likers = mLikers;
 
-- (id) initWithURL:(NSURL*)url uploader:(TRUser*)uploader {
+- (id) initWithID:(NSString*)ID URL:(NSURL*)url uploader:(TRUser*)uploader {
     self = [super init];
     if (self) {
         mUploader = uploader;
         mURL = url;
+        mID = ID;
 
         mImage = [[TRImage alloc] initWithURL:mURL];
         mLikers = [[NSMutableArray alloc] init];

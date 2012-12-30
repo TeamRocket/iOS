@@ -57,8 +57,8 @@
 - (void)setPhotoView:(TRImageView*)photoView {
     mPhoto = photoView.TRPhoto;
     [AppDelegate.graph registerForDelegateCallback:self];
-    [AppDelegate.graph downloadPhotoInfo:[mPhoto.URL absoluteString]];
-    [AppDelegate.graph downloadLikesForPhoto:[mPhoto.URL absoluteString]];
+    [AppDelegate.graph downloadPhotoInfo:mPhoto.ID];
+    [AppDelegate.graph downloadLikesForPhoto:mPhoto.ID];
     mImageView = photoView;
     [self.view addSubview:photoView];
     
@@ -79,13 +79,7 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    mUploaderLabel = nil;
-    mPhoto = nil;
     mImageView = nil;
-    mCloseButton = nil;
-    mLikeOverlayView = nil;
-    mLikeOverlayImage = nil;
-    mLikeOverlayLabel = nil;
     [AppDelegate.graph unregisterForDelegateCallback:self];
 }
 
@@ -108,7 +102,7 @@
         [mLikeOverlayImage setImage:[UIImage imageNamed:@"heart_red_large.png"]];
         [mLikeOverlayLabel setText:@"Liked!"];
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_red_small.png"]];
-        [AppDelegate.graph sendLikePhoto:[mPhoto.URL absoluteString]
+        [AppDelegate.graph sendLikePhoto:mPhoto.ID
                                 forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
         [mPhoto addLiker:me];
         mPhoto.numLikes++;
@@ -118,7 +112,7 @@
         [mLikeOverlayLabel setText:@"Unliked..."];
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
         [mPhoto removeLiker:me];
-        [AppDelegate.graph sendUnlikePhoto:[mPhoto.URL absoluteString]
+        [AppDelegate.graph sendUnlikePhoto:mPhoto.ID
                                   forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
         mPhoto.numLikes--;
     }
