@@ -57,8 +57,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    TRUser * loggedInUser = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
-    return [loggedInUser.streams count];
+    return [AppDelegate.graph.me.streams count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -67,8 +66,7 @@
         cell = [[NSBundle mainBundle] loadNibNamed:@"TRStreamCell" owner:self options:nil][0];
     }
 
-    TRUser * loggedInUser = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
-    TRPhotoStream * stream = [loggedInUser.streams objectAtIndex:indexPath.row];
+    TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
     [cell.titleLabel setText:stream.name];
     if (stream.numParticipants == 1) {
         [cell.participantsLabel setText:@"1 Participant"];

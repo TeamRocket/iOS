@@ -56,6 +56,7 @@
                                           firstName:[[NSUserDefaults alloc] objectForKey:@"user_first"]
                                            lastName:[[NSUserDefaults alloc] objectForKey:@"user_last"]];
         [AppDelegate.graph addUser:me];
+        AppDelegate.graph.me = me;
         [AppDelegate.graph downloadUserPhotoStreams:me.phone];
         [self dismissViewControllerAnimated:NO completion:nil];
         [TestFlight passCheckpoint:@"Automatically Logged In"];
