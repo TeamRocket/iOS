@@ -324,7 +324,7 @@ typedef enum {
             newStream.numPhotos = [[streamData objectForKey:@"numberOfPictures"] intValue];
         }
         NSDictionary * latestInfo = [streamData objectForKey:@"latestPicture"];
-        if (![[NSNull null] isEqual:latestInfo] && ![latestInfo respondsToSelector:@selector(removeLastObject)]) {
+        if (![[NSNull null] isEqual:latestInfo]) {
             TRPhoto * latestPhoto = [self getPhotoWithID:[latestInfo objectForKey:@"id"]];
             if (latestPhoto == nil) {
                 latestPhoto = [[TRPhoto alloc] initWithID:[latestInfo objectForKey:@"id"]
@@ -355,7 +355,7 @@ typedef enum {
                 TRPhoto * newPhoto = [self getPhotoWithID:[photoInfo objectForKey:@"pictureID"]];
                 if (newPhoto == nil) {
                     newPhoto = [[TRPhoto alloc] initWithID:[photoInfo objectForKey:@"pictureID"]
-                                                       URL:[NSURL URLWithString:[photoInfo objectForKey:@"TinyPicURL"]]
+                                                       URL:[NSURL URLWithString:[photoInfo objectForKey:@"url"]]
                                                   uploader:nil];
                     [self addPhoto:newPhoto];
                 }
@@ -414,7 +414,7 @@ typedef enum {
             [scanner setScanLocation:([scanner scanLocation] + 1)];
         }
     }
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/invitePeople.php?phone=%@&streamID=%@", strippedString, streamID]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/invitePeople.php?inviteesPhone=%@&inviterPhone=%@&streamID=%@", strippedString, mMe.phone, streamID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
