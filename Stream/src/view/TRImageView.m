@@ -75,6 +75,7 @@
 }
 
 - (void)setTRPhoto:(TRPhoto*)photo {
+    [self setImage:nil];
     mPhoto = photo;
     if ([photo.image loaded]) {
         [self setBackgroundColor:[UIColor colorWithPatternImage:[mPhoto.image sizedTo:self.frame.size]]];

@@ -175,21 +175,54 @@
         if (cell == nil) {
             cell = [[NSBundle mainBundle] loadNibNamed:@"TRStreamGridViewCell" owner:self options:nil][0];
         }
+        int photoBoxes = mUploading ? [photoArray count] + 1 : [photoArray count];
         TRStreamGridViewCell * gridCell = (TRStreamGridViewCell*)cell;
-        if ([photoArray count] > 0) {
-            if (indexPath.row * 2 < [photoArray count]) {
-                TRPhoto * leftPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
-                [gridCell.leftFrame setTRPhoto:leftPhoto];
-                if (!gridCell.leftFrame.tapRecognizer)
-                    gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
-                else
-                    [gridCell.leftFrame.tapRecognizer addTarget:self action:@selector(tappedPhoto:)];
-                [gridCell.leftFrame setUserInteractionEnabled:YES];
-                [gridCell.leftFrame.tapRecognizer setNumberOfTapsRequired:1];
+        if (photoBoxes > 0) {
+            if (indexPath.row * 2 < photoBoxes) {
+                TRPhoto * leftPhoto;
+                if (mUploading) {
+                    if (indexPath.row == 0) {
+                        if (mProgressBar == nil) {
+                            mProgressBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+                            [mProgressBar setProgressImage:[[UIImage imageNamed:@"progress_bar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0, 6.0, 6.0, 5.5)]];
+                            [mProgressBar setTrackImage:[[UIImage imageNamed:@"progress_bar_bg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0, 6.0, 6.0, 5.5)]];
+                            [mProgressBar setFrame:CGRectMake(0.0f, 114.0f, 100.0f, 11.0f)];
+                            mProgressBar.center = CGPointMake(gridCell.leftFrame.center.x-10.0f, mProgressBar.center.y);
+                        }
+                        [mProgressBar setProgress:0.0f];
+                        [gridCell.leftFrame addSubview:mProgressBar];
+                        [gridCell.leftFrame setImage:[UIImage imageNamed:@"upload_placeholder.png"]];
+                        [gridCell.leftFrame setUserInteractionEnabled:NO];
+                    } else {
+                        leftPhoto = [photoArray objectAtIndex:((indexPath.row) * 2) - 1];
+                        [gridCell.leftFrame setTRPhoto:leftPhoto];
+                        if (!gridCell.leftFrame.tapRecognizer)
+                            gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
+                        else
+                            [gridCell.leftFrame.tapRecognizer addTarget:self action:@selector(tappedPhoto:)];
+                        [gridCell.leftFrame setUserInteractionEnabled:YES];
+                        [gridCell.leftFrame.tapRecognizer setNumberOfTapsRequired:1];
+                    }
+                } else {
+                    leftPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
+                    [gridCell.leftFrame setTRPhoto:leftPhoto];
+                    if (!gridCell.leftFrame.tapRecognizer)
+                        gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
+                    else
+                        [gridCell.leftFrame.tapRecognizer addTarget:self action:@selector(tappedPhoto:)];
+                    [gridCell.leftFrame setUserInteractionEnabled:YES];
+                    [gridCell.leftFrame.tapRecognizer setNumberOfTapsRequired:1];
+                }
+                
                 [gridCell.leftFrame setAlpha:1.0f];
             }
-            if (indexPath.row * 2 + 1 < [photoArray count]) {
-                TRPhoto * rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2) + 1];
+            if (indexPath.row * 2 + 1 < photoBoxes) {
+                TRPhoto * rightPhoto;
+                if (mUploading) {
+                    rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
+                } else {
+                    rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2) + 1];
+                }
                 [gridCell.rightFrame setTRPhoto:rightPhoto];
                 if (!gridCell.rightFrame.tapRecognizer)
                     gridCell.rightFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
@@ -259,6 +292,7 @@
     }
     if (mUploading) {
         mUploading = NO;
+        [mProgressBar removeFromSuperview];
         [self refreshStream];
     }
     [mTableView reloadData];
@@ -266,6 +300,9 @@
 
 - (void)uploadedBytes:(int)bytesWritten ofExpected:(int)bytesExpected {
     mUploading = YES;
+    if (mProgressBar) {
+        [mProgressBar setProgress:((float)bytesWritten)/((float)bytesExpected) animated:YES];
+    }
 }
 
 - (void)refreshStream {
@@ -295,6 +332,8 @@
 
     newPhoto.image = [TRImage orientImage:image];
     [AppDelegate.graph uploadPhoto:newPhoto toStream:mStream];
+    mUploading = YES;
+    [mTableView reloadData];
     [self dismissViewControllerAnimated:YES completion:nil];
     [TestFlight passCheckpoint:@"Uploaded Picture"];
 }

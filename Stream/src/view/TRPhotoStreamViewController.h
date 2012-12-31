@@ -25,6 +25,7 @@ typedef enum {
     TRPhotoStreamViewMode mMode;
     TRUser * mUser;
     BOOL mUploading;
+    UIProgressView * mProgressBar;
 }
 
 - (id)initWithPhotoStream:(TRPhotoStream *)stream;
