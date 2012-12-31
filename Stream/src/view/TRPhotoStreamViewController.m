@@ -259,6 +259,10 @@
     [mTableView reloadData];
 }
 
+- (void)uploadedBytes:(int)bytesWritten ofExpected:(int)bytesExpected {
+    
+}
+
 - (void)refreshStream {
     [AppDelegate.graph downloadStreamInfo:mStream.ID
                                  forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];

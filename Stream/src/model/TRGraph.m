@@ -478,6 +478,7 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskUploadPhoto:
                 [self p_uploadedPhoto:info];
+                break;
             case kTRGraphNetworkTaskCreateStream:
                 [self p_createdStream:info];
                 break;
@@ -513,6 +514,15 @@ typedef enum {
             [delegate graphFinishedUpdating];
         }
     }
+}
+
+- (void)connection:(TRConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
+    for (id<TRGraphDelegate> delegate in [mDelegates copy]) {
+        if ([delegate respondsToSelector:@selector(uploadedBytes:ofExpected:)]) {
+            [delegate uploadedBytes:totalBytesWritten ofExpected:totalBytesExpectedToWrite];
+        }
+    }
+
 }
 
 - (void) didReceiveMemoryWarning {
