@@ -69,11 +69,15 @@ typedef enum {
 }
 
 - (void)registerForDelegateCallback:(id<TRGraphDelegate>)delegate {
-    [mDelegates addObject:delegate];
+    if (![mDelegates containsObject:delegate]) {
+        [mDelegates addObject:delegate];
+    }
 }
 
 - (void)unregisterForDelegateCallback:(id<TRGraphDelegate>)delegate {
-    [mDelegates removeObject:delegate];
+    if ([mDelegates containsObject:delegate]) {
+        [mDelegates removeObject:delegate];
+    }
 }
 
 - (BOOL)updating {

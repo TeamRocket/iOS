@@ -11,6 +11,7 @@
 #import "TRPhotoViewController.h"
 
 #import "TRAppDelegate.h"
+#import "TRPhotoStream.h"
 
 #import "TRImageView.h"
 #import "TRLikerListViewController.h"
@@ -51,6 +52,8 @@
     mLikeIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart_white_small.png"]];
     mLikeIndicator.center = mLikeCountButton.center;
     [self.view addSubview:mLikeIndicator];
+
+    [mScroller setContentSize:CGSizeMake(self.view.frame.size.width * 3, IMAGE_SIZE)];
     [TestFlight passCheckpoint:@"Viewed Picture"];
 }
 
@@ -61,25 +64,78 @@
     [AppDelegate.graph downloadLikesForPhoto:mPhoto.ID];
     mImageView = photoView;
     [self.view addSubview:photoView];
-    
+}
+
+- (void)setPrevPhoto:(TRPhoto *)prev {
+    mPrevPhoto = prev;
+    if (mPrevView != nil) {
+        [mPrevView removeFromSuperview];
+    }
+    mPrevView = nil;
+    if (mPrevPhoto != nil) {
+        [AppDelegate.graph registerForDelegateCallback:self];
+        [AppDelegate.graph downloadPhotoInfo:mPrevPhoto.ID];
+        [AppDelegate.graph downloadLikesForPhoto:mPrevPhoto.ID];
+        mPrevView = [[TRImageView alloc] initWithTRPhoto:mPrevPhoto
+                                                 inFrame:CGRectMake(mImageView.frame.origin.x - self.view.frame.size.width,
+                                                                    mImageView.frame.origin.y,
+                                                                    mImageView.frame.size.width, mImageView.frame.size.height)];
+        [mPrevView setPictureBorder:YES];
+        [mScroller addSubview:mPrevView];
+        [mScroller setContentInset:UIEdgeInsetsMake(0.0, 0.0, 0.0, mScroller.contentInset.right)];
+    } else {
+        mPrevView = nil;
+        [mScroller setContentInset:UIEdgeInsetsMake(0.0, -mScroller.frame.size.width, 0.0, mScroller.contentInset.right)];
+    }
+}
+
+- (void)setNextPhoto:(TRPhoto *)next {
+    mNextPhoto = next;
+    if (mNextView != nil) {
+        [mNextView removeFromSuperview];
+    }
+    mNextView = nil;
+    if (mNextPhoto != nil) {
+        [AppDelegate.graph registerForDelegateCallback:self];
+        [AppDelegate.graph downloadPhotoInfo:mNextPhoto.ID];
+        [AppDelegate.graph downloadLikesForPhoto:mNextPhoto.ID];
+        mNextView = [[TRImageView alloc] initWithTRPhoto:mNextPhoto
+                                                 inFrame:CGRectMake(mImageView.frame.origin.x + self.view.frame.size.width,
+                                                                    mImageView.frame.origin.y,
+                                                                    mImageView.frame.size.width, mImageView.frame.size.height)];
+        [mNextView setPictureBorder:YES];
+        [mScroller addSubview:mNextView];
+        [mScroller setContentInset:UIEdgeInsetsMake(0.0, mScroller.contentInset.left, 0.0, 0.0)];
+    } else {
+        mNextView = nil;
+        [mScroller setContentInset:UIEdgeInsetsMake(0.0, mScroller.contentInset.left, 0.0, -mScroller.frame.size.width)];
+    }
+}
+
+- (void)setPhotoStream:(TRPhotoStream*)stream {
+    mStream = stream;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [mScroller scrollRectToVisible:CGRectMake(mScroller.frame.size.width, 0.0, mScroller.frame.size.width, mScroller.frame.size.height) animated:NO];
 
-    [UIView beginAnimations:@"PhotoScaleFull" context:nil];
-    [UIView setAnimationDuration:0.5f];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(loadFullImage)];
-    mImageView.center = self.view.center;
-    [mImageView.layer setBorderWidth:mImageView.layer.borderWidth / (IMAGE_SIZE/mImageView.frame.size.width)];
-    [mImageView setTransform:CGAffineTransformMakeScale(IMAGE_SIZE/mImageView.frame.size.width,
-                                                        IMAGE_SIZE/mImageView.frame.size.height)];
-    [UIView commitAnimations];
+    if ([mLikeCountButton.titleLabel.text length] == 0) {
+        [UIView beginAnimations:@"PhotoScaleFull" context:nil];
+        [UIView setAnimationDuration:0.5f];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(loadFullImage)];
+        //mImageView.center = CGPointMake(self.view.center.x + self.view.frame.size.width,
+        //                                self.view.center.y - mScroller.frame.origin.y);
+        mImageView.center = self.view.center;
+        [mImageView.layer setBorderWidth:mImageView.layer.borderWidth / (IMAGE_SIZE/mImageView.frame.size.width)];
+        [mImageView setTransform:CGAffineTransformMakeScale(IMAGE_SIZE/mImageView.frame.size.width,
+                                                            IMAGE_SIZE/mImageView.frame.size.height)];
+        [UIView commitAnimations];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    mImageView = nil;
     [AppDelegate.graph unregisterForDelegateCallback:self];
 }
 
@@ -87,9 +143,14 @@
     [mImageView setTransform:CGAffineTransformMakeScale(1.0f,
                                                         1.0f)];
     [mImageView setFrame:CGRectMake(0.0, 0.0, IMAGE_SIZE, IMAGE_SIZE)];
-    mImageView.center = self.view.center;
+    [mImageView removeFromSuperview];
+    [mScroller addSubview:mImageView];
+    mImageView.center = CGPointMake(mScroller.contentSize.width/2, self.view.center.y - mScroller.frame.origin.y);
     [mImageView setTRPhoto:mPhoto];
-    [mImageView setPictureFrame:YES];
+    [mImageView setPictureBorder:YES];
+
+    [self setPrevPhoto:[mStream photoBefore:mPhoto]];
+    [self setNextPhoto:[mStream photoAfter:mPhoto]];
 }
 
 - (IBAction)likeButtonPressed:(id)sender {
@@ -172,11 +233,71 @@
     }
     CGSize labelSize = [mLikeCountButton.titleLabel.text sizeWithFont:mLikeCountButton.titleLabel.font];
     mLikeIndicator.center = CGPointMake(mLikeCountButton.frame.origin.x + mLikeCountButton.frame.size.width - labelSize.width - mLikeIndicator.frame.size.width, mLikeCountButton.center.y);
-    TRUser * me = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
-    if ([mPhoto.likers containsObject:me]) {
+    if ([mPhoto.likers containsObject:AppDelegate.graph.me]) {
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_red_small.png"]];
         [mLikeButton setTitle:@"Unlike" forState:UIControlStateNormal];
+    } else {
+        [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
+        [mLikeButton setTitle:@"Like" forState:UIControlStateNormal];
     }
+    if (mPrevPhoto != [mStream photoBefore:mPhoto]) {
+        [self setPrevPhoto:[mStream photoBefore:mPhoto]];
+    }
+    if (mNextPhoto != [mStream photoAfter:mPhoto]) {
+        [self setNextPhoto:[mStream photoAfter:mPhoto]];
+    }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollToIndex:(int)index animated:(BOOL)animated {
+    if (index < 0)
+        index = 0;
+    else if (index >= 3)
+        index = 2;
+    if (index == 0 && mScroller.contentInset.left != 0.0f) {
+        index = 1;
+    }
+    if (index == 2 && mScroller.contentInset.right != 0.0f) {
+        index = 1;
+    }
+    [mScroller scrollRectToVisible:CGRectMake(index*mScroller.frame.size.width, 0.0, mScroller.frame.size.width, IMAGE_SIZE) animated:animated];
+    mCurrentIndex = index;
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    CGPoint offset = scrollView.contentOffset;
+    *targetContentOffset = offset;
+    if (velocity.x > 0.5) {
+        [self scrollToIndex:2 animated:YES];
+    } else if (velocity.x < -0.5) {
+        [self scrollToIndex:0 animated:YES];
+    } else {
+        [self scrollToIndex:(int)round(offset.x/mScroller.frame.size.width) animated:YES];
+    }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    switch (mCurrentIndex) {
+        case 0:
+            mPhoto = mPrevPhoto;
+            [self setPrevPhoto:[mStream photoBefore:mPhoto]];
+            [self setNextPhoto:[mStream photoAfter:mPhoto]];
+            [mImageView setTRPhoto:mPhoto];
+            [mUploaderLabel setText:@""];
+            break;
+        case 2:
+            mPhoto = mNextPhoto;
+            [self setPrevPhoto:[mStream photoBefore:mPhoto]];
+            [self setNextPhoto:[mStream photoAfter:mPhoto]];
+            [mImageView setTRPhoto:mPhoto];
+            [mUploaderLabel setText:@""];
+            [mLikeCountButton setTitle:@"" forState:UIControlStateNormal];
+            break;
+        default:
+            break;
+    }
+    [self scrollToIndex:1 animated:NO];
 }
 
 @end
