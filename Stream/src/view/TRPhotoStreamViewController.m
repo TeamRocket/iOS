@@ -34,6 +34,7 @@
     if (self) {
         mStream = stream;
         mMode = mode;
+        mUploading = NO;
         self.title = mStream.name;
         [AppDelegate.graph registerForDelegateCallback:self];
         if (mMode == kTRPhotoStreamViewModeAll) {
@@ -256,11 +257,15 @@
     if (mRefreshControl) {
         [mRefreshControl endRefreshing];
     }
+    if (mUploading) {
+        mUploading = NO;
+        [self refreshStream];
+    }
     [mTableView reloadData];
 }
 
 - (void)uploadedBytes:(int)bytesWritten ofExpected:(int)bytesExpected {
-    
+    mUploading = YES;
 }
 
 - (void)refreshStream {

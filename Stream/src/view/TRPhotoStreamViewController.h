@@ -24,6 +24,7 @@ typedef enum {
     UIImagePickerController * mPicker;
     TRPhotoStreamViewMode mMode;
     TRUser * mUser;
+    BOOL mUploading;
 }
 
 - (id)initWithPhotoStream:(TRPhotoStream *)stream;
