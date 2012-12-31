@@ -18,12 +18,17 @@
 
 @synthesize graph = mGraph;
 @synthesize network = mNetwork;
+@synthesize pushToken = mPushToken;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     [TestFlight takeOff:@"c5a032ea808bb992ba0e2063fd719860_MTYwMTg0MjAxMi0xMi0xNSAwMjozNjo1My40MzM0MDM"];
+    if (launchOptions != nil && [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    }
     mGraph = [[TRGraph alloc] init];
     mNetwork = [[TRNetwork alloc] init];
     mSplash = [[TRSplashViewController alloc] initWithNibName:@"TRSplashViewController" bundle:nil];
@@ -31,7 +36,29 @@
     self.window.rootViewController = mStream;
     [self.window makeKeyAndVisible];
     [mStream presentViewController:mSplash animated:NO completion:nil];
+
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:( UIRemoteNotificationTypeAlert |
+                                                                            UIRemoteNotificationTypeBadge |
+                                                                            UIRemoteNotificationTypeSound )];
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    mPushToken = [[deviceToken description] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    mPushToken = [mPushToken substringWithRange:NSMakeRange(1, mPushToken.length-2)];
+    if ([[NSUserDefaults alloc] objectForKey:@"user_phone"] != nil && [NSNull null] != [[NSUserDefaults alloc] objectForKey:@"user_phone"]) {
+        [mGraph registerPushToken:mPushToken forPhone:[[NSUserDefaults alloc] objectForKey:@"user_phone"]];
+    }
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
+    NSLog(@"Push error: %@", err);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

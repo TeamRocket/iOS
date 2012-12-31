@@ -75,6 +75,7 @@
 }
 
 - (void)setTRPhoto:(TRPhoto*)photo {
+    [self setImage:nil];
     mPhoto = photo;
     if ([photo.image loaded]) {
         [self setBackgroundColor:[UIColor colorWithPatternImage:[mPhoto.image sizedTo:self.frame.size]]];
@@ -92,20 +93,29 @@
 }
 
 - (void)setPictureFrame:(BOOL)frame {
-    if (frame) {
+    [self setPictureBorder:frame];
+    [self setPictureShadow:frame];
+    [self.layer setShouldRasterize:YES];
+}
+
+- (void)setPictureBorder:(BOOL)border {
+    if (border) {
+        [self.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [self.layer setBorderWidth:5.0f];
+    } else {
+        [self.layer setBorderWidth:0.0f];
+    }
+}
+
+- (void)setPictureShadow:(BOOL)shadow {
+    if (shadow) {
         [self.layer setShadowColor:[UIColor blackColor].CGColor];
         [self.layer setShadowOpacity:0.5];
         [self.layer setShadowRadius:2.0];
         [self.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
-        [self.layer setBorderColor:[UIColor whiteColor].CGColor];
-        [self.layer setBorderWidth:5.0f];
-        [self.layer setShouldRasterize:YES];
     } else {
         [self.layer setShadowOpacity:0.0f];
         [self.layer setShadowRadius:0.0f];
-        [self.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
-        [self.layer setBorderWidth:0.0f];
-        [self.layer setShouldRasterize:YES];
     }
 }
 

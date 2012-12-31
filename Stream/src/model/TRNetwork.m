@@ -125,4 +125,12 @@
         NSLog(@"Response was never created...");
 }
 
+- (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
+    TRConnection * conn = (TRConnection*)connection;
+    if (CFDictionaryContainsKey(mActiveConnections, (__bridge const void *)conn)) {
+        [conn.delegate connection:conn didSendBodyData:bytesWritten totalBytesWritten:totalBytesWritten totalBytesExpectedToWrite:totalBytesExpectedToWrite];
+    } else
+        NSLog(@"Response was never created...");
+}
+
 @end

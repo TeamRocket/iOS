@@ -14,6 +14,7 @@
 @interface TRPhoto : NSObject {
     TRUser * mUploader;
     NSURL * mURL;
+    NSString * mID;
     TRImage * mImage;
 
     int mNumLikes;
@@ -22,11 +23,12 @@
 
 @property (nonatomic) TRUser * uploader;
 @property (nonatomic, readonly) NSURL * URL;
+@property (nonatomic, readonly) NSString * ID;
 @property (nonatomic) TRImage * image;
 @property (nonatomic) int numLikes;
 @property (nonatomic, readonly) NSArray * likers;
 
-- (id) initWithURL:(NSURL*)url uploader:(TRUser*)uploader;
+- (id) initWithID:(NSString*)ID URL:(NSURL*)url uploader:(TRUser*)uploader;
 - (void)addLiker:(TRUser*)user;
 - (void)removeLiker:(TRUser*)user;
 

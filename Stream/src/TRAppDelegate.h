@@ -21,10 +21,13 @@
 
     TRGraph * mGraph;
     TRNetwork * mNetwork;
+
+    NSString * mPushToken;
 }
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) TRGraph * graph;
 @property (strong, nonatomic) TRNetwork * network;
+@property (strong, nonatomic) NSString * pushToken;
 
 @end
