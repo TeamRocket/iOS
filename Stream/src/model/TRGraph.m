@@ -346,7 +346,7 @@ typedef enum {
                 TRPhoto * newPhoto = [self getPhotoWithID:[photoInfo objectForKey:@"pictureID"]];
                 if (newPhoto == nil) {
                     newPhoto = [[TRPhoto alloc] initWithID:[photoInfo objectForKey:@"pictureID"]
-                                                       URL:[NSURL URLWithString:[photoInfo objectForKey:@"TinyPicURL"]]
+                                                       URL:[NSURL URLWithString:[photoInfo objectForKey:@"url"]]
                                                   uploader:nil];
                     [self addPhoto:newPhoto];
                 }
