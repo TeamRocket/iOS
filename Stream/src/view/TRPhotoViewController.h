@@ -14,7 +14,7 @@
 @class TRPhotoStream;
 @class TRImageView;
 
-@interface TRPhotoViewController : UIViewController <TRGraphDelegate> {
+@interface TRPhotoViewController : UIViewController <TRGraphDelegate, UIScrollViewDelegate> {
     TRImageView * mImageView;
     TRImageView * mPrevView;
     TRImageView * mNextView;
@@ -27,17 +27,18 @@
     IBOutlet UIButton * mCloseButton;
     IBOutlet UIButton * mLikeButton;
     IBOutlet UIButton * mLikeCountButton;
+    IBOutlet UIScrollView * mScroller;
 
     UIView * mLikeOverlayView;
     UIImageView * mLikeIndicator;
 
     UIImageView * mLikeOverlayImage;
     UILabel * mLikeOverlayLabel;
+
+    int mCurrentIndex;
 }
 
 - (void)setPhotoView:(TRImageView*)photoView;
-- (void)setPrevPhoto:(TRPhoto*)prev;
-- (void)setNextPhoto:(TRPhoto*)next;
 - (void)setPhotoStream:(TRPhotoStream*)stream;
 
 @end
