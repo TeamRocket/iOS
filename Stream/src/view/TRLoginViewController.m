@@ -69,7 +69,8 @@
     int sectionRows = [tableView numberOfRowsInSection:[indexPath section]];
     if (indexPath.row == 0) {
         [cell setCapType:TRTableViewCellCapTypeTop];
-        [cell.textField setPlaceholder:@"Username"];
+        [cell.textField setPlaceholder:@"Phone Number"];
+        [cell.textField setKeyboardType:UIKeyboardTypePhonePad];
         [cell.textField setText:@""];
         mUsernameField = cell.textField;
     } else if (indexPath.row == sectionRows - 1) {
