@@ -315,7 +315,7 @@ typedef enum {
             newStream.numPhotos = [[streamData objectForKey:@"numberOfPictures"] intValue];
         }
         NSDictionary * latestInfo = [streamData objectForKey:@"latestPicture"];
-        if (![[NSNull null] isEqual:latestInfo] && ![latestInfo respondsToSelector:@selector(removeLastObject)]) {
+        if (![[NSNull null] isEqual:latestInfo]) {
             TRPhoto * latestPhoto = [self getPhotoWithID:[latestInfo objectForKey:@"id"]];
             if (latestPhoto == nil) {
                 latestPhoto = [[TRPhoto alloc] initWithID:[latestInfo objectForKey:@"id"]
