@@ -10,9 +10,13 @@
 
 #import "TRNetwork.h"
 
-@protocol TRGraphDelegate
+@protocol TRGraphDelegate <NSObject>
 
 - (void)graphFinishedUpdating;
+
+@optional
+
+- (void)uploadedBytes:(int)bytesWritten ofExpected:(int)bytesExpected;
 
 @end
 

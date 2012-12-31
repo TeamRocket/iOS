@@ -16,6 +16,10 @@
 - (void)connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data;
 - (void)connection:(TRConnection *)connection failedWithError:(NSError *)error;
 
+@optional
+
+- (void)connection:(TRConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
+
 @end
 
 @interface TRConnection : NSURLConnection {
