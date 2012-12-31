@@ -123,7 +123,7 @@
     if (section == 0) return 1;
     else {
         if (mMode == kTRPhotoStreamViewModeAll) {
-            return (mStream.numPhotos + 2 - 1)/2;
+            return mUploading ? (mStream.numPhotos + 3 - 1)/2 : (mStream.numPhotos + 2 - 1)/2;
         } else {
             return ([mUser getCountOfPhotosInStream:mStream] + 2 - 1)/2;
         }
