@@ -56,4 +56,22 @@
     [mPhotos insertObject:photo atIndex:0];
 }
 
+- (TRPhoto*)photoBefore:(TRPhoto*)photo {
+    int index = [mPhotos indexOfObject:photo];
+    if (index == 0) {
+        return nil;
+    } else {
+        return [mPhotos objectAtIndex:index-1];
+    }
+}
+
+- (TRPhoto*)photoAfter:(TRPhoto*)photo {
+    int index = [mPhotos indexOfObject:photo];
+    if (index + 1 == [mPhotos count]) {
+        return nil;
+    } else {
+        return [mPhotos objectAtIndex:index+1];
+    }
+}
+
 @end

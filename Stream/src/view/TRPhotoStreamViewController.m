@@ -228,6 +228,7 @@
 - (void)tappedPhoto:(UITapGestureRecognizer*)recognizer {
     TRImageView * frame = (TRImageView*)recognizer.view;
     TRPhotoViewController * photoView = [[TRPhotoViewController alloc] initWithNibName:@"TRPhotoViewController" bundle:nil];
+    [photoView setPhotoStream:mStream];
     [photoView.view setBackgroundColor:[UIColor blackColor]];
     TRImageView * largeFrame = [[TRImageView alloc] initWithTRPhoto:frame.TRPhoto
                                                             inFrame:[frame.superview convertRect:frame.frame toView:self.view]];

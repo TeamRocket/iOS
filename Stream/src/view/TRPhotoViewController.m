@@ -11,6 +11,7 @@
 #import "TRPhotoViewController.h"
 
 #import "TRAppDelegate.h"
+#import "TRPhotoStream.h"
 
 #import "TRImageView.h"
 #import "TRLikerListViewController.h"
@@ -61,7 +62,53 @@
     [AppDelegate.graph downloadLikesForPhoto:mPhoto.ID];
     mImageView = photoView;
     [self.view addSubview:photoView];
-    
+
+    [self setPrevPhoto:[mStream photoBefore:mPhoto]];
+    [self setNextPhoto:[mStream photoAfter:mPhoto]];
+}
+
+- (void)setPrevPhoto:(TRPhoto *)prev {
+    mPrevPhoto = prev;
+    mPrevView = nil;
+    if (mPrevView != nil) {
+        [mPrevView removeFromSuperview];
+    }
+    if (mPrevPhoto != nil) {
+        [AppDelegate.graph registerForDelegateCallback:self];
+        [AppDelegate.graph downloadPhotoInfo:mPrevPhoto.ID];
+        [AppDelegate.graph downloadLikesForPhoto:mPrevPhoto.ID];
+        mPrevView = [[TRImageView alloc] initWithTRPhoto:mPrevPhoto
+                                                 inFrame:CGRectMake(mImageView.frame.origin.x - self.view.frame.size.width,
+                                                                    mImageView.frame.origin.y,
+                                                                    mImageView.frame.size.width, mImageView.frame.size.height)];
+        [self.view addSubview:mPrevView];
+    } else {
+        mPrevView = nil;
+    }
+}
+
+- (void)setNextPhoto:(TRPhoto *)next {
+    mNextPhoto = next;
+    mNextView = nil;
+    if (mNextView != nil) {
+        [mNextView removeFromSuperview];
+    }
+    if (mNextPhoto != nil) {
+        [AppDelegate.graph registerForDelegateCallback:self];
+        [AppDelegate.graph downloadPhotoInfo:mNextPhoto.ID];
+        [AppDelegate.graph downloadLikesForPhoto:mNextPhoto.ID];
+        mNextView = [[TRImageView alloc] initWithTRPhoto:mNextPhoto
+                                                 inFrame:CGRectMake(mImageView.frame.origin.x + self.view.frame.size.width,
+                                                                    mImageView.frame.origin.y,
+                                                                    mImageView.frame.size.width, mImageView.frame.size.height)];
+        [self.view addSubview:mNextView];
+    } else {
+        mNextView = nil;
+    }
+}
+
+- (void)setPhotoStream:(TRPhotoStream*)stream {
+    mStream = stream;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
