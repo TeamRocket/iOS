@@ -9,6 +9,8 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import <UIKit/UIKit.h>
 
+#import "TRGraph.h"
+
 #import "TRTokenField.h"
 
 @class TRPhotoStream;
@@ -19,7 +21,7 @@ typedef enum {
     kTRPhotoStreamSetupModeInvite,
 } TRPhotoStreamSetupMode;
 
-@interface TRStreamSetupViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, TRTokenFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
+@interface TRStreamSetupViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, TRGraphDelegate, TRTokenFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
     IBOutlet UINavigationItem * mTitleItem;
     IBOutlet UIBarButtonItem * mCreateButton;
     IBOutlet UITableView * mTableView;
