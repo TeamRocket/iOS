@@ -30,6 +30,7 @@ typedef enum {
     kTRGraphNetworkTaskDownloadLikes,
     kTRGraphNetworkTaskSendInvite,
     kTRGraphNetworkTaskRegisterPushToken,
+    kTRGraphNetworkTaskGetUserStatus,
 } TRGraphNetworkTask;
 
 @implementation NSString (encode)
@@ -136,6 +137,12 @@ typedef enum {
     }
 }
 
+- (void)removeUser:(TRUser*)user {
+    if ([mUsers objectForKey:user.phone]) {
+        [mUsers removeObjectForKey:user.phone];
+    }
+}
+
 - (TRUser*)getUserWithPhone:(NSString*)phone {
     return [mUsers objectForKey:phone];
 }
@@ -147,6 +154,26 @@ typedef enum {
                          (__bridge const void *)conn,
                          (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskRegisterPushToken]);
 }
+
+- (void)downloadUserStatus:(NSString*)phone {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/isInBeta.php?phone=%@", phone]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskGetUserStatus]);
+}
+
+- (void)p_downloadedUserStatus:(NSDictionary*)info {
+    if (info) {
+        NSString * phone = [info objectForKey:@"phone"];
+        if (phone != nil) {
+            if ([[info objectForKey:@"isInBeta"] intValue] == 0) {
+                [self removeUser:[self getUserWithPhone:phone]];
+            }
+        }
+    }
+}
+
 
 #pragma mark Photo
 
@@ -418,7 +445,7 @@ typedef enum {
             [scanner setScanLocation:([scanner scanLocation] + 1)];
         }
     }
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/invitePeople.php?inviteesPhone=%@&inviterPhone=%@&streamID=%@", strippedString, mMe.phone, streamID]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/invitePeople1.php?inviteesPhone=%@&inviterPhone=%@&streamID=%@", strippedString, mMe.phone, streamID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -497,6 +524,9 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskSendInvite:
                 [self p_sentInvite:info];
+                break;
+            case kTRGraphNetworkTaskGetUserStatus:
+                [self p_downloadedUserStatus:info];
                 break;
             default:
                 break;

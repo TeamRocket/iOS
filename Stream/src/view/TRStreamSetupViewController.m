@@ -60,6 +60,7 @@
 }
 
 - (void)pressedAddButton:(TRTokenField*)sender {
+    [AppDelegate.graph registerForDelegateCallback:self];
     ABPeoplePickerNavigationController * ABPicker = [[ABPeoplePickerNavigationController alloc] init];
     ABPicker.peoplePickerDelegate = self;
     [self presentViewController:ABPicker animated:YES completion:nil];
@@ -300,9 +301,11 @@
     }
     if (ABMultiValueGetCount(phones) > 0) {
         phone = (__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phones, 0);
+        [AppDelegate.graph downloadUserStatus:phone];
         newUser = [[TRUser alloc] initWithPhone:phone
                                       firstName:first
                                        lastName:last];
+        [AppDelegate.graph addUser:newUser];
         [self addParticipant:newUser];
     } else {
         
@@ -322,5 +325,20 @@
     [textField resignFirstResponder];
     return YES;
 }
+
+#pragma mark - TRGraphDelegate
+
+- (void)graphFinishedUpdating {
+    for (TRUser * participant in mParticipants) {
+        TRUser * graphUser = [AppDelegate.graph getUserWithPhone:participant.phone];
+        if (!graphUser) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Can't Invite User" message:[NSString stringWithFormat:@"%@ %@ is not currently participating in the Stream beta.", participant.firstName, participant.lastName] delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            [alert show];
+            [mParticipants removeObject:participant];
+        }
+    }
+    [mTableView reloadData];
+}
+
 
 @end
