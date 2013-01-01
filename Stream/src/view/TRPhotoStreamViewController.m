@@ -71,6 +71,7 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshStream) name:UIApplicationWillEnterForegroundNotification object:nil];
     if (mMode == kTRPhotoStreamViewModeAll) {
         UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:nil action:nil];
         [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -85,6 +86,10 @@
         [mRefreshControl addTarget:self action:@selector(refreshStream) forControlEvents:UIControlEventValueChanged];
         [mTableView addSubview:mRefreshControl];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self refreshStream];
 }
 
 - (void)didReceiveMemoryWarning
