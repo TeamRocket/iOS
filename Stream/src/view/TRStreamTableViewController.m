@@ -44,6 +44,12 @@
     [mRefreshControl addTarget:self action:@selector(refreshStreams) forControlEvents:UIControlEventValueChanged];
     [mTableView addSubview:mRefreshControl];
     mWasPreviouslyCreatingStream = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshStreams) name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self refreshStreams];
 }
 
 - (void)presentSetup:(id)sender {
