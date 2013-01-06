@@ -46,6 +46,8 @@
 
 - (void)authenitcated {
     [TestFlight passCheckpoint:@"Authenticated"];
+    if (AppDelegate.pushToken != nil)
+        [AppDelegate.graph registerPushToken:AppDelegate.pushToken forPhone:[[NSUserDefaults alloc] objectForKey:@"user_phone"]];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -56,7 +58,10 @@
                                           firstName:[[NSUserDefaults alloc] objectForKey:@"user_first"]
                                            lastName:[[NSUserDefaults alloc] objectForKey:@"user_last"]];
         [AppDelegate.graph addUser:me];
+        AppDelegate.graph.me = me;
         [AppDelegate.graph downloadUserPhotoStreams:me.phone];
+        if (AppDelegate.pushToken != nil)
+            [AppDelegate.graph registerPushToken:AppDelegate.pushToken forPhone:me.phone];
         [self dismissViewControllerAnimated:NO completion:nil];
         [TestFlight passCheckpoint:@"Automatically Logged In"];
     }

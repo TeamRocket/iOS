@@ -34,6 +34,7 @@
     if (self) {
         mStream = stream;
         mMode = mode;
+        mUploading = NO;
         self.title = mStream.name;
         [AppDelegate.graph registerForDelegateCallback:self];
         if (mMode == kTRPhotoStreamViewModeAll) {
@@ -70,6 +71,7 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshStream) name:UIApplicationWillEnterForegroundNotification object:nil];
     if (mMode == kTRPhotoStreamViewModeAll) {
         UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:nil action:nil];
         [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -84,6 +86,10 @@
         [mRefreshControl addTarget:self action:@selector(refreshStream) forControlEvents:UIControlEventValueChanged];
         [mTableView addSubview:mRefreshControl];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self refreshStream];
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,7 +128,7 @@
     if (section == 0) return 1;
     else {
         if (mMode == kTRPhotoStreamViewModeAll) {
-            return (mStream.numPhotos + 2 - 1)/2;
+            return mUploading ? (mStream.numPhotos + 3 - 1)/2 : (mStream.numPhotos + 2 - 1)/2;
         } else {
             return ([mUser getCountOfPhotosInStream:mStream] + 2 - 1)/2;
         }
@@ -174,21 +180,54 @@
         if (cell == nil) {
             cell = [[NSBundle mainBundle] loadNibNamed:@"TRStreamGridViewCell" owner:self options:nil][0];
         }
+        int photoBoxes = mUploading ? [photoArray count] + 1 : [photoArray count];
         TRStreamGridViewCell * gridCell = (TRStreamGridViewCell*)cell;
-        if ([photoArray count] > 0) {
-            if (indexPath.row * 2 < [photoArray count]) {
-                TRPhoto * leftPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
-                [gridCell.leftFrame setTRPhoto:leftPhoto];
-                if (!gridCell.leftFrame.tapRecognizer)
-                    gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
-                else
-                    [gridCell.leftFrame.tapRecognizer addTarget:self action:@selector(tappedPhoto:)];
-                [gridCell.leftFrame setUserInteractionEnabled:YES];
-                [gridCell.leftFrame.tapRecognizer setNumberOfTapsRequired:1];
+        if (photoBoxes > 0) {
+            if (indexPath.row * 2 < photoBoxes) {
+                TRPhoto * leftPhoto;
+                if (mUploading) {
+                    if (indexPath.row == 0) {
+                        if (mProgressBar == nil) {
+                            mProgressBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+                            [mProgressBar setProgressImage:[[UIImage imageNamed:@"progress_bar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0, 6.0, 6.0, 5.5)]];
+                            [mProgressBar setTrackImage:[[UIImage imageNamed:@"progress_bar_bg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0, 6.0, 6.0, 5.5)]];
+                            [mProgressBar setFrame:CGRectMake(0.0f, 114.0f, 100.0f, 11.0f)];
+                            mProgressBar.center = CGPointMake(gridCell.leftFrame.center.x-10.0f, mProgressBar.center.y);
+                        }
+                        [mProgressBar setProgress:0.0f];
+                        [gridCell.leftFrame addSubview:mProgressBar];
+                        [gridCell.leftFrame setImage:[UIImage imageNamed:@"upload_placeholder.png"]];
+                        [gridCell.leftFrame setUserInteractionEnabled:NO];
+                    } else {
+                        leftPhoto = [photoArray objectAtIndex:((indexPath.row) * 2) - 1];
+                        [gridCell.leftFrame setTRPhoto:leftPhoto];
+                        if (!gridCell.leftFrame.tapRecognizer)
+                            gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
+                        else
+                            [gridCell.leftFrame.tapRecognizer addTarget:self action:@selector(tappedPhoto:)];
+                        [gridCell.leftFrame setUserInteractionEnabled:YES];
+                        [gridCell.leftFrame.tapRecognizer setNumberOfTapsRequired:1];
+                    }
+                } else {
+                    leftPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
+                    [gridCell.leftFrame setTRPhoto:leftPhoto];
+                    if (!gridCell.leftFrame.tapRecognizer)
+                        gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
+                    else
+                        [gridCell.leftFrame.tapRecognizer addTarget:self action:@selector(tappedPhoto:)];
+                    [gridCell.leftFrame setUserInteractionEnabled:YES];
+                    [gridCell.leftFrame.tapRecognizer setNumberOfTapsRequired:1];
+                }
+                
                 [gridCell.leftFrame setAlpha:1.0f];
             }
-            if (indexPath.row * 2 + 1 < [photoArray count]) {
-                TRPhoto * rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2) + 1];
+            if (indexPath.row * 2 + 1 < photoBoxes) {
+                TRPhoto * rightPhoto;
+                if (mUploading) {
+                    rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
+                } else {
+                    rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2) + 1];
+                }
                 [gridCell.rightFrame setTRPhoto:rightPhoto];
                 if (!gridCell.rightFrame.tapRecognizer)
                     gridCell.rightFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
@@ -228,6 +267,7 @@
 - (void)tappedPhoto:(UITapGestureRecognizer*)recognizer {
     TRImageView * frame = (TRImageView*)recognizer.view;
     TRPhotoViewController * photoView = [[TRPhotoViewController alloc] initWithNibName:@"TRPhotoViewController" bundle:nil];
+    [photoView setPhotoStream:mStream];
     [photoView.view setBackgroundColor:[UIColor blackColor]];
     TRImageView * largeFrame = [[TRImageView alloc] initWithTRPhoto:frame.TRPhoto
                                                             inFrame:[frame.superview convertRect:frame.frame toView:self.view]];
@@ -256,7 +296,19 @@
     if (mRefreshControl) {
         [mRefreshControl endRefreshing];
     }
+    if (mUploading) {
+        mUploading = NO;
+        [mProgressBar removeFromSuperview];
+        [self refreshStream];
+    }
     [mTableView reloadData];
+}
+
+- (void)uploadedBytes:(int)bytesWritten ofExpected:(int)bytesExpected {
+    mUploading = YES;
+    if (mProgressBar) {
+        [mProgressBar setProgress:((float)bytesWritten)/((float)bytesExpected) animated:YES];
+    }
 }
 
 - (void)refreshStream {
@@ -267,8 +319,9 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    TRPhoto * newPhoto = [[TRPhoto alloc] initWithURL:nil
-                                             uploader:[AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]]];
+    TRPhoto * newPhoto = [[TRPhoto alloc] initWithID:nil
+                                                 URL:nil
+                                            uploader:[AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]]];
     TRImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     if(!image)
         image = [info objectForKey:UIImagePickerControllerOriginalImage];
@@ -285,6 +338,8 @@
 
     newPhoto.image = [TRImage orientImage:image];
     [AppDelegate.graph uploadPhoto:newPhoto toStream:mStream];
+    mUploading = YES;
+    [mTableView reloadData];
     [self dismissViewControllerAnimated:YES completion:nil];
     [TestFlight passCheckpoint:@"Uploaded Picture"];
 }

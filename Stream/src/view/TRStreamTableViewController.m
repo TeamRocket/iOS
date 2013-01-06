@@ -43,10 +43,18 @@
     mRefreshControl = [[UIRefreshControl alloc] init];
     [mRefreshControl addTarget:self action:@selector(refreshStreams) forControlEvents:UIControlEventValueChanged];
     [mTableView addSubview:mRefreshControl];
+    mWasPreviouslyCreatingStream = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshStreams) name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self refreshStreams];
 }
 
 - (void)presentSetup:(id)sender {
     TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithStream:nil];
+    mWasPreviouslyCreatingStream = YES;
     [self.navigationController presentViewController:setup animated:YES completion:nil];
 }
 
@@ -57,8 +65,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    TRUser * loggedInUser = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
-    return [loggedInUser.streams count];
+    return [AppDelegate.graph.me.streams count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -67,8 +74,7 @@
         cell = [[NSBundle mainBundle] loadNibNamed:@"TRStreamCell" owner:self options:nil][0];
     }
 
-    TRUser * loggedInUser = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
-    TRPhotoStream * stream = [loggedInUser.streams objectAtIndex:indexPath.row];
+    TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
     [cell.titleLabel setText:stream.name];
     if (stream.numParticipants == 1) {
         [cell.participantsLabel setText:@"1 Participant"];
@@ -93,8 +99,7 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TRUser * loggedInUser = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
-    TRPhotoStream * stream = [loggedInUser.streams objectAtIndex:indexPath.row];
+    TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
     TRPhotoStreamViewController * streamController = [[TRPhotoStreamViewController alloc] initWithPhotoStream:stream];
     [self.navigationController pushViewController:streamController animated:YES];
 }
@@ -105,11 +110,15 @@
     if (mRefreshControl) {
         [mRefreshControl endRefreshing];
     }
+    if (mWasPreviouslyCreatingStream) {
+        [self refreshStreams];
+        mWasPreviouslyCreatingStream = NO;
+    }
     [mTableView reloadData];
 }
 
 - (void)refreshStreams {
-    [AppDelegate.graph downloadUserPhotoStreams:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
+    [AppDelegate.graph downloadUserPhotoStreams:AppDelegate.graph.me.phone];
 }
 
 @end

@@ -36,4 +36,7 @@
 
 - (void)addParticipant:(TRUser*)newUser;
 
+- (TRPhoto*)photoBefore:(TRPhoto*)photo;
+- (TRPhoto*)photoAfter:(TRPhoto*)photo;
+
 @end
