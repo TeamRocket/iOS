@@ -60,7 +60,7 @@
         mSpinner.center = self.center;
         [mSpinner startAnimating];
         [self addSubview:mSpinner];
-        [AppDelegate.network dataAtURL:url delegate:self];
+        mConnection = [AppDelegate.network dataAtURL:url delegate:self];
     }
     return self;
 }
@@ -71,7 +71,9 @@
     mSpinner.center = self.center;
     [mSpinner startAnimating];
     [self addSubview:mSpinner];
-    [AppDelegate.network dataAtURL:image.url delegate:self];
+    if (mConnection)
+        [mConnection cancel];
+    mConnection = [AppDelegate.network dataAtURL:image.url delegate:self];
 }
 
 - (void)setTRPhoto:(TRPhoto*)photo {
@@ -86,7 +88,9 @@
             mSpinner.center = self.center;
             [mSpinner startAnimating];
             [self addSubview:mSpinner];
-            [AppDelegate.network dataAtURL:photo.URL delegate:self];
+            if (mConnection)
+                [mConnection cancel];
+            mConnection = [AppDelegate.network dataAtURL:photo.URL delegate:self];
         } else 
             [self setTRImage:photo.image];
     }
@@ -127,12 +131,15 @@
 #pragma mark - FCConnectionDelegate
 
 - (void)connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data {
-    [mSpinner stopAnimating];
-    mSpinner = nil;
-    mImage = [[TRImage alloc] initWithData:data fromURL:mImage.url];
-    if (mPhoto != nil)
-        mPhoto.image = mImage;
-    [self setBackgroundColor:[UIColor colorWithPatternImage:[mImage sizedTo:self.frame.size]]];
+    if (connection == mConnection) {
+        mConnection = nil;
+        [mSpinner stopAnimating];
+        mSpinner = nil;
+        mImage = [[TRImage alloc] initWithData:data fromURL:mImage.url];
+        if (mPhoto != nil)
+            mPhoto.image = mImage;
+        [self setBackgroundColor:[UIColor colorWithPatternImage:[mImage sizedTo:self.frame.size]]];
+    }
 }
 
 - (void)connection:(TRConnection *)connection failedWithError:(NSError *)error {

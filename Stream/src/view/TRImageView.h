@@ -18,6 +18,8 @@
     TRPhoto * mPhoto;
     UIActivityIndicatorView * mSpinner;
     UITapGestureRecognizer * mTapRecognizer;
+
+    TRConnection * mConnection;
 }
 
 @property (nonatomic) UITapGestureRecognizer * tapRecognizer;
