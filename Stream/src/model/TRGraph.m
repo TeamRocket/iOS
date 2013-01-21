@@ -87,8 +87,8 @@ typedef enum {
 
 #pragma mark User 
 
-- (void)loginAsUser:(NSString*)first password:(NSString*)password {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/signin.php?first=%@&password=%@", [first encodeString:NSASCIIStringEncoding], [password encodeString:NSASCIIStringEncoding]]
+- (void)loginAsUser:(NSString*)phone password:(NSString*)password {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/sign_in.php?viewer_phone=%@&password=%@", [phone encodeString:NSASCIIStringEncoding], [password encodeString:NSASCIIStringEncoding]]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -96,7 +96,7 @@ typedef enum {
 }
 
 - (void)signupWithPhone:(NSString*)phone first:(NSString*)first last:(NSString*)last password:(NSString*)password {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/signup.php?first=%@&last=%@&phone=%@&password=%@",
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://75.101.134.112/stream/1.0/api/sign_up.php?viewer_first=%@&viewer_last=%@&viewer_phone=%@&password=%@",
                                                                                [first encodeString:NSASCIIStringEncoding],
                                                                                [last encodeString:NSASCIIStringEncoding],
                                                                                [phone encodeString:NSASCIIStringEncoding],
@@ -108,12 +108,12 @@ typedef enum {
 }
 
 - (void)p_receivedLoginResponse:(NSDictionary*)info {
-    if (info) {
-        TRUser * user = [self getUserWithPhone:[info objectForKey:@"phone"]];
-        if (user == nil && ![[info objectForKey:@"value"] isEqualToString:@"false"] && ![[info objectForKey:@"value"] isEqualToString:@""]) {
-            user = [[TRUser alloc] initWithPhone:[info objectForKey:@"phone"]
-                                       firstName:[info objectForKey:@"first"]
-                                        lastName:[info objectForKey:@"last"]];
+    if (info && [[info objectForKey:@"status"] isEqualToString:@"ok"]) {
+        TRUser * user = [self getUserWithPhone:[info objectForKey:@"viewer_phone"]];
+        if (user == nil) {
+            user = [[TRUser alloc] initWithPhone:[info objectForKey:@"viewer_phone"]
+                                       firstName:[info objectForKey:@"viewer_first"]
+                                        lastName:[info objectForKey:@"viewer_last"]];
             [self addUser:user];
         }
         mMe = user;

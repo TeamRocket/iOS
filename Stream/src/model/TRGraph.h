@@ -41,7 +41,7 @@
 - (void)registerForDelegateCallback:(id<TRGraphDelegate>)delegate;
 - (void)unregisterForDelegateCallback:(id<TRGraphDelegate>)delegate;
 
-- (void)loginAsUser:(NSString*)first password:(NSString*)password;
+- (void)loginAsUser:(NSString*)phone password:(NSString*)password;
 - (void)addUser:(TRUser*)user;
 - (void)signupWithPhone:(NSString*)phone first:(NSString*)first last:(NSString*)last password:(NSString*)password;
 - (TRUser*)getUserWithPhone:(NSString*)phone;
