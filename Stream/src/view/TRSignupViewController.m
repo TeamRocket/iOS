@@ -38,6 +38,9 @@
         [alert show];
         [mPasswordField setText:@""];
         [mConfirmPasswordField setText:@""];
+    } else if ([mFirstNameField.text isEqualToString:@""] || [mLastNameField.text isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signup Error" message:@"First and last names required." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
     } else {
         [AppDelegate.graph registerForDelegateCallback:self];
         [AppDelegate.graph signupWithPhone:mPhoneField.text first:mFirstNameField.text last:mLastNameField.text password:mPasswordField.text];
