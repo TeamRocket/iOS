@@ -33,7 +33,18 @@
 }
 
 - (IBAction)pressedSignup:(id)sender {
-    if (![mPasswordField.text isEqualToString:@""] && [mPasswordField.text isEqualToString:mConfirmPasswordField.text]) {
+    if ([mPasswordField.text isEqualToString:@""] || ![mPasswordField.text isEqualToString:mConfirmPasswordField.text]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signup Error" message:@"Your passwords don't match" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+        [mPasswordField setText:@""];
+        [mConfirmPasswordField setText:@""];
+    } else if ([mFirstNameField.text isEqualToString:@""] || [mLastNameField.text isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signup Error" message:@"First and last names required." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+    } else if ([mPhoneField.text isEqualToString:@""] || [mPhoneField.text length] < 10 || [mPhoneField.text length] > 11) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signup Error" message:@"Invalid phone number." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+    } else {
         [AppDelegate.graph registerForDelegateCallback:self];
         [AppDelegate.graph signupWithPhone:mPhoneField.text first:mFirstNameField.text last:mLastNameField.text password:mPasswordField.text];
     }
@@ -253,7 +264,8 @@
         [AppDelegate.graph unregisterForDelegateCallback:self];
         [TestFlight passCheckpoint:@"Signed Up"];
     } else {
-        NSLog(@"Signup error");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signup Error" message:@"Ensure that you have not already registered and try again later." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
     }
 }
 

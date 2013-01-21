@@ -142,7 +142,8 @@
         [AppDelegate.graph unregisterForDelegateCallback:self];
         [TestFlight passCheckpoint:@"Logged In"];
     } else {
-        NSLog(@"Login error");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signin Error" message:@"You entered an incorrect phone number or password." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
     }
 }
 
