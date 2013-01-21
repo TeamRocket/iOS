@@ -128,7 +128,9 @@
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     TRConnection * conn = (TRConnection*)connection;
     if (CFDictionaryContainsKey(mActiveConnections, (__bridge const void *)conn)) {
-        [conn.delegate connection:conn didSendBodyData:bytesWritten totalBytesWritten:totalBytesWritten totalBytesExpectedToWrite:totalBytesExpectedToWrite];
+        if ([conn.delegate respondsToSelector:@selector(connection:didSendBodyData:totalBytesWritten:totalBytesExpectedToWrite:)]) {
+            [conn.delegate connection:conn didSendBodyData:bytesWritten totalBytesWritten:totalBytesWritten totalBytesExpectedToWrite:totalBytesExpectedToWrite];
+        }
     } else
         NSLog(@"Response was never created...");
 }
