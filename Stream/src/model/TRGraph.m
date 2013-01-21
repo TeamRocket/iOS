@@ -96,7 +96,7 @@ typedef enum {
 }
 
 - (void)signupWithPhone:(NSString*)phone first:(NSString*)first last:(NSString*)last password:(NSString*)password {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://75.101.134.112/stream/1.0/api/sign_up.php?viewer_first=%@&viewer_last=%@&viewer_phone=%@&password=%@",
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/sign_up.php?viewer_first=%@&viewer_last=%@&viewer_phone=%@&password=%@",
                                                                                [first encodeString:NSASCIIStringEncoding],
                                                                                [last encodeString:NSASCIIStringEncoding],
                                                                                [phone encodeString:NSASCIIStringEncoding],
