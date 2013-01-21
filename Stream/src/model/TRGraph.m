@@ -148,7 +148,7 @@ typedef enum {
 }
 
 - (void)registerPushToken:(NSString*)token forPhone:(NSString*)phone {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/registerPushToken.php?phone=%@&token=%@", phone, token]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/register_push_token.php?viewer_phone=%@&token=%@", phone, token]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -178,7 +178,7 @@ typedef enum {
 #pragma mark Photo
 
 - (void)sendLikePhoto:(NSString*)ID forPhone:(NSString*)phone{
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/likePicture.php?phone=%@&pictureID=%@", phone, ID]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/like_picture.php?liker_phone=%@&picture_id=%@", phone, ID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -186,7 +186,7 @@ typedef enum {
 }
 
 - (void)sendUnlikePhoto:(NSString*)ID forPhone:(NSString*)phone{
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/unlikePicture.php?phone=%@&pictureID=%@", phone, ID]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/unlike_picture.php?liker_phone=%@&picture_id=%@", phone, ID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -194,7 +194,7 @@ typedef enum {
 }
 
 - (void)downloadPhotoInfo:(NSString*)ID {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/getPictureMetadata2.php?pictureID=%@", ID]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/get_picture_metadata.php?viewer_phone=%@&picture_id=%@",mMe.phone, ID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -202,28 +202,28 @@ typedef enum {
 }
 
 - (void)p_downloadedPhotoInfo:(NSDictionary*)info {
-    if ([info objectForKey:@"pictureID"]) {
-        TRPhoto * photo = [self getPhotoWithID:[info objectForKey:@"pictureID"]];
+    if (info && [[info objectForKey:@"status"] isEqualToString:@"ok"]) {
+        TRPhoto * photo = [self getPhotoWithID:[info objectForKey:@"picture_id"]];
         if (!photo) {
-            photo = [[TRPhoto alloc] initWithID:[info objectForKey:@"pictureID"]
+            photo = [[TRPhoto alloc] initWithID:[info objectForKey:@"picture_id"]
                                             URL:[NSURL URLWithString:[info objectForKey:@"picture_url"]]
                                        uploader:nil];
             [self addPhoto:photo];
         }
-        if ([info objectForKey:@"uploaderPhone"]) {
-            TRUser * user = [self getUserWithPhone:[info objectForKey:@"uploaderPhone"]];
+        if ([info objectForKey:@"uploader_phone"]) {
+            TRUser * user = [self getUserWithPhone:[info objectForKey:@"uploader_phone"]];
             if (user == nil) {
-                user = [[TRUser alloc] initWithPhone:[info objectForKey:@"uploaderPhone"]
-                                           firstName:[info objectForKey:@"uploaderFirstName"]
-                                            lastName:[info objectForKey:@"uploaderLastName"]];
+                user = [[TRUser alloc] initWithPhone:[info objectForKey:@"uploader_phone"]
+                                           firstName:[info objectForKey:@"uploader_first"]
+                                            lastName:[info objectForKey:@"uploader_last"]];
                 [self addUser:user];
             } else {
-                user.firstName = [info objectForKey:@"uploaderFirstName"];
-                user.lastName = [info objectForKey:@"uploaderLastName"];
+                user.firstName = [info objectForKey:@"uploader_first"];
+                user.lastName = [info objectForKey:@"uploader_last"];
             }
             photo.uploader = user;
         }
-        photo.numLikes = [[info objectForKey:@"numberOfLikes"] intValue];
+        photo.numLikes = [[info objectForKey:@"picture_likecount"] intValue];
     }
 }
 
@@ -239,10 +239,10 @@ typedef enum {
 - (void)uploadPhoto:(TRPhoto*)photo toStream:(TRPhotoStream*)stream {
     if (photo.uploader.phone && photo.image && stream.ID) {
         NSDictionary * args = [NSDictionary dictionaryWithObjectsAndKeys:
-                               photo.uploader.phone, @"phoneNumber",
-                               stream.ID, @"streamID",
+                               photo.uploader.phone, @"uploader_phone",
+                               stream.ID, @"stream_id",
                                nil];
-        TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"upload/upload_file.php"
+        TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"stream/1.0/api/upload_file.php"
                                                                     relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
                                                    arguments:args
                                                         data:UIImageJPEGRepresentation((UIImage*)photo.image, 0.75)
@@ -261,7 +261,7 @@ typedef enum {
 }
 
 - (void)downloadUserPhotos:(NSString*)phone inStream:(NSString*)streamID {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/getUserPhotos2.php?viewerPhone=%@&streamerPhone=%@&streamID=%@", mMe.phone, phone, streamID]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/get_pictures_uploaded_by_user.php?viewer_phone=%@&uploader_phone=%@&stream_id=%@", mMe.phone, phone, streamID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -269,21 +269,21 @@ typedef enum {
 }
 
 - (void)p_downloadedUserPhotos:(NSDictionary*)info {
-    if (info != nil) {
-        TRPhotoStream * stream = [self getStreamWithID:[info objectForKey:@"streamID"]];
+    if (info && [[info objectForKey:@"status"] isEqualToString:@"ok"]) {
+        TRPhotoStream * stream = [self getStreamWithID:[info objectForKey:@"stream_id"]];
         if (stream != nil) {
-            TRUser * user = [self getUserWithPhone:[info objectForKey:@"phone"]];
+            TRUser * user = [self getUserWithPhone:[info objectForKey:@"uploader_phone"]];
             if (user == nil) {
-                user = [[TRUser alloc] initWithPhone:[info objectForKey:@"phone"]
+                user = [[TRUser alloc] initWithPhone:[info objectForKey:@"uploader_phone"]
                                            firstName:nil lastName:nil];
                 [self addUser:user];
             }
             NSArray * photos = [info objectForKey:@"pictures"];
             for (NSDictionary * photoInfo in photos) {
-                TRPhoto * photo = [self getPhotoWithID:[photoInfo objectForKey:@"id"]];
+                TRPhoto * photo = [self getPhotoWithID:[photoInfo objectForKey:@"picture_id"]];
                 if (photo == nil) {
-                    photo = [[TRPhoto alloc] initWithID:[photoInfo objectForKey:@"id"]
-                                                    URL:[NSURL URLWithString:[photoInfo objectForKey:@"url"]]
+                    photo = [[TRPhoto alloc] initWithID:[photoInfo objectForKey:@"picture_id"]
+                                                    URL:[NSURL URLWithString:[photoInfo objectForKey:@"picture_tinyurl"]]
                                                uploader:user];
                     [self addPhoto:photo];
                     [stream addPhoto:photo];
@@ -295,7 +295,7 @@ typedef enum {
 }
 
 - (void)downloadLikesForPhoto:(NSString*)ID {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/getPeopleWhoLike2.php?pictureID=%@", ID]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/get_users_who_like.php?picture_id=%@", ID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -304,15 +304,15 @@ typedef enum {
 
 - (void)p_downloadedLikes:(NSDictionary*)info {
     if (info != nil) {
-        TRPhoto * photo = [self getPhotoWithID:[info objectForKey:@"pictureID"]];
+        TRPhoto * photo = [self getPhotoWithID:[info objectForKey:@"picture_id"]];
         NSArray * likers = [info objectForKey:@"likers"];
         if (photo != nil) {
             for (NSDictionary * likerInfo in likers) {
-                TRUser * user = [self getUserWithPhone:[likerInfo objectForKey:@"phone"]];
+                TRUser * user = [self getUserWithPhone:[likerInfo objectForKey:@"liker_phone"]];
                 if (user == nil) {
-                    user = [[TRUser alloc] initWithPhone:[likerInfo objectForKey:@"phone"]
-                                               firstName:[likerInfo objectForKey:@"first"]
-                                                lastName:[likerInfo objectForKey:@"last"]];
+                    user = [[TRUser alloc] initWithPhone:[likerInfo objectForKey:@"liker_phone"]
+                                               firstName:[likerInfo objectForKey:@"liker_first"]
+                                                lastName:[likerInfo objectForKey:@"liker_last"]];
                     [self addUser:user];
                 }
                 [photo addLiker:user];
@@ -333,44 +333,47 @@ typedef enum {
 }
 
 - (void)downloadUserPhotoStreams:(NSString*)phone {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/populateStreamNewsfeed2.php?phone=%@", phone]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/populate_user_streams.php?viewer_phone=%@", phone]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
                          (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskDownloadUserPhotoStreams]);
 }
 
-- (void)p_downloadedUserPhotoStreams:(NSDictionary*)data {
-    for (NSString * ID in data) {
-        NSDictionary * streamData = [data objectForKey:ID];
-        TRPhotoStream * newStream = [self getStreamWithID:ID];
-        if (newStream == nil) {
-            newStream = [[TRPhotoStream alloc] initWithID:ID name:[streamData objectForKey:@"streamName"]
-                                             participants:[[streamData objectForKey:@"numberOfParticipants"] intValue]
-                                                   photos:[[streamData objectForKey:@"numberOfPictures"] intValue]];
-            [self addStream:newStream];
-        } else {
-            newStream.name = [streamData objectForKey:@"streamName"];
-            newStream.numParticipants = [[streamData objectForKey:@"numberOfParticipants"] intValue];
-            newStream.numPhotos = [[streamData objectForKey:@"numberOfPictures"] intValue];
-        }
-        NSDictionary * latestInfo = [streamData objectForKey:@"latestPicture"];
-        if (![[NSNull null] isEqual:latestInfo]) {
-            TRPhoto * latestPhoto = [self getPhotoWithID:[latestInfo objectForKey:@"id"]];
-            if (latestPhoto == nil) {
-                latestPhoto = [[TRPhoto alloc] initWithID:[latestInfo objectForKey:@"id"]
-                                                      URL:[NSURL URLWithString:[latestInfo objectForKey:@"url"]]
-                                                 uploader:nil];
-                [self addPhoto:latestPhoto];
+- (void)p_downloadedUserPhotoStreams:(NSDictionary*)info {
+    if (info && [[info objectForKey:@"status"] isEqualToString:@"ok"]) {
+        NSArray * streamInfos = [info objectForKey:@"streams"];
+        for (NSDictionary * streamInfo in streamInfos) {
+            TRPhotoStream * newStream = [self getStreamWithID:[streamInfo objectForKey:@"stream_id"]];
+            if (newStream == nil) {
+                newStream = [[TRPhotoStream alloc] initWithID:[streamInfo objectForKey:@"stream_id"]
+                                                         name:[streamInfo objectForKey:@"stream_name"]
+                                                 participants:[[streamInfo objectForKey:@"stream_usercount"] intValue]
+                                                       photos:[[streamInfo objectForKey:@"picture_count"] intValue]];
+                [self addStream:newStream];
+            } else {
+                newStream.name = [streamInfo objectForKey:@"stream_name"];
+                newStream.numParticipants = [[streamInfo objectForKey:@"stream_usercount"] intValue];
+                newStream.numPhotos = [[streamInfo objectForKey:@"picture_count"] intValue];
             }
-            [newStream addPhotoAsLatest:latestPhoto];
+            NSDictionary * latestPictureInfo = [streamInfo objectForKey:@"picture_latest"];
+            if (![[NSNull null] isEqual:latestPictureInfo]) {
+                TRPhoto * latestPhoto = [self getPhotoWithID:[latestPictureInfo objectForKey:@"picture_id"]];
+                if (latestPhoto == nil) {
+                    latestPhoto = [[TRPhoto alloc] initWithID:[latestPictureInfo objectForKey:@"picture_id"]
+                                                          URL:[NSURL URLWithString:[latestPictureInfo objectForKey:@"picture_tinyurl"]]
+                                                     uploader:nil];
+                    [self addPhoto:latestPhoto];
+                }
+                [newStream addPhotoAsLatest:latestPhoto];
+            }
+            [mMe addStream:newStream];
         }
-        [mMe addStream:newStream];
     }
 }
 
 - (void)downloadStreamInfo:(NSString*)stream forPhone:(NSString*)phone {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/populateStreamProfile2.php?phone=%@&streamID=%@", phone, stream]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/populate_stream_profile.php?viewer_phone=%@&stream_id=%@", phone, stream]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -378,25 +381,28 @@ typedef enum {
 }
 
 - (void)p_downloadedStreamInfo:(NSDictionary*)info {
-    TRPhotoStream * stream = [self getStreamWithID:[info objectForKey:@"streamID"]];
-    if (stream != nil) {
-        NSArray * pictures = [info objectForKey:@"pictures"];
-        for (NSDictionary * photoInfo in pictures) {
-            if (photoInfo) {
-                TRPhoto * newPhoto = [self getPhotoWithID:[photoInfo objectForKey:@"pictureID"]];
-                if (newPhoto == nil) {
-                    newPhoto = [[TRPhoto alloc] initWithID:[photoInfo objectForKey:@"pictureID"]
-                                                       URL:[NSURL URLWithString:[photoInfo objectForKey:@"url"]]
-                                                  uploader:nil];
-                    [self addPhoto:newPhoto];
+    if (info && [[info objectForKey:@"status"] isEqualToString:@"ok"]) {
+        TRPhotoStream * stream = [self getStreamWithID:[info objectForKey:@"stream_id"]];
+        if (stream != nil) {
+            NSArray * pictures = [info objectForKey:@"pictures"];
+            for (NSDictionary * photoInfo in pictures) {
+                if (photoInfo) {
+                    TRPhoto * newPhoto = [self getPhotoWithID:[photoInfo objectForKey:@"picture_id"]];
+                    if (newPhoto == nil) {
+                        newPhoto = [[TRPhoto alloc] initWithID:[photoInfo objectForKey:@"picture_id"]
+                                                           URL:[NSURL URLWithString:[photoInfo objectForKey:@"picture_tinyurl"]]
+                                                      uploader:nil];
+                        [self addPhoto:newPhoto];
+                    }
+                    [stream addPhoto:newPhoto];
+                    stream.numPhotos = [stream.photos count];
                 }
-                [stream addPhoto:newPhoto];
-                stream.numPhotos = [stream.photos count];
+            }
+            if ([pictures count] > 0) {
+                [stream addPhotoAsLatest: [self getPhotoWithID:[[pictures objectAtIndex:0] objectForKey:@"picture_id"]]];
             }
         }
-        if ([pictures count] > 0) {
-            [stream addPhotoAsLatest: [self getPhotoWithID:[[pictures objectAtIndex:0] objectForKey:@"pictureID"]]];
-        }
+        [stream setName:[info objectForKey:@"stream_name"]];
     }
 }
 
@@ -417,7 +423,7 @@ typedef enum {
             [scanner setScanLocation:([scanner scanLocation] + 1)];
         }
     }
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/createStream.php?phone=%@&streamName=%@&invitees=%@", phone, [streamName encodeString:NSASCIIStringEncoding], strippedString]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/create_stream.php?inviter_phone=%@&invitees_phone=%@&stream_name=%@", phone, strippedString, [streamName encodeString:NSASCIIStringEncoding]]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -458,7 +464,7 @@ typedef enum {
 }
 
 - (void)downloadParticipantsInStream:(NSString*)streamID {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/getPeopleInStream1.php?streamID=%@", streamID]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/get_users_in_stream.php?stream_id=%@", streamID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
@@ -466,18 +472,18 @@ typedef enum {
 }
 
 - (void)p_downloadedParticipants:(NSDictionary*)info {
-    if (info != nil) {
-        TRPhotoStream * stream = [self getStreamWithID:[info objectForKey:@"streamID"]];
-        NSArray * participants = [info objectForKey:@"participants"];
+    if (info && [[info objectForKey:@"status"] isEqualToString:@"ok"]) {
+        TRPhotoStream * stream = [self getStreamWithID:[info objectForKey:@"stream_id"]];
+        NSArray * participants = [info objectForKey:@"users"];
         for (NSDictionary * participantInfo in participants) {
-            TRUser * user = [self getUserWithPhone:[participantInfo objectForKey:@"phone"]];
+            TRUser * user = [self getUserWithPhone:[participantInfo objectForKey:@"uploader_phone"]];
             if (user == nil) {
-                user = [[TRUser alloc] initWithPhone:[participantInfo objectForKey:@"phone"]
-                                           firstName:[participantInfo objectForKey:@"first"]
-                                            lastName:[participantInfo objectForKey:@"last"]];
+                user = [[TRUser alloc] initWithPhone:[participantInfo objectForKey:@"uploader_phone"]
+                                           firstName:[participantInfo objectForKey:@"uploader_first"]
+                                            lastName:[participantInfo objectForKey:@"uploader_last"]];
                 [self addUser:user];
             }
-            [user setCountOfPhotos:[[participantInfo objectForKey:@"numberOfPhotos"] intValue] inStream:stream];
+            [user setCountOfPhotos:[[participantInfo objectForKey:@"uploader_picturecount"] intValue] inStream:stream];
             [stream addParticipant:user];
         }
     }
