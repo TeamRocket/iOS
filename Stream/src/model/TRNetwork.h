@@ -11,7 +11,7 @@
 @class TRNetwork;
 @class TRConnection;
 
-@protocol TRConnectionDelegate
+@protocol TRConnectionDelegate <NSObject>
 
 - (void)connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data;
 - (void)connection:(TRConnection *)connection failedWithError:(NSError *)error;
