@@ -33,7 +33,12 @@
 }
 
 - (IBAction)pressedSignup:(id)sender {
-    if (![mPasswordField.text isEqualToString:@""] && [mPasswordField.text isEqualToString:mConfirmPasswordField.text]) {
+    if ([mPasswordField.text isEqualToString:@""] || ![mPasswordField.text isEqualToString:mConfirmPasswordField.text]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signup Error" message:@"Your passwords don't match" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+        [mPasswordField setText:@""];
+        [mConfirmPasswordField setText:@""];
+    } else {
         [AppDelegate.graph registerForDelegateCallback:self];
         [AppDelegate.graph signupWithPhone:mPhoneField.text first:mFirstNameField.text last:mLastNameField.text password:mPasswordField.text];
     }
