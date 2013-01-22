@@ -271,7 +271,6 @@
     [photoView.view setBackgroundColor:[UIColor blackColor]];
     TRImageView * largeFrame = [[TRImageView alloc] initWithTRPhoto:frame.TRPhoto
                                                             inFrame:[frame.superview convertRect:frame.frame toView:self.view]];
-    [largeFrame setPictureFrame:YES];
     largeFrame.center = CGPointMake(largeFrame.center.x,
                                     largeFrame.center.y + self.navigationController.navigationBar.frame.size.height);
     [photoView setPhotoView:largeFrame];

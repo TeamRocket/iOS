@@ -31,8 +31,8 @@
 - (void)setTRImage:(TRImage*)image;
 - (void)setTRPhoto:(TRPhoto*)photo;
 
-- (void)setPictureFrame:(BOOL)frame;
-- (void)setPictureBorder:(BOOL)border;
-- (void)setPictureShadow:(BOOL)shadow;
+- (void)setPlaceholder;
+
+- (void)setPictureInnerShadow:(BOOL)shadow;
 
 @end

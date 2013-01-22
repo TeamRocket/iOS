@@ -66,7 +66,7 @@
 }
 
 - (void)setTRImage:(TRImage*)image {
-    [self setBackgroundColor:[UIColor whiteColor]];
+    [self setPlaceholder];
     mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     mSpinner.center = self.center;
     [mSpinner startAnimating];
@@ -81,7 +81,7 @@
         [self setBackgroundColor:[UIColor colorWithPatternImage:[mPhoto.image sizedTo:self.frame.size]]];
     } else {
         if (!photo.image) {
-            [self setBackgroundColor:[UIColor whiteColor]];
+            [self setPlaceholder];
             mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
             mSpinner.center = self.center;
             [mSpinner startAnimating];
@@ -92,31 +92,23 @@
     }
 }
 
-- (void)setPictureFrame:(BOOL)frame {
-    [self setPictureBorder:frame];
-    [self setPictureShadow:frame];
-    [self.layer setShouldRasterize:YES];
-}
-
-- (void)setPictureBorder:(BOOL)border {
-    if (border) {
-        [self.layer setBorderColor:[UIColor whiteColor].CGColor];
-        [self.layer setBorderWidth:5.0f];
-    } else {
-        [self.layer setBorderWidth:0.0f];
-    }
-}
-
-- (void)setPictureShadow:(BOOL)shadow {
+- (void)setPictureInnerShadow:(BOOL)shadow {
     if (shadow) {
-        [self.layer setShadowColor:[UIColor blackColor].CGColor];
-        [self.layer setShadowOpacity:0.5];
-        [self.layer setShadowRadius:2.0];
-        [self.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
+        CALayer *innerShadowLayer = [CALayer layer];
+        innerShadowLayer.frame = CGRectMake(0.0, 0.0,
+                                            self.layer.frame.size.width, self.layer.frame.size.height);
+        innerShadowLayer.contents = (id)[UIImage imageNamed: @"inner_shadow.png"].CGImage;
+        innerShadowLayer.contentsCenter = CGRectMake(12.0f/36.0f, 12.0f/36.0f, 1.0f/36.0f, 1.0f/36.0f);
+        [self.layer insertSublayer:innerShadowLayer atIndex:0];
+        [self.layer setShouldRasterize:YES];
     } else {
-        [self.layer setShadowOpacity:0.0f];
-        [self.layer setShadowRadius:0.0f];
+        if ([[self.layer sublayers] count] > 1)
+            [[[self.layer sublayers] objectAtIndex:0] removeFromSuperlayer];
     }
+}
+
+- (void)setPlaceholder {
+    [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"upload_placeholder.png"]]];
 }
 
 - (void)setTapRecognizer:(UITapGestureRecognizer *)tapRecognizer {

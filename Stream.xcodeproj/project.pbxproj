@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A14A3F016AE6B5000688B51 /* inner_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A14A3EE16AE6B5000688B51 /* inner_shadow.png */; };
+		0A14A3F116AE6B5000688B51 /* inner_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A14A3EF16AE6B5000688B51 /* inner_shadow@2x.png */; };
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
@@ -133,6 +135,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A14A3EE16AE6B5000688B51 /* inner_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inner_shadow.png; path = img/UI/inner_shadow.png; sourceTree = "<group>"; };
+		0A14A3EF16AE6B5000688B51 /* inner_shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "inner_shadow@2x.png"; path = "img/UI/inner_shadow@2x.png"; sourceTree = "<group>"; };
 		0A3890CF1664AFC7002E8BC1 /* Stream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -484,6 +488,8 @@
 				0A457697167D7F5600848D8E /* heart_unlike_large@2x.png */,
 				0A457698167D7F5600848D8E /* heart_white_small.png */,
 				0A457699167D7F5600848D8E /* heart_white_small@2x.png */,
+				0A14A3EE16AE6B5000688B51 /* inner_shadow.png */,
+				0A14A3EF16AE6B5000688B51 /* inner_shadow@2x.png */,
 				0A510B031678600D00E2012F /* navbaritem.png */,
 				0A510B041678600D00E2012F /* navbaritem@2x.png */,
 				0A510AFF16785D7300E2012F /* navbarback.png */,
@@ -690,6 +696,8 @@
 				0AAE997C1691A0910012B826 /* progress_bar_bg@2x.png in Resources */,
 				0AAE997D1691A0910012B826 /* progress_bar.png in Resources */,
 				0AAE997E1691A0910012B826 /* progress_bar@2x.png in Resources */,
+				0A14A3F016AE6B5000688B51 /* inner_shadow.png in Resources */,
+				0A14A3F116AE6B5000688B51 /* inner_shadow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,8 +803,6 @@
 		0A3890EE1664AFC7002E8BC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Stream/misc/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Stream/misc/Info.plist";
@@ -806,7 +812,6 @@
 					"\"$(SRCROOT)/Stream/misc\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D481C269-4D2A-4E55-AC3B-18CFC46FA3D0";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -815,8 +820,6 @@
 		0A3890EF1664AFC7002E8BC1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Stream/misc/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Stream/misc/Info.plist";
@@ -826,7 +829,6 @@
 					"\"$(SRCROOT)/Stream/misc\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D481C269-4D2A-4E55-AC3B-18CFC46FA3D0";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

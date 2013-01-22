@@ -80,7 +80,6 @@
                                                  inFrame:CGRectMake(mImageView.frame.origin.x - self.view.frame.size.width,
                                                                     mImageView.frame.origin.y,
                                                                     mImageView.frame.size.width, mImageView.frame.size.height)];
-        [mPrevView setPictureBorder:YES];
         [mScroller addSubview:mPrevView];
         [mScroller setContentInset:UIEdgeInsetsMake(0.0, 0.0, 0.0, mScroller.contentInset.right)];
     } else {
@@ -103,7 +102,6 @@
                                                  inFrame:CGRectMake(mImageView.frame.origin.x + self.view.frame.size.width,
                                                                     mImageView.frame.origin.y,
                                                                     mImageView.frame.size.width, mImageView.frame.size.height)];
-        [mNextView setPictureBorder:YES];
         [mScroller addSubview:mNextView];
         [mScroller setContentInset:UIEdgeInsetsMake(0.0, mScroller.contentInset.left, 0.0, 0.0)];
     } else {
@@ -128,7 +126,6 @@
         //mImageView.center = CGPointMake(self.view.center.x + self.view.frame.size.width,
         //                                self.view.center.y - mScroller.frame.origin.y);
         mImageView.center = self.view.center;
-        [mImageView.layer setBorderWidth:mImageView.layer.borderWidth / (IMAGE_SIZE/mImageView.frame.size.width)];
         [mImageView setTransform:CGAffineTransformMakeScale(IMAGE_SIZE/mImageView.frame.size.width,
                                                             IMAGE_SIZE/mImageView.frame.size.height)];
         [UIView commitAnimations];
@@ -147,7 +144,6 @@
     [mScroller addSubview:mImageView];
     mImageView.center = CGPointMake(mScroller.contentSize.width/2, self.view.center.y - mScroller.frame.origin.y);
     [mImageView setTRPhoto:mPhoto];
-    [mImageView setPictureBorder:YES];
 
     [self setPrevPhoto:[mStream photoBefore:mPhoto]];
     [self setNextPhoto:[mStream photoAfter:mPhoto]];
