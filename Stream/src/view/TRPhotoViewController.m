@@ -173,6 +173,26 @@
     [self setNextPhoto:[mStream photoAfter:mPhoto]];
 }
 
+- (void)updateIndicators {
+    if (mPhoto.uploader) {
+        [mUploaderLabel setText:[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName]];
+    }
+    if (mPhoto.numLikes == 1) {
+        [mLikeCountButton setTitle:@"1 Like" forState:UIControlStateNormal];
+    } else {
+        [mLikeCountButton setTitle:[NSString stringWithFormat:@"%i Likes", mPhoto.numLikes] forState:UIControlStateNormal];
+    }
+    CGSize labelSize = [mLikeCountButton.titleLabel.text sizeWithFont:mLikeCountButton.titleLabel.font];
+    mLikeIndicator.center = CGPointMake(mLikeCountButton.frame.origin.x + mLikeCountButton.frame.size.width - labelSize.width - mLikeIndicator.frame.size.width, mLikeCountButton.center.y);
+    if ([mPhoto.likers containsObject:AppDelegate.graph.me]) {
+        [mLikeIndicator setImage:[UIImage imageNamed:@"heart_red_small.png"]];
+        [mLikeButton setTitle:@"Unlike" forState:UIControlStateNormal];
+    } else {
+        [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
+        [mLikeButton setTitle:@"Like" forState:UIControlStateNormal];
+    }
+}
+
 - (IBAction)likeButtonPressed:(id)sender {
     mLikeOverlayView.center = self.view.center;
     [self.view bringSubviewToFront:mLikeOverlayView];
@@ -245,21 +265,7 @@
 #pragma mark - TRGraphDelegate
 
 - (void)graphFinishedUpdating {
-    [mUploaderLabel setText:[[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName] uppercaseString]];
-    if (mPhoto.numLikes == 1) {
-        [mLikeCountButton setTitle:@"1 Like" forState:UIControlStateNormal];
-    } else {
-        [mLikeCountButton setTitle:[NSString stringWithFormat:@"%i Likes", mPhoto.numLikes] forState:UIControlStateNormal];
-    }
-    CGSize labelSize = [mLikeCountButton.titleLabel.text sizeWithFont:mLikeCountButton.titleLabel.font];
-    mLikeIndicator.center = CGPointMake(mLikeCountButton.frame.origin.x + mLikeCountButton.frame.size.width - labelSize.width - mLikeIndicator.frame.size.width, mLikeCountButton.center.y);
-    if ([mPhoto.likers containsObject:AppDelegate.graph.me]) {
-        [mLikeIndicator setImage:[UIImage imageNamed:@"heart_red_small.png"]];
-        [mLikeButton setTitle:@"Unlike" forState:UIControlStateNormal];
-    } else {
-        [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
-        [mLikeButton setTitle:@"Like" forState:UIControlStateNormal];
-    }
+    [self updateIndicators];
     if (mPrevPhoto != [mStream photoBefore:mPhoto]) {
         [self setPrevPhoto:[mStream photoBefore:mPhoto]];
     }
@@ -283,6 +289,7 @@
     }
     [mScroller scrollRectToVisible:CGRectMake(index*mScroller.frame.size.width, 0.0, mScroller.frame.size.width, mScroller.frame.size.height) animated:animated];
     mCurrentIndex = index;
+    [self updateIndicators];
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
