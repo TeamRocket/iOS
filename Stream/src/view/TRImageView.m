@@ -120,7 +120,11 @@
 }
 
 - (void)setPlaceholder {
-    [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"upload_placeholder.png"]]];
+    if (CGSizeEqualToSize(self.frame.size, CGSizeMake(145.0f, 145.0f))) {
+        [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"upload_placeholder.png"]]];
+    } else {
+        [self setBackgroundColor:[UIColor blackColor]];
+    }
 }
 
 - (void)setTapRecognizer:(UITapGestureRecognizer *)tapRecognizer {

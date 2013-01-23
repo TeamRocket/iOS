@@ -31,19 +31,19 @@
 - (void)viewDidLoad{
     [mDeleteButton removeFromSuperview];
     [mUploaderLabel setFont:[UIFont fontWithName:@"MuseoSans-300" size:22.0]];
-    [mLikeButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:20.0]];
-    [mLikeCountButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:20.0]];
-    mLikeOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, IMAGE_SIZE - 10.0f, IMAGE_SIZE - 10.0f)];
+    [mLikeButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
+    [mLikeCountButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
+    mLikeOverlayView = [[UIView alloc] initWithFrame:mScroller.frame];
     [mLikeOverlayView setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.8f]];
     
     mLikeOverlayImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart_red_large.png"]];
     mLikeOverlayImage.center = CGPointMake(mLikeOverlayView.frame.size.width/2,
-                                           mLikeOverlayView.frame.size.height/2);
+                                           mLikeOverlayView.frame.size.height/2 - TOOLBAR_HEIGHT);
     mLikeOverlayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, mLikeOverlayImage.frame.origin.y + mLikeOverlayImage.frame.size.height + 5.0f, 300.0f, 25.0f)];
     mLikeOverlayLabel.center = CGPointMake(mLikeOverlayImage.center.x, mLikeOverlayLabel.center.y);
     [mLikeOverlayView addSubview:mLikeOverlayImage];
     [mLikeOverlayView addSubview:mLikeOverlayLabel];
-    [mLikeOverlayLabel setText:@"Liked!"];
+    [mLikeOverlayLabel setText:@"Liked"];
     [mLikeOverlayLabel setTextColor:[UIColor whiteColor]];
     [mLikeOverlayLabel setBackgroundColor:[UIColor clearColor]];
     [mLikeOverlayLabel setTextAlignment:NSTextAlignmentCenter];
@@ -154,6 +154,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [self.view layoutSubviews];
     [mScroller setContentSize:CGSizeMake(self.view.frame.size.width * 3, mScroller.frame.size.height)];
+    [mLikeOverlayView setFrame:mScroller.frame];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -185,20 +186,20 @@
     } else {
         [mDeleteButton removeFromSuperview];
     }
-    if (mPhoto.numLikes == 1) {
-        [mLikeCountButton setTitle:@"1 Like" forState:UIControlStateNormal];
-    } else {
-        [mLikeCountButton setTitle:[NSString stringWithFormat:@"%i Likes", mPhoto.numLikes] forState:UIControlStateNormal];
-    }
+    [mLikeCountButton setTitle:[NSString stringWithFormat:@"%i", mPhoto.numLikes] forState:UIControlStateNormal];
     CGSize labelSize = [mLikeCountButton.titleLabel.text sizeWithFont:mLikeCountButton.titleLabel.font];
     mLikeIndicator.center = CGPointMake(mLikeCountButton.frame.origin.x + mLikeCountButton.frame.size.width - labelSize.width - mLikeIndicator.frame.size.width, mLikeCountButton.center.y);
     if ([mPhoto.likers containsObject:AppDelegate.graph.me]) {
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_red_small.png"]];
-        [mLikeButton setTitle:@"Unlike" forState:UIControlStateNormal];
+        [mLikeButton setTitle:@"Liked" forState:UIControlStateNormal];
     } else {
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
         [mLikeButton setTitle:@"Like" forState:UIControlStateNormal];
     }
+    CGSize buttonSize = [mLikeButton.titleLabel.text sizeWithFont:mLikeButton.titleLabel.font];
+    [mLikeButton setFrame:CGRectMake(mLikeButton.frame.origin.x, mLikeButton.frame.origin.y,
+                                     buttonSize.width, mLikeButton.frame.size.height)];
+
 }
 
 - (IBAction)likeButtonPressed:(id)sender {
@@ -207,7 +208,7 @@
     TRUser * me = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
     
     if ([mLikeButton.titleLabel.text isEqualToString:@"Like"]) {
-        [mLikeButton setTitle:@"Unlike" forState:UIControlStateNormal];
+        [mLikeButton setTitle:@"Liked" forState:UIControlStateNormal];
         [mLikeOverlayImage setImage:[UIImage imageNamed:@"heart_red_large.png"]];
         [mLikeOverlayLabel setText:@"Liked!"];
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_red_small.png"]];
