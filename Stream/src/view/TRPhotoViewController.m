@@ -13,12 +13,14 @@
 #import "TRAppDelegate.h"
 #import "TRPhotoStream.h"
 
+#import "TRImage.h"
 #import "TRImageView.h"
 #import "TRLikerListViewController.h"
 #import "TRPhoto.h"
 #import "TRUser.h"
 
 #define IMAGE_SIZE 300.0f
+#define TOOLBAR_HEIGHT 44.0f
 
 @interface TRPhotoViewController ()
 
@@ -26,7 +28,7 @@
 
 @implementation TRPhotoViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [mUploaderLabel setFont:[UIFont fontWithName:@"MuseoSans-300" size:22.0]];
     [mLikeButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:20.0]];
     [mLikeCountButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:20.0]];
@@ -52,8 +54,7 @@
     mLikeIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart_white_small.png"]];
     mLikeIndicator.center = mLikeCountButton.center;
     [self.view addSubview:mLikeIndicator];
-
-    [mScroller setContentSize:CGSizeMake(self.view.frame.size.width * 3, IMAGE_SIZE)];
+    
     [TestFlight passCheckpoint:@"Viewed Picture"];
 }
 
@@ -76,10 +77,18 @@
         [AppDelegate.graph registerForDelegateCallback:self];
         [AppDelegate.graph downloadPhotoInfo:mPrevPhoto.ID];
         [AppDelegate.graph downloadLikesForPhoto:mPrevPhoto.ID];
-        mPrevView = [[TRImageView alloc] initWithTRPhoto:mPrevPhoto
-                                                 inFrame:CGRectMake(mImageView.frame.origin.x - self.view.frame.size.width,
-                                                                    mImageView.frame.origin.y,
-                                                                    mImageView.frame.size.width, mImageView.frame.size.height)];
+        if (mPrevPhoto.image.CGImage) {
+            CGSize photoSize = [mPrevPhoto.image bestFitForSize:mScroller.frame.size];
+            mPrevView = [[TRImageView alloc] initWithTRPhoto:mPrevPhoto
+                                                     inFrame:CGRectMake(0.0f, 0.0f,
+                                                                        photoSize.width, photoSize.height)];
+        } else {
+            mPrevView = [[TRImageView alloc] initWithTRPhoto:mPrevPhoto
+                                                  fitInFrame:CGRectMake(0.0f, 0.0f,
+                                                                        mScroller.frame.size.width, mScroller.frame.size.height)];
+
+        }
+        mPrevView.center = CGPointMake(mImageView.center.x - mScroller.frame.size.width, mImageView.center.y);
         [mScroller addSubview:mPrevView];
         [mScroller setContentInset:UIEdgeInsetsMake(0.0, 0.0, 0.0, mScroller.contentInset.right)];
     } else {
@@ -98,10 +107,17 @@
         [AppDelegate.graph registerForDelegateCallback:self];
         [AppDelegate.graph downloadPhotoInfo:mNextPhoto.ID];
         [AppDelegate.graph downloadLikesForPhoto:mNextPhoto.ID];
-        mNextView = [[TRImageView alloc] initWithTRPhoto:mNextPhoto
-                                                 inFrame:CGRectMake(mImageView.frame.origin.x + self.view.frame.size.width,
-                                                                    mImageView.frame.origin.y,
-                                                                    mImageView.frame.size.width, mImageView.frame.size.height)];
+        if (mNextPhoto.image.CGImage) {
+            CGSize photoSize = [mNextPhoto.image bestFitForSize:mScroller.frame.size];
+            mNextView = [[TRImageView alloc] initWithTRPhoto:mNextPhoto
+                                                     inFrame:CGRectMake(0.0f, 0.0f,
+                                                                        photoSize.width, photoSize.height)];
+        } else {
+            mNextView = [[TRImageView alloc] initWithTRPhoto:mNextPhoto
+                                                  fitInFrame:CGRectMake(0.0f, 0.0f,
+                                                                        mScroller.frame.size.width, mScroller.frame.size.height)];
+        }
+        mNextView.center = CGPointMake(mImageView.center.x + mScroller.frame.size.width, mImageView.center.y);
         [mScroller addSubview:mNextView];
         [mScroller setContentInset:UIEdgeInsetsMake(0.0, mScroller.contentInset.left, 0.0, 0.0)];
     } else {
@@ -116,6 +132,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.view layoutSubviews];
+    [mScroller setContentSize:CGSizeMake(self.view.frame.size.width * 3, mScroller.frame.size.height)];
     [mScroller scrollRectToVisible:CGRectMake(mScroller.frame.size.width, 0.0, mScroller.frame.size.width, mScroller.frame.size.height) animated:NO];
 
     if ([mLikeCountButton.titleLabel.text length] == 0) {
@@ -132,6 +150,11 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [self.view layoutSubviews];
+    [mScroller setContentSize:CGSizeMake(self.view.frame.size.width * 3, mScroller.frame.size.height)];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [AppDelegate.graph unregisterForDelegateCallback:self];
 }
@@ -139,7 +162,8 @@
 - (void)loadFullImage {
     [mImageView setTransform:CGAffineTransformMakeScale(1.0f,
                                                         1.0f)];
-    [mImageView setFrame:CGRectMake(0.0, 0.0, IMAGE_SIZE, IMAGE_SIZE)];
+    CGSize photoSize = [mPhoto.image bestFitForSize:mScroller.frame.size];
+    [mImageView setFrame:CGRectMake(0.0, 0.0, photoSize.width, photoSize.height)];
     [mImageView removeFromSuperview];
     [mScroller addSubview:mImageView];
     mImageView.center = CGPointMake(mScroller.contentSize.width/2, self.view.center.y - mScroller.frame.origin.y);
@@ -293,6 +317,7 @@
         default:
             break;
     }
+    [self loadFullImage];
     [self scrollToIndex:1 animated:NO];
 }
 

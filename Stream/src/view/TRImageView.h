@@ -18,6 +18,7 @@
     TRPhoto * mPhoto;
     UIActivityIndicatorView * mSpinner;
     UITapGestureRecognizer * mTapRecognizer;
+    CGSize mPostDownloadResize;
 }
 
 @property (nonatomic) UITapGestureRecognizer * tapRecognizer;
@@ -26,6 +27,7 @@
 - (id)initWithImage:(UIImage *)image;
 - (id)initWithTRImage:(TRImage *)image inFrame:(CGRect)frame;
 - (id)initWithTRPhoto:(TRPhoto*)photo inFrame:(CGRect)frame;
+- (id)initWithTRPhoto:(TRPhoto *)photo fitInFrame:(CGRect)frame;
 - (id)initWithURL:(NSURL *)url inFrame:(CGRect)frame;
 
 - (void)setTRImage:(TRImage*)image;

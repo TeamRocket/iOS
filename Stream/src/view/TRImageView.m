@@ -22,6 +22,7 @@
 - (id)initWithImage:(UIImage *)image {
     self = [self initWithFrame:CGRectMake(0.0f, 0.0f, image.size.width, image.size.height)];
     if (self) {
+        mPostDownloadResize = CGSizeZero;
         [self setBackgroundColor:[UIColor colorWithPatternImage:image]];
     }
     return self;
@@ -36,7 +37,7 @@
     }
 
     if (self) {
-        
+        mPostDownloadResize = CGSizeZero;
     }
     return self;
 }
@@ -48,7 +49,16 @@
         self = [self initWithURL:photo.URL inFrame:frame];
     }
     if (self) {
+        mPostDownloadResize = CGSizeZero;
         mPhoto = photo;
+    }
+    return self;
+}
+
+- (id)initWithTRPhoto:(TRPhoto *)photo fitInFrame:(CGRect)frame {
+    self = [self initWithTRPhoto:photo inFrame:frame];
+    if (self) {
+        mPostDownloadResize = frame.size;
     }
     return self;
 }
@@ -67,6 +77,7 @@
 
 - (void)setTRImage:(TRImage*)image {
     [self setPlaceholder];
+    mPostDownloadResize = CGSizeZero;
     mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     mSpinner.center = self.center;
     [mSpinner startAnimating];
@@ -76,6 +87,7 @@
 
 - (void)setTRPhoto:(TRPhoto*)photo {
     [self setImage:nil];
+    mPostDownloadResize = CGSizeZero;
     mPhoto = photo;
     if ([photo.image loaded]) {
         [self setBackgroundColor:[UIColor colorWithPatternImage:[mPhoto.image sizedTo:self.frame.size]]];
@@ -124,6 +136,13 @@
     mImage = [[TRImage alloc] initWithData:data fromURL:mImage.url];
     if (mPhoto != nil)
         mPhoto.image = mImage;
+    if (!CGSizeEqualToSize(mPostDownloadResize, CGSizeZero)) {
+        CGPoint oldCenter = self.center;
+        CGSize photoSize = [mPhoto.image bestFitForSize:mPostDownloadResize];
+        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y,
+                                photoSize.width, photoSize.height);
+        self.center = oldCenter;
+    }
     [self setBackgroundColor:[UIColor colorWithPatternImage:[mImage sizedTo:self.frame.size]]];
 }
 

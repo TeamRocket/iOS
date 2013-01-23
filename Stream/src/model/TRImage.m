@@ -82,6 +82,15 @@
     return [TRImage imageWithImage:[TRImage imageWithImage:image croppedToRect:largeCropRect] scaledToSize:newSize];
 }
 
+- (CGSize)bestFitForSize:(CGSize)newSize {
+    float ratio = self.size.width/self.size.height;
+    if (ratio > 1) {
+        return CGSizeMake(newSize.width, newSize.width/ratio);
+    } else {
+        return CGSizeMake(newSize.height*ratio, newSize.height);
+    }
+}
+
 + (TRImage *) orientImage:(TRImage*)initImage {
     CGImageRef imgRef = initImage.CGImage;
 
