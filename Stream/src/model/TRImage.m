@@ -83,11 +83,12 @@
 }
 
 - (CGSize)bestFitForSize:(CGSize)newSize {
-    float ratio = self.size.width/self.size.height;
-    if (ratio > 1) {
-        return CGSizeMake(newSize.width, newSize.width/ratio);
+    float oldRatio = self.size.width/self.size.height;
+    float newRatio = newSize.width/newSize.height;
+    if (oldRatio > newRatio) {
+        return CGSizeMake(newSize.width, newSize.width/oldRatio);
     } else {
-        return CGSizeMake(newSize.height*ratio, newSize.height);
+        return CGSizeMake(newSize.height*oldRatio, newSize.height);
     }
 }
 

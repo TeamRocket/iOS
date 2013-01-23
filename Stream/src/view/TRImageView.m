@@ -139,8 +139,10 @@
     if (!CGSizeEqualToSize(mPostDownloadResize, CGSizeZero)) {
         CGPoint oldCenter = self.center;
         CGSize photoSize = [mPhoto.image bestFitForSize:mPostDownloadResize];
+        // Using mPostDownloadResize.width because the full photo view crops to width...
+        // not technically correct, but it suits the purpose
         self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y,
-                                photoSize.width, photoSize.height);
+                                mPostDownloadResize.width, photoSize.height);
         self.center = oldCenter;
     }
     [self setBackgroundColor:[UIColor colorWithPatternImage:[mImage sizedTo:self.frame.size]]];

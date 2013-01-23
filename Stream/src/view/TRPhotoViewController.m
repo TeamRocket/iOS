@@ -81,7 +81,7 @@
             CGSize photoSize = [mPrevPhoto.image bestFitForSize:mScroller.frame.size];
             mPrevView = [[TRImageView alloc] initWithTRPhoto:mPrevPhoto
                                                      inFrame:CGRectMake(0.0f, 0.0f,
-                                                                        photoSize.width, photoSize.height)];
+                                                                        mScroller.frame.size.width, photoSize.height)];
         } else {
             mPrevView = [[TRImageView alloc] initWithTRPhoto:mPrevPhoto
                                                   fitInFrame:CGRectMake(0.0f, 0.0f,
@@ -111,7 +111,7 @@
             CGSize photoSize = [mNextPhoto.image bestFitForSize:mScroller.frame.size];
             mNextView = [[TRImageView alloc] initWithTRPhoto:mNextPhoto
                                                      inFrame:CGRectMake(0.0f, 0.0f,
-                                                                        photoSize.width, photoSize.height)];
+                                                                        mScroller.frame.size.width, photoSize.height)];
         } else {
             mNextView = [[TRImageView alloc] initWithTRPhoto:mNextPhoto
                                                   fitInFrame:CGRectMake(0.0f, 0.0f,
@@ -163,7 +163,7 @@
     [mImageView setTransform:CGAffineTransformMakeScale(1.0f,
                                                         1.0f)];
     CGSize photoSize = [mPhoto.image bestFitForSize:mScroller.frame.size];
-    [mImageView setFrame:CGRectMake(0.0, 0.0, photoSize.width, photoSize.height)];
+    [mImageView setFrame:CGRectMake(0.0, 0.0, mScroller.frame.size.width, photoSize.height)];
     [mImageView removeFromSuperview];
     [mScroller addSubview:mImageView];
     mImageView.center = CGPointMake(mScroller.contentSize.width/2, self.view.center.y - mScroller.frame.origin.y);
@@ -281,7 +281,7 @@
     if (index == 2 && mScroller.contentInset.right != 0.0f) {
         index = 1;
     }
-    [mScroller scrollRectToVisible:CGRectMake(index*mScroller.frame.size.width, 0.0, mScroller.frame.size.width, IMAGE_SIZE) animated:animated];
+    [mScroller scrollRectToVisible:CGRectMake(index*mScroller.frame.size.width, 0.0, mScroller.frame.size.width, mScroller.frame.size.height) animated:animated];
     mCurrentIndex = index;
 }
 
