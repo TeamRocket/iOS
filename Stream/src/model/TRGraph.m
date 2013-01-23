@@ -385,7 +385,7 @@ typedef enum {
         TRPhotoStream * stream = [self getStreamWithID:[info objectForKey:@"stream_id"]];
         if (stream != nil) {
             NSArray * pictures = [info objectForKey:@"pictures"];
-            for (NSDictionary * photoInfo in pictures) {
+            for (NSDictionary * photoInfo in [pictures reverseObjectEnumerator]) {
                 if (photoInfo) {
                     TRPhoto * newPhoto = [self getPhotoWithID:[photoInfo objectForKey:@"picture_id"]];
                     if (newPhoto == nil) {
@@ -394,7 +394,7 @@ typedef enum {
                                                       uploader:nil];
                         [self addPhoto:newPhoto];
                     }
-                    [stream addPhoto:newPhoto];
+                    [stream addPhotoAsLatest:newPhoto];
                     stream.numPhotos = [stream.photos count];
                 }
             }
