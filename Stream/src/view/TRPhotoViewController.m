@@ -245,7 +245,7 @@
 #pragma mark - TRGraphDelegate
 
 - (void)graphFinishedUpdating {
-    [mUploaderLabel setText:[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName]];
+    [mUploaderLabel setText:[[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName] uppercaseString]];
     if (mPhoto.numLikes == 1) {
         [mLikeCountButton setTitle:@"1 Like" forState:UIControlStateNormal];
     } else {
