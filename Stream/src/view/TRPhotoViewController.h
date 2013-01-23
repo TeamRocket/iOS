@@ -25,6 +25,7 @@
 
     IBOutlet UILabel * mUploaderLabel;
     IBOutlet UIButton * mCloseButton;
+    IBOutlet UIButton * mDeleteButton;
     IBOutlet UIButton * mLikeButton;
     IBOutlet UIButton * mLikeCountButton;
     IBOutlet UIScrollView * mScroller;

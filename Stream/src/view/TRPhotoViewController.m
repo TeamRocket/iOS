@@ -29,6 +29,7 @@
 @implementation TRPhotoViewController
 
 - (void)viewDidLoad{
+    [mDeleteButton removeFromSuperview];
     [mUploaderLabel setFont:[UIFont fontWithName:@"MuseoSans-300" size:22.0]];
     [mLikeButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:20.0]];
     [mLikeCountButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:20.0]];
@@ -176,6 +177,13 @@
 - (void)updateIndicators {
     if (mPhoto.uploader) {
         [mUploaderLabel setText:[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName]];
+        if (mPhoto.uploader == AppDelegate.graph.me) {
+            [self.view addSubview:mDeleteButton];
+        } else {
+            [mDeleteButton removeFromSuperview];
+        }
+    } else {
+        [mDeleteButton removeFromSuperview];
     }
     if (mPhoto.numLikes == 1) {
         [mLikeCountButton setTitle:@"1 Like" forState:UIControlStateNormal];
