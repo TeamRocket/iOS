@@ -19,6 +19,8 @@
 @synthesize image = mImage;
 @synthesize numLikes = mNumLikes;
 @synthesize likers = mLikers;
+@synthesize comments = mComments;
+@synthesize numComments = mNumComments;
 
 - (id) initWithID:(NSString*)ID URL:(NSURL*)url uploader:(TRUser*)uploader {
     self = [super init];
@@ -29,6 +31,7 @@
 
         mImage = [[TRImage alloc] initWithURL:mURL];
         mLikers = [[NSMutableArray alloc] init];
+        mComments = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -40,6 +43,12 @@
     }
     if (!exists) {
         [mLikers addObject:user];
+    }
+}
+
+- (void)addComment:(NSDictionary *)comment {
+    if (![mComments containsObject:comment]) {
+        [mComments addObject:comment];
     }
 }
 

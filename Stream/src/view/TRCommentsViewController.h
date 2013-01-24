@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class TRPhoto;
+
 @interface TRCommentsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate> {
     IBOutlet UIButton * mBackButton;
     IBOutlet UIButton * mSendButton;
@@ -21,6 +23,10 @@
     UIViewAnimationCurve mKBAnimationCurve;
     CGFloat mKBAnimationDuration;
     CGFloat mLastCommentBoxHeight;
+
+    TRPhoto * mPhoto;
 }
+
+- (void)setPhoto:(TRPhoto*)photo;
 
 @end

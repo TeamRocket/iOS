@@ -8,6 +8,9 @@
 
 #import "TRCommentsViewController.h"
 
+#import "TRPhoto.h"
+#import "TRUser.h"
+
 #import "TRCommentCell.h"
 
 @interface TRCommentsViewController ()
@@ -75,6 +78,10 @@
     }
 }
 
+- (void)setPhoto:(TRPhoto*)photo {
+    mPhoto = photo;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -82,11 +89,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 9;
+    return [mPhoto.comments count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString * comment = @"";
+    NSString * comment = [[mPhoto.comments objectAtIndex:indexPath.row] objectForKey:@"comment"];
     CGSize commentSize = [comment sizeWithFont:[UIFont fontWithName:@"MuseoSans-100" size:15.0]
                              constrainedToSize:CGSizeMake(298, 300)
                                  lineBreakMode:NSLineBreakByWordWrapping];
@@ -97,6 +104,25 @@
     TRCommentCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TRCommentCell"];
     if (cell == nil) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"TRCommentCell" owner:self options:nil][0];
+    }
+    NSDictionary * comment = [mPhoto.comments objectAtIndex:indexPath.row];
+    TRUser * commenter = [comment objectForKey:@"commenter"];
+    NSDate * time = [comment objectForKey:@"time"];
+    NSTimeInterval timeSince = [[NSDate date] timeIntervalSinceDate:time];
+    [cell setComment:[comment objectForKey:@"comment"]];
+    [cell setCommenter:[NSString stringWithFormat:@"%@ %@", commenter.firstName, commenter.lastName]];
+    if (timeSince < 60) {
+        [cell setTime:@"now"];
+    } else if (timeSince < 3600) {
+        [cell setTime:[NSString stringWithFormat:@"%i m", (int)timeSince/60]];
+    } else if (timeSince < 86400) {
+        [cell setTime:[NSString stringWithFormat:@"%i h", (int)timeSince/3600]];
+    } else if (timeSince < 604800) {
+        [cell setTime:[NSString stringWithFormat:@"%i d", (int)timeSince/86400]];
+    } else {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM/dd/yyyy"];
+        [cell setTime:[NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:time]]];
     }
     return cell;
 }

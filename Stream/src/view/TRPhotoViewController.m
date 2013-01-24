@@ -213,7 +213,7 @@
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
         [mLikeButton setTitle:@"Like" forState:UIControlStateNormal];
     }
-    [mCommentCountButton setTitle:[NSString stringWithFormat:@"%i", mPhoto.numLikes] forState:UIControlStateNormal];
+    [mCommentCountButton setTitle:[NSString stringWithFormat:@"%i", mPhoto.numComments] forState:UIControlStateNormal];
     labelSize = [mCommentCountButton.titleLabel.text sizeWithFont:mCommentCountButton.titleLabel.font];
     mCommentIndicator.center = CGPointMake(mCommentCountButton.frame.origin.x + mCommentCountButton.frame.size.width - labelSize.width - mCommentIndicator.frame.size.width - 3.0f, mCommentCountButton.center.y);
     CGSize buttonSize = [mLikeButton.titleLabel.text sizeWithFont:mLikeButton.titleLabel.font];
@@ -303,6 +303,7 @@
 - (IBAction)showComments:(id)sender {
     [mCommentsViewController.view setFrame:self.view.frame];
     [mCommentsViewController.view layoutSubviews];
+    [mCommentsViewController setPhoto:mPhoto];
     [mCommentsViewController.view setAlpha:0.0f];
     [self.view addSubview:mCommentsViewController.view];
     [UIView beginAnimations:@"FadeInCommentView" context:nil];

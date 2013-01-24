@@ -32,6 +32,8 @@
     NSMutableDictionary * mPhotos;
     NSMutableDictionary * mUsers;
 
+    NSDateFormatter * mDateFormatter;
+
     TRUser * mMe;
 }
 

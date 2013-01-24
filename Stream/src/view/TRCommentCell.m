@@ -24,6 +24,7 @@
 }
 
 - (void)setComment:(NSString*)comment {
+    [mCommentLabel setFrame:CGRectMake(10, 25, 300, 60)];
     [mCommentLabel setText:comment];
     [mCommentLabel sizeToFit];
 }

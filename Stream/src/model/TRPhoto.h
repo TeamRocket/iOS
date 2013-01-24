@@ -18,7 +18,9 @@
     TRImage * mImage;
 
     int mNumLikes;
+    int mNumComments;
     NSMutableArray * mLikers;
+    NSMutableArray * mComments;
 }
 
 @property (nonatomic) TRUser * uploader;
@@ -26,10 +28,13 @@
 @property (nonatomic, readonly) NSString * ID;
 @property (nonatomic) TRImage * image;
 @property (nonatomic) int numLikes;
+@property (nonatomic) int numComments;
 @property (nonatomic, readonly) NSArray * likers;
+@property (nonatomic, readonly) NSArray * comments;
 
 - (id) initWithID:(NSString*)ID URL:(NSURL*)url uploader:(TRUser*)uploader;
 - (void)addLiker:(TRUser*)user;
 - (void)removeLiker:(TRUser*)user;
+- (void)addComment:(NSDictionary *)comment;
 
 @end
