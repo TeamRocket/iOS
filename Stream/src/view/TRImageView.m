@@ -110,7 +110,7 @@
         innerShadowLayer.frame = CGRectMake(0.0, 0.0,
                                             self.layer.frame.size.width, self.layer.frame.size.height);
         innerShadowLayer.contents = (id)[UIImage imageNamed: @"inner_shadow.png"].CGImage;
-        innerShadowLayer.contentsCenter = CGRectMake(12.0f/36.0f, 12.0f/36.0f, 1.0f/36.0f, 1.0f/36.0f);
+        innerShadowLayer.contentsCenter = CGRectMake(10.0f/30.0f, 10.0f/30.0f, 10.0f/30.0f, 10.0f/30.0f);
         [self.layer insertSublayer:innerShadowLayer atIndex:0];
         [self.layer setShouldRasterize:YES];
     } else {
