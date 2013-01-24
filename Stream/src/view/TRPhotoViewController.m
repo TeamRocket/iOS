@@ -33,6 +33,7 @@
     [mUploaderLabel setFont:[UIFont fontWithName:@"MuseoSans-300" size:22.0]];
     [mLikeButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
     [mLikeCountButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
+    [mCommentCountButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
     mLikeOverlayView = [[UIView alloc] initWithFrame:mScroller.frame];
     [mLikeOverlayView setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.8f]];
     
@@ -55,6 +56,10 @@
     mLikeIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart_white_small.png"]];
     mLikeIndicator.center = mLikeCountButton.center;
     [self.view addSubview:mLikeIndicator];
+
+    mCommentIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"comment_white_small.png"]];
+    mCommentIndicator.center = mCommentCountButton.center;
+    [self.view addSubview:mCommentIndicator];
     
     [TestFlight passCheckpoint:@"Viewed Picture"];
 }
@@ -196,6 +201,9 @@
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
         [mLikeButton setTitle:@"Like" forState:UIControlStateNormal];
     }
+    [mCommentCountButton setTitle:[NSString stringWithFormat:@"%i", mPhoto.numLikes] forState:UIControlStateNormal];
+    labelSize = [mCommentCountButton.titleLabel.text sizeWithFont:mCommentCountButton.titleLabel.font];
+    mCommentIndicator.center = CGPointMake(mCommentCountButton.frame.origin.x + mCommentCountButton.frame.size.width - labelSize.width - mCommentIndicator.frame.size.width - 3.0f, mCommentCountButton.center.y);
     CGSize buttonSize = [mLikeButton.titleLabel.text sizeWithFont:mLikeButton.titleLabel.font];
     [mLikeButton setFrame:CGRectMake(mLikeButton.frame.origin.x, mLikeButton.frame.origin.y,
                                      buttonSize.width, mLikeButton.frame.size.height)];
@@ -269,6 +277,10 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController pushViewController:likers animated:NO];
+}
+
+- (IBAction)showComments:(id)sender {
+    
 }
 
 #pragma mark - TRGraphDelegate
