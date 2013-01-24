@@ -22,6 +22,7 @@
 - (id)initWithImage:(UIImage *)image {
     self = [self initWithFrame:CGRectMake(0.0f, 0.0f, image.size.width, image.size.height)];
     if (self) {
+        mPostDownloadResize = CGSizeZero;
         [self setBackgroundColor:[UIColor colorWithPatternImage:image]];
     }
     return self;
@@ -36,7 +37,7 @@
     }
 
     if (self) {
-        
+        mPostDownloadResize = CGSizeZero;
     }
     return self;
 }
@@ -48,7 +49,16 @@
         self = [self initWithURL:photo.URL inFrame:frame];
     }
     if (self) {
+        mPostDownloadResize = CGSizeZero;
         mPhoto = photo;
+    }
+    return self;
+}
+
+- (id)initWithTRPhoto:(TRPhoto *)photo fitInFrame:(CGRect)frame {
+    self = [self initWithTRPhoto:photo inFrame:frame];
+    if (self) {
+        mPostDownloadResize = frame.size;
     }
     return self;
 }
@@ -66,7 +76,8 @@
 }
 
 - (void)setTRImage:(TRImage*)image {
-    [self setBackgroundColor:[UIColor whiteColor]];
+    [self setPlaceholder];
+    mPostDownloadResize = CGSizeZero;
     mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     mSpinner.center = self.center;
     [mSpinner startAnimating];
@@ -78,12 +89,13 @@
 
 - (void)setTRPhoto:(TRPhoto*)photo {
     [self setImage:nil];
+    mPostDownloadResize = CGSizeZero;
     mPhoto = photo;
     if ([photo.image loaded]) {
         [self setBackgroundColor:[UIColor colorWithPatternImage:[mPhoto.image sizedTo:self.frame.size]]];
     } else {
         if (!photo.image) {
-            [self setBackgroundColor:[UIColor whiteColor]];
+            [self setPlaceholder];
             mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
             mSpinner.center = self.center;
             [mSpinner startAnimating];
@@ -96,30 +108,26 @@
     }
 }
 
-- (void)setPictureFrame:(BOOL)frame {
-    [self setPictureBorder:frame];
-    [self setPictureShadow:frame];
-    [self.layer setShouldRasterize:YES];
-}
-
-- (void)setPictureBorder:(BOOL)border {
-    if (border) {
-        [self.layer setBorderColor:[UIColor whiteColor].CGColor];
-        [self.layer setBorderWidth:5.0f];
+- (void)setPictureInnerShadow:(BOOL)shadow {
+    if (shadow) {
+        CALayer *innerShadowLayer = [CALayer layer];
+        innerShadowLayer.frame = CGRectMake(0.0, 0.0,
+                                            self.layer.frame.size.width, self.layer.frame.size.height);
+        innerShadowLayer.contents = (id)[UIImage imageNamed: @"inner_shadow.png"].CGImage;
+        innerShadowLayer.contentsCenter = CGRectMake(10.0f/30.0f, 10.0f/30.0f, 10.0f/30.0f, 10.0f/30.0f);
+        [self.layer insertSublayer:innerShadowLayer atIndex:0];
+        [self.layer setShouldRasterize:YES];
     } else {
-        [self.layer setBorderWidth:0.0f];
+        if ([[self.layer sublayers] count] > 1)
+            [[[self.layer sublayers] objectAtIndex:0] removeFromSuperlayer];
     }
 }
 
-- (void)setPictureShadow:(BOOL)shadow {
-    if (shadow) {
-        [self.layer setShadowColor:[UIColor blackColor].CGColor];
-        [self.layer setShadowOpacity:0.5];
-        [self.layer setShadowRadius:2.0];
-        [self.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
+- (void)setPlaceholder {
+    if (CGSizeEqualToSize(self.frame.size, CGSizeMake(145.0f, 145.0f))) {
+        [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"upload_placeholder.png"]]];
     } else {
-        [self.layer setShadowOpacity:0.0f];
-        [self.layer setShadowRadius:0.0f];
+        [self setBackgroundColor:[UIColor blackColor]];
     }
 }
 
@@ -138,6 +146,15 @@
         mImage = [[TRImage alloc] initWithData:data fromURL:mImage.url];
         if (mPhoto != nil)
             mPhoto.image = mImage;
+        if (!CGSizeEqualToSize(mPostDownloadResize, CGSizeZero)) {
+            CGPoint oldCenter = self.center;
+            CGSize photoSize = [mPhoto.image bestFitForSize:mPostDownloadResize];
+            // Using mPostDownloadResize.width because the full photo view crops to width...
+            // not technically correct, but it suits the purpose
+            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y,
+                                    mPostDownloadResize.width, photoSize.height);
+            self.center = oldCenter;
+        }
         [self setBackgroundColor:[UIColor colorWithPatternImage:[mImage sizedTo:self.frame.size]]];
     }
 }

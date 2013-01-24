@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A14A3F016AE6B5000688B51 /* inner_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A14A3EE16AE6B5000688B51 /* inner_shadow.png */; };
+		0A14A3F116AE6B5000688B51 /* inner_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A14A3EF16AE6B5000688B51 /* inner_shadow@2x.png */; };
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
@@ -116,6 +118,10 @@
 		0ADF45811664B14C00E0C0FA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADF457E1664B14C00E0C0FA /* Default@2x.png */; };
 		0ADF45861664B15100E0C0FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF45831664B15100E0C0FA /* main.m */; };
 		0ADF45891664B15C00E0C0FA /* TRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF45881664B15C00E0C0FA /* TRAppDelegate.m */; };
+		0AF3B4C316B06C3F0034AB0A /* delete_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF3B4C116B06C3F0034AB0A /* delete_icon.png */; };
+		0AF3B4C416B06C3F0034AB0A /* delete_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF3B4C216B06C3F0034AB0A /* delete_icon@2x.png */; };
+		0AF3B4D816B07CA00034AB0A /* comment_white_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF3B4D616B07CA00034AB0A /* comment_white_small.png */; };
+		0AF3B4D916B07CA00034AB0A /* comment_white_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF3B4D716B07CA00034AB0A /* comment_white_small@2x.png */; };
 		0AF7A1DB167AAFA40040023D /* view_participants_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF7A1D9167AAFA40040023D /* view_participants_highlighted@2x.png */; };
 		0AF7A1DC167AAFA40040023D /* view_participants_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF7A1DA167AAFA40040023D /* view_participants_normal@2x.png */; };
 		0AF7A1E0167AB01A0040023D /* view_participants_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF7A1DE167AB01A0040023D /* view_participants_highlighted.png */; };
@@ -133,6 +139,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A14A3EE16AE6B5000688B51 /* inner_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inner_shadow.png; path = img/UI/inner_shadow.png; sourceTree = "<group>"; };
+		0A14A3EF16AE6B5000688B51 /* inner_shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "inner_shadow@2x.png"; path = "img/UI/inner_shadow@2x.png"; sourceTree = "<group>"; };
 		0A3890CF1664AFC7002E8BC1 /* Stream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -268,6 +276,10 @@
 		0ADF45841664B15100E0C0FA /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = misc/Prefix.pch; sourceTree = "<group>"; };
 		0ADF45871664B15C00E0C0FA /* TRAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRAppDelegate.h; path = src/TRAppDelegate.h; sourceTree = "<group>"; };
 		0ADF45881664B15C00E0C0FA /* TRAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRAppDelegate.m; path = src/TRAppDelegate.m; sourceTree = "<group>"; };
+		0AF3B4C116B06C3F0034AB0A /* delete_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete_icon.png; path = img/UI/delete_icon.png; sourceTree = "<group>"; };
+		0AF3B4C216B06C3F0034AB0A /* delete_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "delete_icon@2x.png"; path = "img/UI/delete_icon@2x.png"; sourceTree = "<group>"; };
+		0AF3B4D616B07CA00034AB0A /* comment_white_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment_white_small.png; path = img/UI/comment_white_small.png; sourceTree = "<group>"; };
+		0AF3B4D716B07CA00034AB0A /* comment_white_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "comment_white_small@2x.png"; path = "img/UI/comment_white_small@2x.png"; sourceTree = "<group>"; };
 		0AF7A1D9167AAFA40040023D /* view_participants_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "view_participants_highlighted@2x.png"; path = "img/UI/view_participants_highlighted@2x.png"; sourceTree = "<group>"; };
 		0AF7A1DA167AAFA40040023D /* view_participants_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "view_participants_normal@2x.png"; path = "img/UI/view_participants_normal@2x.png"; sourceTree = "<group>"; };
 		0AF7A1DE167AB01A0040023D /* view_participants_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = view_participants_highlighted.png; path = img/UI/view_participants_highlighted.png; sourceTree = "<group>"; };
@@ -474,6 +486,10 @@
 				0A6276891682C5B800827101 /* add_token@2x.png */,
 				0A45768E167D651900848D8E /* closex.png */,
 				0A45768F167D651900848D8E /* closex@2x.png */,
+				0AF3B4D616B07CA00034AB0A /* comment_white_small.png */,
+				0AF3B4D716B07CA00034AB0A /* comment_white_small@2x.png */,
+				0AF3B4C116B06C3F0034AB0A /* delete_icon.png */,
+				0AF3B4C216B06C3F0034AB0A /* delete_icon@2x.png */,
 				0A92F67C1689012B00803DA1 /* empty_stream.png */,
 				0A92F67D1689012B00803DA1 /* empty_stream@2x.png */,
 				0A457692167D7F5600848D8E /* heart_red_large.png */,
@@ -484,6 +500,8 @@
 				0A457697167D7F5600848D8E /* heart_unlike_large@2x.png */,
 				0A457698167D7F5600848D8E /* heart_white_small.png */,
 				0A457699167D7F5600848D8E /* heart_white_small@2x.png */,
+				0A14A3EE16AE6B5000688B51 /* inner_shadow.png */,
+				0A14A3EF16AE6B5000688B51 /* inner_shadow@2x.png */,
 				0A510B031678600D00E2012F /* navbaritem.png */,
 				0A510B041678600D00E2012F /* navbaritem@2x.png */,
 				0A510AFF16785D7300E2012F /* navbarback.png */,
@@ -690,6 +708,12 @@
 				0AAE997C1691A0910012B826 /* progress_bar_bg@2x.png in Resources */,
 				0AAE997D1691A0910012B826 /* progress_bar.png in Resources */,
 				0AAE997E1691A0910012B826 /* progress_bar@2x.png in Resources */,
+				0A14A3F016AE6B5000688B51 /* inner_shadow.png in Resources */,
+				0A14A3F116AE6B5000688B51 /* inner_shadow@2x.png in Resources */,
+				0AF3B4C316B06C3F0034AB0A /* delete_icon.png in Resources */,
+				0AF3B4C416B06C3F0034AB0A /* delete_icon@2x.png in Resources */,
+				0AF3B4D816B07CA00034AB0A /* comment_white_small.png in Resources */,
+				0AF3B4D916B07CA00034AB0A /* comment_white_small@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,8 +819,6 @@
 		0A3890EE1664AFC7002E8BC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Stream/misc/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Stream/misc/Info.plist";
@@ -806,7 +828,6 @@
 					"\"$(SRCROOT)/Stream/misc\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D481C269-4D2A-4E55-AC3B-18CFC46FA3D0";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -815,8 +836,6 @@
 		0A3890EF1664AFC7002E8BC1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Stream/misc/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Stream/misc/Info.plist";
@@ -826,7 +845,6 @@
 					"\"$(SRCROOT)/Stream/misc\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D481C269-4D2A-4E55-AC3B-18CFC46FA3D0";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

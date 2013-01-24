@@ -16,10 +16,10 @@
 @interface TRImageView : UIImageView <TRConnectionDelegate> {
     TRImage * mImage;
     TRPhoto * mPhoto;
+    TRConnection * mConnection;
     UIActivityIndicatorView * mSpinner;
     UITapGestureRecognizer * mTapRecognizer;
-
-    TRConnection * mConnection;
+    CGSize mPostDownloadResize;
 }
 
 @property (nonatomic) UITapGestureRecognizer * tapRecognizer;
@@ -28,13 +28,14 @@
 - (id)initWithImage:(UIImage *)image;
 - (id)initWithTRImage:(TRImage *)image inFrame:(CGRect)frame;
 - (id)initWithTRPhoto:(TRPhoto*)photo inFrame:(CGRect)frame;
+- (id)initWithTRPhoto:(TRPhoto *)photo fitInFrame:(CGRect)frame;
 - (id)initWithURL:(NSURL *)url inFrame:(CGRect)frame;
 
 - (void)setTRImage:(TRImage*)image;
 - (void)setTRPhoto:(TRPhoto*)photo;
 
-- (void)setPictureFrame:(BOOL)frame;
-- (void)setPictureBorder:(BOOL)border;
-- (void)setPictureShadow:(BOOL)shadow;
+- (void)setPlaceholder;
+
+- (void)setPictureInnerShadow:(BOOL)shadow;
 
 @end

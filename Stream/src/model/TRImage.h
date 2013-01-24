@@ -23,6 +23,7 @@
 - (id) initWithURL:(NSURL *)url;
 - (id) initWithData:(NSData *)data fromURL:(NSURL*)url;
 - (TRImage *)sizedTo:(CGSize)size;
+- (CGSize)bestFitForSize:(CGSize)newSize;
 - (void)flushCache;
 + (TRImage *) orientImage:(TRImage*)image;
 + (TRImage *) imageWithImage:(TRImage *)image scaledToSize:(CGSize)newSize;
