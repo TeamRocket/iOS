@@ -10,6 +10,7 @@
 
 #import "TRGraph.h"
 
+@class TRCommentsViewController;
 @class TRPhoto;
 @class TRPhotoStream;
 @class TRImageView;
@@ -22,6 +23,7 @@
     TRPhoto * mPrevPhoto;
     TRPhoto * mNextPhoto;
     TRPhotoStream * mStream;
+    TRCommentsViewController * mCommentsViewController;
 
     IBOutlet UILabel * mUploaderLabel;
     IBOutlet UIButton * mCloseButton;

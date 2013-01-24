@@ -13,6 +13,7 @@
 #import "TRAppDelegate.h"
 #import "TRPhotoStream.h"
 
+#import "TRCommentsViewController.h"
 #import "TRImage.h"
 #import "TRImageView.h"
 #import "TRLikerListViewController.h"
@@ -29,6 +30,7 @@
 @implementation TRPhotoViewController
 
 - (void)viewDidLoad{
+    mCommentsViewController = [[TRCommentsViewController alloc] initWithNibName:@"TRCommentsViewController" bundle:nil];
     [mDeleteButton removeFromSuperview];
     [mUploaderLabel setFont:[UIFont fontWithName:@"MuseoSans-300" size:22.0]];
     [mLikeButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
@@ -299,7 +301,9 @@
 }
 
 - (IBAction)showComments:(id)sender {
-    
+    [mCommentsViewController.view setFrame:self.view.frame];
+    [mCommentsViewController.view layoutSubviews];
+    [self.view addSubview:mCommentsViewController.view];
 }
 
 #pragma mark - TRGraphDelegate
