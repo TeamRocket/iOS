@@ -34,6 +34,7 @@
     UIView * mLikeOverlayView;
     UIImageView * mLikeIndicator;
 
+    UIButton * mCommentButton;
     UIImageView * mCommentIndicator;
 
     UIImageView * mLikeOverlayImage;

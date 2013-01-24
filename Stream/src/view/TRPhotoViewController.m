@@ -32,7 +32,13 @@
     [mDeleteButton removeFromSuperview];
     [mUploaderLabel setFont:[UIFont fontWithName:@"MuseoSans-300" size:22.0]];
     [mLikeButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
+    mCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0,
+                                                                120.0f, mLikeButton.frame.size.height)];
     [mLikeCountButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
+    [mCommentButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
+    [mCommentButton setTitle:@"·   Comment" forState:UIControlStateNormal];
+    [mCommentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [mCommentButton addTarget:self action:@selector(commentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [mCommentCountButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
     mLikeOverlayView = [[UIView alloc] initWithFrame:mScroller.frame];
     [mLikeOverlayView setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.8f]];
@@ -60,6 +66,7 @@
     mCommentIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"comment_white_small.png"]];
     mCommentIndicator.center = mCommentCountButton.center;
     [self.view addSubview:mCommentIndicator];
+    [self.view addSubview:mCommentButton];
     
     [TestFlight passCheckpoint:@"Viewed Picture"];
 }
@@ -160,6 +167,9 @@
     [self.view layoutSubviews];
     [mScroller setContentSize:CGSizeMake(self.view.frame.size.width * 3, mScroller.frame.size.height)];
     [mLikeOverlayView setFrame:mScroller.frame];
+    CGSize buttonSize = [mLikeButton.titleLabel.text sizeWithFont:mLikeButton.titleLabel.font];
+    [mCommentButton setFrame:CGRectMake(mLikeButton.frame.origin.x + buttonSize.width - 4.0f, mLikeButton.frame.origin.y,
+                                        mCommentButton.frame.size.width, mLikeButton.frame.size.height)];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -207,7 +217,8 @@
     CGSize buttonSize = [mLikeButton.titleLabel.text sizeWithFont:mLikeButton.titleLabel.font];
     [mLikeButton setFrame:CGRectMake(mLikeButton.frame.origin.x, mLikeButton.frame.origin.y,
                                      buttonSize.width, mLikeButton.frame.size.height)];
-
+    [mCommentButton setFrame:CGRectMake(mLikeButton.frame.origin.x + buttonSize.width - 4.0f, mLikeButton.frame.origin.y,
+                                        mCommentButton.frame.size.width, mCommentButton.frame.size.height)];
 }
 
 - (IBAction)likeButtonPressed:(id)sender {
@@ -255,6 +266,14 @@
     
     [mLikeOverlayView.layer addAnimation:fadeInAndOut forKey:@"FadeOverlay"];
     [TestFlight passCheckpoint:@"Liked Photo"];
+}
+
+- (void)commentButtonPressed:(id)sender {
+    
+}
+
+- (IBAction)deleteButtonPressed:(id)sender {
+    
 }
 
 - (IBAction)closePhotoView:(id)sender {
