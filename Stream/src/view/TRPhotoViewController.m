@@ -271,7 +271,8 @@
 }
 
 - (void)commentButtonPressed:(id)sender {
-    
+    [self showComments:sender];
+    [mCommentsViewController focus];
 }
 
 - (IBAction)deleteButtonPressed:(id)sender {

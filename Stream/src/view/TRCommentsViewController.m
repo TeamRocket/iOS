@@ -8,6 +8,8 @@
 
 #import "TRCommentsViewController.h"
 
+#import "TRAppDelegate.h"
+#import "TRGraph.h"
 #import "TRPhoto.h"
 #import "TRUser.h"
 
@@ -21,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    mShouldFocus = NO;
     [mCommentsTable registerNib:[UINib nibWithNibName:@"TRCommentCell" bundle:nil] forCellReuseIdentifier:@"TRCommentCell"];
     [mCommentsTable setContentInset:UIEdgeInsetsMake(30.0f, 0.0f, 40.0f, 0.0f)];
     [mSendButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
@@ -45,13 +48,32 @@
                                                  name:UIKeyboardWillHideNotification object:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    if (mShouldFocus) {
+        [mCommentBox becomeFirstResponder];
+    }
+    mShouldFocus = NO;
+}
+
 -(void) viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self keyboardWillBeHidden:nil];
 }
 
 - (IBAction)sendButtonPressed:(id)sender {
-    NSLog(@"Sent");
+    NSDictionary * newComment = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 mCommentBox.text, @"comment",
+                                 AppDelegate.graph.me, @"commenter",
+                                 [NSDate date], @"time",
+                                 nil];
+    [AppDelegate.graph sendNewComment:[newComment objectForKey:@"comment"] forPhoto:mPhoto.ID];
+    [mPhoto addComment:newComment];
+    [mCommentBox setText:@""];
+    [self textViewDidChange:mCommentBox];
+    [mCommentBox resignFirstResponder];
+    [mCommentsTable reloadData];
+    [mCommentsTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[mPhoto.comments count]-1 inSection:0]
+                          atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 - (IBAction)backButtonPressed:(id)sender {
@@ -80,6 +102,10 @@
 
 - (void)setPhoto:(TRPhoto*)photo {
     mPhoto = photo;
+}
+
+- (void)focus {
+    mShouldFocus = YES;
 }
 
 #pragma mark - UITableViewDelegate

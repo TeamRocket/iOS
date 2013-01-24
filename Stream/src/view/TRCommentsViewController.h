@@ -25,8 +25,10 @@
     CGFloat mLastCommentBoxHeight;
 
     TRPhoto * mPhoto;
+    BOOL mShouldFocus;
 }
 
 - (void)setPhoto:(TRPhoto*)photo;
+- (void)focus;
 
 @end

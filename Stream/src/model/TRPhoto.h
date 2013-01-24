@@ -36,5 +36,6 @@
 - (void)addLiker:(TRUser*)user;
 - (void)removeLiker:(TRUser*)user;
 - (void)addComment:(NSDictionary *)comment;
+- (void)clearComments;
 
 @end

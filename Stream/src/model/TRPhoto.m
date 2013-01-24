@@ -50,6 +50,11 @@
     if (![mComments containsObject:comment]) {
         [mComments addObject:comment];
     }
+    mNumComments = [mComments count];
+}
+
+- (void)clearComments {
+    mComments = [[NSMutableArray alloc] init];
 }
 
 - (void)removeLiker:(TRUser*)user {

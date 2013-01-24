@@ -31,6 +31,7 @@ typedef enum {
     kTRGraphNetworkTaskSendInvite,
     kTRGraphNetworkTaskRegisterPushToken,
     kTRGraphNetworkTaskGetUserStatus,
+    kTRGraphNetworkTaskSendComment,
 } TRGraphNetworkTask;
 
 @implementation NSString (encode)
@@ -196,6 +197,14 @@ typedef enum {
                          (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskSendUnlikePhoto]);
 }
 
+- (void)sendNewComment:(NSString*)comment forPhoto:(NSString*)photoID {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/add_comment.php?picture_id=%@&commenter_phone=%@&comment=%@",photoID, mMe.phone, [comment encodeString:NSASCIIStringEncoding]]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskSendComment]);
+}
+
 - (void)downloadPhotoInfo:(NSString*)ID {
     TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/get_picture_metadata.php?viewer_phone=%@&picture_id=%@",mMe.phone, ID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
@@ -228,6 +237,9 @@ typedef enum {
         }
         photo.numLikes = [[info objectForKey:@"picture_likecount"] intValue];
         NSArray * commentInfos = [info objectForKey:@"comments"];
+        if ([photo.comments count] > 0) {
+            [photo clearComments];
+        }
         for (NSDictionary * commentInfo in commentInfos) {
             TRUser * commentingUser = [self getUserWithPhone:[commentInfo objectForKey:@"commenter_phone"]];
             if (commentingUser == nil) {
