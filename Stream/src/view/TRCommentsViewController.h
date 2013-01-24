@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TRCommentsViewController : UIViewController <UITextViewDelegate> {
+    IBOutlet UIButton * mBackButton;
     IBOutlet UIButton * mSendButton;
     IBOutlet UIImageView * mBottomGradient;
     IBOutlet UILabel * mTitleLabel;

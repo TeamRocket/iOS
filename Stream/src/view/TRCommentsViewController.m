@@ -14,22 +14,16 @@
 
 @implementation TRCommentsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [mSendButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
+    [mBackButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
     [mSendButton setBackgroundImage:[[UIImage imageNamed:@"outline_button_bg.png"]
                                      resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)]
                            forState:UIControlStateNormal];
     [mTitleLabel setFont:[UIFont fontWithName:@"MuseoSans-300" size:22.0]];
     [mCommentBox setFont:[UIFont fontWithName:@"MuseoSans-300" size:15.0]];
+    [mCommentBox setContentInset:UIEdgeInsetsMake(3.0f, 0.0f, 0.0f, 0.0f)];
     mLastCommentBoxHeight = mCommentBox.contentSize.height;
 }
 
@@ -51,6 +45,21 @@
 
 - (IBAction)sendButtonPressed:(id)sender {
     NSLog(@"Sent");
+}
+
+- (IBAction)backButtonPressed:(id)sender {
+    [UIView beginAnimations:@"FadeOutCommentView" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(removeFromView)];
+    [self.view setAlpha:0.0f];
+    [UIView commitAnimations];
+}
+
+- (void)removeFromView {
+    [self.view removeFromSuperview];
+    [self.view setAlpha:1.0f];
 }
 
 - (void)setSendEnabled:(BOOL)enabled {

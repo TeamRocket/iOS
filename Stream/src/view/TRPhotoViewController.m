@@ -303,7 +303,13 @@
 - (IBAction)showComments:(id)sender {
     [mCommentsViewController.view setFrame:self.view.frame];
     [mCommentsViewController.view layoutSubviews];
+    [mCommentsViewController.view setAlpha:0.0f];
     [self.view addSubview:mCommentsViewController.view];
+    [UIView beginAnimations:@"FadeInCommentView" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.5];
+    [mCommentsViewController.view setAlpha:1.0f];
+    [UIView commitAnimations];
 }
 
 #pragma mark - TRGraphDelegate
