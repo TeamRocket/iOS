@@ -196,7 +196,7 @@
     if (mPhoto.uploader) {
         [mUploaderLabel setText:[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName]];
         if (mPhoto.uploader == AppDelegate.graph.me) {
-            [self.view addSubview:mDeleteButton];
+            [self.view insertSubview:mDeleteButton belowSubview:mLikeIndicator];
         } else {
             [mDeleteButton removeFromSuperview];
         }
