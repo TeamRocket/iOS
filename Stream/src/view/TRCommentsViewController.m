@@ -8,6 +8,8 @@
 
 #import "TRCommentsViewController.h"
 
+#import "TRCommentCell.h"
+
 @interface TRCommentsViewController ()
 
 @end
@@ -16,6 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [mCommentsTable registerNib:[UINib nibWithNibName:@"TRCommentCell" bundle:nil] forCellReuseIdentifier:@"TRCommentCell"];
+    [mCommentsTable setContentInset:UIEdgeInsetsMake(30.0f, 0.0f, 40.0f, 0.0f)];
     [mSendButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
     [mBackButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
     [mSendButton setBackgroundImage:[[UIImage imageNamed:@"outline_button_bg.png"]
@@ -71,6 +75,32 @@
     }
 }
 
+#pragma mark - UITableViewDelegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 9;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString * comment = @"";
+    CGSize commentSize = [comment sizeWithFont:[UIFont fontWithName:@"MuseoSans-100" size:15.0]
+                             constrainedToSize:CGSizeMake(298, 300)
+                                 lineBreakMode:NSLineBreakByWordWrapping];
+    return commentSize.height + 40.0f;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TRCommentCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TRCommentCell"];
+    if (cell == nil) {
+        cell = [[NSBundle mainBundle] loadNibNamed:@"TRCommentCell" owner:self options:nil][0];
+    }
+    return cell;
+}
+
 - (void)keyboardWillShow:(NSNotification*)aNotification {
     NSDictionary* info = [aNotification userInfo];
     mKBSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
@@ -90,6 +120,11 @@
     mCommentBox.center = CGPointMake(mCommentBox.center.x, mCommentBox.center.y - mKBSize.height);
     mBlackBack.center = CGPointMake(mBlackBack.center.x, mBlackBack.center.y - mKBSize.height);
     [UIView commitAnimations];
+
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(mCommentsTable.contentInset.top, mCommentsTable.contentInset.left,
+                                                  mCommentsTable.contentInset.bottom + mKBSize.height, mCommentsTable.contentInset.right);
+    mCommentsTable.contentInset = contentInsets;
+    mCommentsTable.scrollIndicatorInsets = contentInsets;
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification {
@@ -105,17 +140,11 @@
     mCommentBox.center = CGPointMake(mCommentBox.center.x, mCommentBox.center.y + mKBSize.height);
     mBlackBack.center = CGPointMake(mBlackBack.center.x, mBlackBack.center.y + mKBSize.height);
     [UIView commitAnimations];
-}
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(mCommentsTable.contentInset.top, mCommentsTable.contentInset.left,
+                                                  mCommentsTable.contentInset.bottom - mKBSize.height, mCommentsTable.contentInset.right);
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesBegan:touches withEvent:event];
-    if ([mCommentBox isFirstResponder]) {
-        if (CGRectContainsPoint(mCommentBox.frame, [[touches anyObject] locationInView:mCommentBox])) {
-            NSLog(@"Contains point");
-        } else {
-            [mCommentBox resignFirstResponder];
-        }
-    }
+    mCommentsTable.contentInset = contentInsets;
+    mCommentsTable.scrollIndicatorInsets = contentInsets;
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -139,6 +168,11 @@
                 [UIView commitAnimations];
                 mLastCommentBoxHeight = textView.contentSize.height;
             }
+        }
+        if ([textView.text length] > 0 && [textView.text characterAtIndex:[textView.text length] - 1] == '\n') {
+            textView.text = [textView.text substringToIndex:[textView.text length]-1];
+            [self textViewDidChange:textView];
+            [textView resignFirstResponder];
         }
     }
 }

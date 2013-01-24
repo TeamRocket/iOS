@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TRCommentsViewController : UIViewController <UITextViewDelegate> {
+@interface TRCommentsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate> {
     IBOutlet UIButton * mBackButton;
     IBOutlet UIButton * mSendButton;
     IBOutlet UIImageView * mBottomGradient;
     IBOutlet UILabel * mTitleLabel;
     IBOutlet UITextView * mCommentBox;
     IBOutlet UIView * mBlackBack;
+    IBOutlet UITableView * mCommentsTable;
 
     CGSize mKBSize;
     UIViewAnimationCurve mKBAnimationCurve;
