@@ -35,4 +35,8 @@
     [mImageView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"empty_stream.png"]]];
 }
 
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
+}
+
 @end
