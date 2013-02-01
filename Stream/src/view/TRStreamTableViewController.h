@@ -14,6 +14,7 @@
     IBOutlet UITableView * mTableView;
     UIRefreshControl * mRefreshControl;
     BOOL mWasPreviouslyCreatingStream;
+    IBOutlet UIImageView * mNUX;
 }
 
 @end

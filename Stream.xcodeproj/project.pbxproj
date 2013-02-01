@@ -11,6 +11,8 @@
 		0A14A3F116AE6B5000688B51 /* inner_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A14A3EF16AE6B5000688B51 /* inner_shadow@2x.png */; };
 		0A26060616BBBE0B009EF224 /* TRFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26060416BBBE0B009EF224 /* TRFeedbackViewController.m */; };
 		0A26060916BBBE32009EF224 /* TRFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */; };
+		0A26061016BBD5AD009EF224 /* nux_streams.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060C16BBD5AD009EF224 /* nux_streams.png */; };
+		0A26061116BBD5AD009EF224 /* nux_streams@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060D16BBD5AD009EF224 /* nux_streams@2x.png */; };
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
@@ -157,6 +159,8 @@
 		0A26060316BBBE0B009EF224 /* TRFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRFeedbackViewController.h; path = src/view/TRFeedbackViewController.h; sourceTree = "<group>"; };
 		0A26060416BBBE0B009EF224 /* TRFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRFeedbackViewController.m; path = src/view/TRFeedbackViewController.m; sourceTree = "<group>"; };
 		0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRFeedbackViewController.xib; path = gui/TRFeedbackViewController.xib; sourceTree = "<group>"; };
+		0A26060C16BBD5AD009EF224 /* nux_streams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nux_streams.png; path = img/UI/nux_streams.png; sourceTree = "<group>"; };
+		0A26060D16BBD5AD009EF224 /* nux_streams@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nux_streams@2x.png"; path = "img/UI/nux_streams@2x.png"; sourceTree = "<group>"; };
 		0A3890CF1664AFC7002E8BC1 /* Stream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -558,6 +562,8 @@
 				0AF7A1EB167AB6280040023D /* navbaritem_orange_highlighted@2x.png */,
 				0A4C6C94167935CF002DD362 /* navbaritem_orange.png */,
 				0A4C6C95167935CF002DD362 /* navbaritem_orange@2x.png */,
+				0A26060C16BBD5AD009EF224 /* nux_streams.png */,
+				0A26060D16BBD5AD009EF224 /* nux_streams@2x.png */,
 				0AB19B6116781F240036E2BC /* blackbutton_normal.png */,
 				0AB19B6216781F240036E2BC /* blackbutton_normal@2x.png */,
 				0AB19B6316781F240036E2BC /* blackbutton_pressed.png */,
@@ -769,6 +775,8 @@
 				0A9A8EE616B0F83500D85655 /* outline_button_bg@2x.png in Resources */,
 				0A9A8EE916B103C500D85655 /* TRCommentCell.xib in Resources */,
 				0A26060916BBBE32009EF224 /* TRFeedbackViewController.xib in Resources */,
+				0A26061016BBD5AD009EF224 /* nux_streams.png in Resources */,
+				0A26061116BBD5AD009EF224 /* nux_streams@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
