@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A26060616BBBE0B009EF224 /* TRFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26060416BBBE0B009EF224 /* TRFeedbackViewController.m */; };
+		0A26060916BBBE32009EF224 /* TRFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */; };
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
@@ -133,6 +135,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A26060316BBBE0B009EF224 /* TRFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRFeedbackViewController.h; path = src/view/TRFeedbackViewController.h; sourceTree = "<group>"; };
+		0A26060416BBBE0B009EF224 /* TRFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRFeedbackViewController.m; path = src/view/TRFeedbackViewController.m; sourceTree = "<group>"; };
+		0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRFeedbackViewController.xib; path = gui/TRFeedbackViewController.xib; sourceTree = "<group>"; };
 		0A3890CF1664AFC7002E8BC1 /* Stream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -351,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				0ADF45791664B14100E0C0FA /* InfoPlist.strings */,
+				0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */,
 				0A510AF916784BD500E2012F /* TRLoginViewController.xib */,
 				0A3CEB5516884DB300305544 /* TRLikerListViewController.xib */,
 				0A6ADB7D1687B2F200A3C1AE /* TRParticipantCell.xib */,
@@ -435,6 +441,8 @@
 				0A45768A167D59B400848D8E /* TRPhotoViewController.m */,
 				0A4C6CE41679E777002DD362 /* TRPhotoStreamViewController.h */,
 				0A4C6CE51679E777002DD362 /* TRPhotoStreamViewController.m */,
+				0A26060316BBBE0B009EF224 /* TRFeedbackViewController.h */,
+				0A26060416BBBE0B009EF224 /* TRFeedbackViewController.m */,
 				0A3CEB5216884D9600305544 /* TRLikerListViewController.h */,
 				0A3CEB5316884D9600305544 /* TRLikerListViewController.m */,
 				0A510AF316784B9F00E2012F /* TRLoginViewController.h */,
@@ -690,6 +698,7 @@
 				0AAE997C1691A0910012B826 /* progress_bar_bg@2x.png in Resources */,
 				0AAE997D1691A0910012B826 /* progress_bar.png in Resources */,
 				0AAE997E1691A0910012B826 /* progress_bar@2x.png in Resources */,
+				0A26060916BBBE32009EF224 /* TRFeedbackViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -725,6 +734,7 @@
 				0A6ADB751687AE2F00A3C1AE /* TRParticipantsViewController.m in Sources */,
 				0A6ADB7C1687B1A400A3C1AE /* TRParticipantCell.m in Sources */,
 				0A3CEB5416884D9600305544 /* TRLikerListViewController.m in Sources */,
+				0A26060616BBBE0B009EF224 /* TRFeedbackViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,8 +805,6 @@
 		0A3890EE1664AFC7002E8BC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Stream/misc/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Stream/misc/Info.plist";
@@ -806,7 +814,6 @@
 					"\"$(SRCROOT)/Stream/misc\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D481C269-4D2A-4E55-AC3B-18CFC46FA3D0";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -815,8 +822,6 @@
 		0A3890EF1664AFC7002E8BC1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Peter Tsoi (94YD5NUQPT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Stream/misc/Prefix.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Stream/misc/Info.plist";
@@ -826,7 +831,6 @@
 					"\"$(SRCROOT)/Stream/misc\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D481C269-4D2A-4E55-AC3B-18CFC46FA3D0";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
