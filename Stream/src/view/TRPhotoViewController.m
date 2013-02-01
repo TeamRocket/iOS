@@ -13,6 +13,7 @@
 #import "TRAppDelegate.h"
 #import "TRPhotoStream.h"
 
+#import "TRCommentsViewController.h"
 #import "TRImage.h"
 #import "TRImageView.h"
 #import "TRLikerListViewController.h"
@@ -29,6 +30,7 @@
 @implementation TRPhotoViewController
 
 - (void)viewDidLoad{
+    mCommentsViewController = [[TRCommentsViewController alloc] initWithNibName:@"TRCommentsViewController" bundle:nil];
     [mDeleteButton removeFromSuperview];
     [mUploaderLabel setFont:[UIFont fontWithName:@"MuseoSans-300" size:22.0]];
     [mLikeButton.titleLabel setFont:[UIFont fontWithName:@"MuseoSans-500" size:15.0]];
@@ -194,7 +196,7 @@
     if (mPhoto.uploader) {
         [mUploaderLabel setText:[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName]];
         if (mPhoto.uploader == AppDelegate.graph.me) {
-            [self.view addSubview:mDeleteButton];
+            [self.view insertSubview:mDeleteButton belowSubview:mLikeIndicator];
         } else {
             [mDeleteButton removeFromSuperview];
         }
@@ -211,7 +213,7 @@
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
         [mLikeButton setTitle:@"Like" forState:UIControlStateNormal];
     }
-    [mCommentCountButton setTitle:[NSString stringWithFormat:@"%i", mPhoto.numLikes] forState:UIControlStateNormal];
+    [mCommentCountButton setTitle:[NSString stringWithFormat:@"%i", mPhoto.numComments] forState:UIControlStateNormal];
     labelSize = [mCommentCountButton.titleLabel.text sizeWithFont:mCommentCountButton.titleLabel.font];
     mCommentIndicator.center = CGPointMake(mCommentCountButton.frame.origin.x + mCommentCountButton.frame.size.width - labelSize.width - mCommentIndicator.frame.size.width - 3.0f, mCommentCountButton.center.y);
     CGSize buttonSize = [mLikeButton.titleLabel.text sizeWithFont:mLikeButton.titleLabel.font];
@@ -269,7 +271,8 @@
 }
 
 - (void)commentButtonPressed:(id)sender {
-    
+    [self showComments:sender];
+    [mCommentsViewController focus];
 }
 
 - (IBAction)deleteButtonPressed:(id)sender {
@@ -299,7 +302,16 @@
 }
 
 - (IBAction)showComments:(id)sender {
-    
+    [mCommentsViewController.view setFrame:self.view.frame];
+    [mCommentsViewController.view layoutSubviews];
+    [mCommentsViewController setPhoto:mPhoto];
+    [mCommentsViewController.view setAlpha:0.0f];
+    [self.view addSubview:mCommentsViewController.view];
+    [UIView beginAnimations:@"FadeInCommentView" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.5];
+    [mCommentsViewController.view setAlpha:1.0f];
+    [UIView commitAnimations];
 }
 
 #pragma mark - TRGraphDelegate

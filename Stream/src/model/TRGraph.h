@@ -32,6 +32,8 @@
     NSMutableDictionary * mPhotos;
     NSMutableDictionary * mUsers;
 
+    NSDateFormatter * mDateFormatter;
+
     TRUser * mMe;
 }
 
@@ -52,6 +54,7 @@
 - (void)downloadPhotoInfo:(NSString*)ID;
 - (void)sendLikePhoto:(NSString*)ID forPhone:(NSString*)phone;
 - (void)sendUnlikePhoto:(NSString*)ID forPhone:(NSString*)phone;
+- (void)sendNewComment:(NSString*)comment forPhoto:(NSString*)photoID;
 - (void)uploadPhoto:(TRPhoto*)photo toStream:(TRPhotoStream*)stream;
 - (void)createStreamNamed:(NSString*)streamName forPhone:(NSString*)phone withParticipants:(NSArray*)participants;
 - (void)downloadParticipantsInStream:(NSString*)streamID;
