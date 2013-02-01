@@ -137,6 +137,8 @@
         TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
         [AppDelegate.graph sendDeleteStream:stream.ID];
         [AppDelegate.graph.me removeStream:stream];
+        [TestFlight passCheckpoint:@"Deleted Stream"];
+        [[Mixpanel sharedInstance] track:@"Deleted Stream"];
         [tableView reloadData];
     }
 }

@@ -17,6 +17,13 @@
 		0A26061516BBDC6D009EF224 /* streamcell_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061316BBDC6D009EF224 /* streamcell_selected@2x.png */; };
 		0A26061816BBE1DC009EF224 /* participantsCellBG_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061616BBE1DC009EF224 /* participantsCellBG_selected.png */; };
 		0A26061916BBE1DC009EF224 /* participantsCellBG_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061716BBE1DC009EF224 /* participantsCellBG_selected@2x.png */; };
+		0A26063B16BBF25A009EF224 /* MPCJSONDataSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26063116BBF25A009EF224 /* MPCJSONDataSerializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0A26063C16BBF25A009EF224 /* MPCJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26063316BBF25A009EF224 /* MPCJSONSerializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0A26063D16BBF25A009EF224 /* MPCSerializedJSONData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26063516BBF25A009EF224 /* MPCSerializedJSONData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0A26063E16BBF25A009EF224 /* NSData+MPBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26063816BBF25A009EF224 /* NSData+MPBase64.m */; };
+		0A26063F16BBF25A009EF224 /* Mixpanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26063A16BBF25A009EF224 /* Mixpanel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0A26064216BBF27F009EF224 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A26064016BBF266009EF224 /* SystemConfiguration.framework */; };
+		0A26064516BBF296009EF224 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A26064316BBF28B009EF224 /* CoreTelephony.framework */; };
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
@@ -169,6 +176,18 @@
 		0A26061316BBDC6D009EF224 /* streamcell_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "streamcell_selected@2x.png"; path = "img/UI/streamcell_selected@2x.png"; sourceTree = "<group>"; };
 		0A26061616BBE1DC009EF224 /* participantsCellBG_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = participantsCellBG_selected.png; path = img/UI/participantsCellBG_selected.png; sourceTree = "<group>"; };
 		0A26061716BBE1DC009EF224 /* participantsCellBG_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "participantsCellBG_selected@2x.png"; path = "img/UI/participantsCellBG_selected@2x.png"; sourceTree = "<group>"; };
+		0A26063016BBF25A009EF224 /* MPCJSONDataSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCJSONDataSerializer.h; sourceTree = "<group>"; };
+		0A26063116BBF25A009EF224 /* MPCJSONDataSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCJSONDataSerializer.m; sourceTree = "<group>"; };
+		0A26063216BBF25A009EF224 /* MPCJSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCJSONSerializer.h; sourceTree = "<group>"; };
+		0A26063316BBF25A009EF224 /* MPCJSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCJSONSerializer.m; sourceTree = "<group>"; };
+		0A26063416BBF25A009EF224 /* MPCSerializedJSONData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCSerializedJSONData.h; sourceTree = "<group>"; };
+		0A26063516BBF25A009EF224 /* MPCSerializedJSONData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCSerializedJSONData.m; sourceTree = "<group>"; };
+		0A26063716BBF25A009EF224 /* NSData+MPBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MPBase64.h"; sourceTree = "<group>"; };
+		0A26063816BBF25A009EF224 /* NSData+MPBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MPBase64.m"; sourceTree = "<group>"; };
+		0A26063916BBF25A009EF224 /* Mixpanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mixpanel.h; sourceTree = "<group>"; };
+		0A26063A16BBF25A009EF224 /* Mixpanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mixpanel.m; sourceTree = "<group>"; };
+		0A26064016BBF266009EF224 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		0A26064316BBF28B009EF224 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		0A3890CF1664AFC7002E8BC1 /* Stream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -345,9 +364,11 @@
 			files = (
 				0A6276951682CFF800827101 /* AddressBook.framework in Frameworks */,
 				0A6276961682CFF800827101 /* AddressBookUI.framework in Frameworks */,
+				0A26064516BBF296009EF224 /* CoreTelephony.framework in Frameworks */,
 				0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */,
 				0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */,
 				0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */,
+				0A26064216BBF27F009EF224 /* SystemConfiguration.framework in Frameworks */,
 				0A457688167D4DBA00848D8E /* QuartzCore.framework in Frameworks */,
 				0A92F6931689068400803DA1 /* libTestFlight.a in Frameworks */,
 				0A92F6951689069400803DA1 /* libz.dylib in Frameworks */,
@@ -357,6 +378,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A26062D16BBF25A009EF224 /* Mixpanel */ = {
+			isa = PBXGroup;
+			children = (
+				0A26062E16BBF25A009EF224 /* Library */,
+				0A26063916BBF25A009EF224 /* Mixpanel.h */,
+				0A26063A16BBF25A009EF224 /* Mixpanel.m */,
+			);
+			name = Mixpanel;
+			path = Stream/misc/Mixpanel;
+			sourceTree = "<group>";
+		};
+		0A26062E16BBF25A009EF224 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				0A26062F16BBF25A009EF224 /* JSON */,
+				0A26063616BBF25A009EF224 /* NSData_Base64 */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		0A26062F16BBF25A009EF224 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				0A26063016BBF25A009EF224 /* MPCJSONDataSerializer.h */,
+				0A26063116BBF25A009EF224 /* MPCJSONDataSerializer.m */,
+				0A26063216BBF25A009EF224 /* MPCJSONSerializer.h */,
+				0A26063316BBF25A009EF224 /* MPCJSONSerializer.m */,
+				0A26063416BBF25A009EF224 /* MPCSerializedJSONData.h */,
+				0A26063516BBF25A009EF224 /* MPCSerializedJSONData.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		0A26063616BBF25A009EF224 /* NSData_Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				0A26063716BBF25A009EF224 /* NSData+MPBase64.h */,
+				0A26063816BBF25A009EF224 /* NSData+MPBase64.m */,
+			);
+			path = NSData_Base64;
+			sourceTree = "<group>";
+		};
 		0A3890C41664AFC7002E8BC1 = {
 			isa = PBXGroup;
 			children = (
@@ -380,11 +443,14 @@
 				0A6276911682CFEC00827101 /* AddressBook.framework */,
 				0A6276921682CFEC00827101 /* AddressBookUI.framework */,
 				0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */,
+				0A26064316BBF28B009EF224 /* CoreTelephony.framework */,
 				0A3890D51664AFC7002E8BC1 /* Foundation.framework */,
 				0A457686167D4DAE00848D8E /* QuartzCore.framework */,
+				0A26064016BBF266009EF224 /* SystemConfiguration.framework */,
 				0A3890D31664AFC7002E8BC1 /* UIKit.framework */,
 				0A92F6921689068400803DA1 /* libTestFlight.a */,
 				0A92F6941689069400803DA1 /* libz.dylib */,
+				0A26062D16BBF25A009EF224 /* Mixpanel */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -831,6 +897,11 @@
 				0A4D4B6416B0C9C10036C440 /* TRCommentsViewController.m in Sources */,
 				0A9A8EEC16B1052200D85655 /* TRCommentCell.m in Sources */,
 				0A26060616BBBE0B009EF224 /* TRFeedbackViewController.m in Sources */,
+				0A26063B16BBF25A009EF224 /* MPCJSONDataSerializer.m in Sources */,
+				0A26063C16BBF25A009EF224 /* MPCJSONSerializer.m in Sources */,
+				0A26063D16BBF25A009EF224 /* MPCSerializedJSONData.m in Sources */,
+				0A26063E16BBF25A009EF224 /* NSData+MPBase64.m in Sources */,
+				0A26063F16BBF25A009EF224 /* Mixpanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

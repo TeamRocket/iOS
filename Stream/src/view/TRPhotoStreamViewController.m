@@ -60,12 +60,14 @@
         
     }
     [TestFlight passCheckpoint:@"Viewed Stream by User"];
+    [[Mixpanel sharedInstance] track:@"Viewed Stream by User"];
     return self;
 }
 
 - (id)initWithPhotoStream:(TRPhotoStream *)stream{
     self = [self initWithPhotoStream:stream mode:kTRPhotoStreamViewModeAll];
     [TestFlight passCheckpoint:@"Viewed Stream"];
+    [[Mixpanel sharedInstance] track:@"Viewed Stream"];
     return self;
 }
 
@@ -343,6 +345,7 @@
     [mTableView reloadData];
     [self dismissViewControllerAnimated:YES completion:nil];
     [TestFlight passCheckpoint:@"Uploaded Picture"];
+    [[Mixpanel sharedInstance] track:@"Uploaded Picture"];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

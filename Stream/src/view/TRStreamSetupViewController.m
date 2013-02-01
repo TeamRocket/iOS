@@ -256,6 +256,7 @@
                         withParticipants:participantPhones];
     [self dismissViewControllerAnimated:YES completion:nil];
     [TestFlight passCheckpoint:@"Created Stream"];
+    [[Mixpanel sharedInstance] track:@"Created Stream"];
 }
 
 - (void)updateStreamTapped:(id)sender {
@@ -267,6 +268,7 @@
     [AppDelegate.graph sendInviteUsers:participantPhones toStream:mStream.ID];
     [self dismissViewControllerAnimated:YES completion:nil];
     [TestFlight passCheckpoint:@"Updated Stream Info"];
+    [[Mixpanel sharedInstance] track:@"Updated Stream Info"];
 }
 
 #pragma mark - ABPeoplePickerDelegate

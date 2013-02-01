@@ -24,6 +24,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    [Mixpanel sharedInstanceWithToken:@"b270f22f26f5edc1cbd5b3c0c811253a"];
     [TestFlight takeOff:@"c5a032ea808bb992ba0e2063fd719860_MTYwMTg0MjAxMi0xMi0xNSAwMjozNjo1My40MzM0MDM"];
     if (launchOptions != nil && [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
@@ -48,6 +49,9 @@
     mPushToken = [mPushToken substringWithRange:NSMakeRange(1, mPushToken.length-2)];
     if ([[NSUserDefaults alloc] objectForKey:@"user_phone"] != nil && [NSNull null] != [[NSUserDefaults alloc] objectForKey:@"user_phone"]) {
         [mGraph registerPushToken:mPushToken forPhone:[[NSUserDefaults alloc] objectForKey:@"user_phone"]];
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel.people identify:[[NSUserDefaults alloc] objectForKey:@"user_phone"]];
+        [mixpanel.people addPushDeviceToken:deviceToken];
     }
 }
 

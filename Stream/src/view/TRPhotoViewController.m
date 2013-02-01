@@ -71,6 +71,7 @@
     [self.view addSubview:mCommentButton];
     
     [TestFlight passCheckpoint:@"Viewed Picture"];
+    [[Mixpanel sharedInstance] track:@"Viewed Picture"];
 }
 
 - (void)setPhotoView:(TRImageView*)photoView {
@@ -268,6 +269,7 @@
     
     [mLikeOverlayView.layer addAnimation:fadeInAndOut forKey:@"FadeOverlay"];
     [TestFlight passCheckpoint:@"Liked Photo"];
+    [[Mixpanel sharedInstance] track:@"Liked Photo"];
 }
 
 - (void)commentButtonPressed:(id)sender {
@@ -320,6 +322,8 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     [AppDelegate.graph sendDeletePhoto:mPhoto.ID];
     [mStream removePhoto:mPhoto];
+    [TestFlight passCheckpoint:@"Deleted Photo"];
+    [[Mixpanel sharedInstance] track:@"Deleted Photo"];
     [self closePhotoView:nil];
 }
 
