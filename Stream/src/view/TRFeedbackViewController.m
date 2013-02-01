@@ -8,6 +8,9 @@
 
 #import "TRFeedbackViewController.h"
 
+#import "TRAppDelegate.h"
+#import "TRGraph.h"
+
 @interface TRFeedbackViewController ()
 
 @end
@@ -31,7 +34,10 @@
 }
 
 - (IBAction)sendButtonPressed:(id)sender {
-    
+    if ([mFeedbackBox.text length] > 0 && ![mFeedbackBox.text isEqualToString:@"What do you think about stream?"]) {
+        [AppDelegate.graph sendFeedback:mFeedbackBox.text];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
