@@ -130,7 +130,15 @@
         TRFeedbackViewController * feedback = [[TRFeedbackViewController alloc] initWithNibName:@"TRFeedbackViewController" bundle:nil];
         [self presentViewController:feedback animated:YES completion:nil];
     }
+}
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
+        [AppDelegate.graph sendDeleteStream:stream.ID];
+        [AppDelegate.graph.me removeStream:stream];
+        [tableView reloadData];
+    }
 }
 
 #pragma mark - TRGraph 
