@@ -217,8 +217,13 @@ typedef enum {
 }
 
 - (void)sendNewComment:(NSString*)comment forPhoto:(NSString*)photoID {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/add_comment.php?picture_id=%@&commenter_phone=%@&comment=%@",photoID, mMe.phone, [comment encodeString:NSASCIIStringEncoding]]
-                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"stream/1.0/api/add_comment.php" relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
+                                               arguments:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [photoID encodeString:NSASCIIStringEncoding], @"picture_id",
+                                                          mMe.phone, @"commenter_phone",
+                                                          [comment encodeString:NSASCIIStringEncoding], @"comment",
+                                                          nil]
+                                                delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
                          (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskSendComment]);
