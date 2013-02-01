@@ -102,6 +102,7 @@
 
 - (void)setPhoto:(TRPhoto*)photo {
     mPhoto = photo;
+    [mCommentsTable reloadData];
 }
 
 - (void)focus {
