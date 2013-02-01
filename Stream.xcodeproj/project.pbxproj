@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A26061016BBD5AD009EF224 /* nux_streams.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060C16BBD5AD009EF224 /* nux_streams.png */; };
+		0A26061116BBD5AD009EF224 /* nux_streams@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060D16BBD5AD009EF224 /* nux_streams@2x.png */; };
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
@@ -133,6 +135,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A26060C16BBD5AD009EF224 /* nux_streams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nux_streams.png; path = img/UI/nux_streams.png; sourceTree = "<group>"; };
+		0A26060D16BBD5AD009EF224 /* nux_streams@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nux_streams@2x.png"; path = "img/UI/nux_streams@2x.png"; sourceTree = "<group>"; };
 		0A3890CF1664AFC7002E8BC1 /* Stream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -498,6 +502,8 @@
 				0AF7A1EB167AB6280040023D /* navbaritem_orange_highlighted@2x.png */,
 				0A4C6C94167935CF002DD362 /* navbaritem_orange.png */,
 				0A4C6C95167935CF002DD362 /* navbaritem_orange@2x.png */,
+				0A26060C16BBD5AD009EF224 /* nux_streams.png */,
+				0A26060D16BBD5AD009EF224 /* nux_streams@2x.png */,
 				0AB19B6116781F240036E2BC /* blackbutton_normal.png */,
 				0AB19B6216781F240036E2BC /* blackbutton_normal@2x.png */,
 				0AB19B6316781F240036E2BC /* blackbutton_pressed.png */,
@@ -690,6 +696,8 @@
 				0AAE997C1691A0910012B826 /* progress_bar_bg@2x.png in Resources */,
 				0AAE997D1691A0910012B826 /* progress_bar.png in Resources */,
 				0AAE997E1691A0910012B826 /* progress_bar@2x.png in Resources */,
+				0A26061016BBD5AD009EF224 /* nux_streams.png in Resources */,
+				0A26061116BBD5AD009EF224 /* nux_streams@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

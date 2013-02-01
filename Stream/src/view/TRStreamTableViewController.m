@@ -107,6 +107,11 @@
 #pragma mark - TRGraph 
 
 - (void)graphFinishedUpdating {
+    if ([AppDelegate.graph.me.streams count] == 0) {
+        [self.view addSubview:mNUX];
+    } else {
+        [mNUX removeFromSuperview];
+    }
     if (mRefreshControl) {
         [mRefreshControl endRefreshing];
     }
