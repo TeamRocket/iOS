@@ -96,6 +96,37 @@
     return conn;
 }
 
+- (TRConnection *)postToURL:(NSURL *)url arguments:(NSDictionary *)args delegate:(id<TRConnectionDelegate>) delegate{
+    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:url];
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    [request setHTTPShouldHandleCookies:NO];
+    [request setHTTPMethod:@"POST"];
+
+    NSString *boundary = @"------TeamRocketBoundaryJESSIEJAMESMEOWTH";
+    NSString *contentType = [NSString stringWithFormat:@"application/x-www-form-urlencoded; boundary=%@", boundary];
+    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+
+    NSMutableData *body = [NSMutableData data];
+    NSMutableString * reqString = [[NSMutableString alloc] init];
+
+    for (NSString * key in args) {
+        [reqString appendFormat:@"%@=%@&", key, [args objectForKey:key]];
+    }
+
+    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPBody:[NSData dataWithBytes:[reqString UTF8String] length: [reqString length]]];
+
+    TRConnection * conn = [[TRConnection alloc] initWithRequest:request delegate:delegate networkDelegate:self startImmediately:NO];
+    [conn scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                    forMode:NSRunLoopCommonModes];
+    [conn start];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSMutableData data]);
+    return conn;
+
+}
+
 #pragma mark - NSURLConnection
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

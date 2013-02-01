@@ -32,6 +32,7 @@ typedef enum {
     kTRGraphNetworkTaskRegisterPushToken,
     kTRGraphNetworkTaskGetUserStatus,
     kTRGraphNetworkTaskSendComment,
+    kTRGraphNetworkTaskSendFeedback,
 } TRGraphNetworkTask;
 
 @implementation NSString (encode)
@@ -89,23 +90,41 @@ typedef enum {
     return CFDictionaryGetCount(mActiveConnections) > 0;
 }
 
+- (void)sendFeedback:(NSString*)feedback {
+    TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"stream/1.0/api/feedback.php" relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
+                                               arguments:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [feedback encodeString:NSASCIIStringEncoding], @"user_feedback",
+                                                          mMe.phone, @"user_phone",
+                                                          nil]
+                                                delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskSendFeedback]);
+}
+
 #pragma mark User 
 
 - (void)loginAsUser:(NSString*)phone password:(NSString*)password {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/sign_in.php?viewer_phone=%@&password=%@", [phone encodeString:NSASCIIStringEncoding], [password encodeString:NSASCIIStringEncoding]]
-                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"stream/1.0/api/sign_in.php" relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
+                                               arguments:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [phone encodeString:NSASCIIStringEncoding], @"viewer_phone",
+                                                          [password encodeString:NSASCIIStringEncoding], @"password",
+                                                          nil]
+                                                delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
                          (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskUserLogin]);
 }
 
 - (void)signupWithPhone:(NSString*)phone first:(NSString*)first last:(NSString*)last password:(NSString*)password {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/sign_up.php?viewer_first=%@&viewer_last=%@&viewer_phone=%@&password=%@",
-                                                                               [first encodeString:NSASCIIStringEncoding],
-                                                                               [last encodeString:NSASCIIStringEncoding],
-                                                                               [phone encodeString:NSASCIIStringEncoding],
-                                                                               [password encodeString:NSASCIIStringEncoding]]
-                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"stream/1.0/api/sign_in.php" relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
+                                               arguments:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [first encodeString:NSASCIIStringEncoding], @"viewer_first",
+                                                          [last encodeString:NSASCIIStringEncoding], @"viewer_last",
+                                                          [phone encodeString:NSASCIIStringEncoding], @"viewer_phone",
+                                                          [password encodeString:NSASCIIStringEncoding], @"password",
+                                                          nil]
+                                                delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
                          (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskUserSignup]);

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0A14A3F016AE6B5000688B51 /* inner_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A14A3EE16AE6B5000688B51 /* inner_shadow.png */; };
 		0A14A3F116AE6B5000688B51 /* inner_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A14A3EF16AE6B5000688B51 /* inner_shadow@2x.png */; };
+		0A26060616BBBE0B009EF224 /* TRFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26060416BBBE0B009EF224 /* TRFeedbackViewController.m */; };
+		0A26060916BBBE32009EF224 /* TRFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */; };
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
@@ -152,6 +154,9 @@
 /* Begin PBXFileReference section */
 		0A14A3EE16AE6B5000688B51 /* inner_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inner_shadow.png; path = img/UI/inner_shadow.png; sourceTree = "<group>"; };
 		0A14A3EF16AE6B5000688B51 /* inner_shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "inner_shadow@2x.png"; path = "img/UI/inner_shadow@2x.png"; sourceTree = "<group>"; };
+		0A26060316BBBE0B009EF224 /* TRFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRFeedbackViewController.h; path = src/view/TRFeedbackViewController.h; sourceTree = "<group>"; };
+		0A26060416BBBE0B009EF224 /* TRFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRFeedbackViewController.m; path = src/view/TRFeedbackViewController.m; sourceTree = "<group>"; };
+		0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRFeedbackViewController.xib; path = gui/TRFeedbackViewController.xib; sourceTree = "<group>"; };
 		0A3890CF1664AFC7002E8BC1 /* Stream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -388,6 +393,7 @@
 			children = (
 				0ADF45791664B14100E0C0FA /* InfoPlist.strings */,
 				0A4D4B6716B0C9FC0036C440 /* TRCommentsViewController.xib */,
+				0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */,
 				0A510AF916784BD500E2012F /* TRLoginViewController.xib */,
 				0A3CEB5516884DB300305544 /* TRLikerListViewController.xib */,
 				0A6ADB7D1687B2F200A3C1AE /* TRParticipantCell.xib */,
@@ -477,6 +483,8 @@
 				0A45768A167D59B400848D8E /* TRPhotoViewController.m */,
 				0A4C6CE41679E777002DD362 /* TRPhotoStreamViewController.h */,
 				0A4C6CE51679E777002DD362 /* TRPhotoStreamViewController.m */,
+				0A26060316BBBE0B009EF224 /* TRFeedbackViewController.h */,
+				0A26060416BBBE0B009EF224 /* TRFeedbackViewController.m */,
 				0A3CEB5216884D9600305544 /* TRLikerListViewController.h */,
 				0A3CEB5316884D9600305544 /* TRLikerListViewController.m */,
 				0A510AF316784B9F00E2012F /* TRLoginViewController.h */,
@@ -760,6 +768,7 @@
 				0A9A8EE516B0F83500D85655 /* outline_button_bg.png in Resources */,
 				0A9A8EE616B0F83500D85655 /* outline_button_bg@2x.png in Resources */,
 				0A9A8EE916B103C500D85655 /* TRCommentCell.xib in Resources */,
+				0A26060916BBBE32009EF224 /* TRFeedbackViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,6 +806,7 @@
 				0A3CEB5416884D9600305544 /* TRLikerListViewController.m in Sources */,
 				0A4D4B6416B0C9C10036C440 /* TRCommentsViewController.m in Sources */,
 				0A9A8EEC16B1052200D85655 /* TRCommentCell.m in Sources */,
+				0A26060616BBBE0B009EF224 /* TRFeedbackViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
