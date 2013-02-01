@@ -36,6 +36,11 @@
         [mStreams addObject:stream];
 }
 
+- (void)removeStream:(TRPhotoStream*)stream{
+    if ([mStreams containsObject:stream])
+        [mStreams removeObject:stream];
+}
+
 - (NSString*)title {
     return [NSString stringWithFormat:@"%@ %@", mFirstName, mLastName];
 }

@@ -276,7 +276,8 @@
 }
 
 - (IBAction)deleteButtonPressed:(id)sender {
-    
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Deleting a picture is permanent and can't be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Delete", nil];
+    [alert show];
 }
 
 - (IBAction)closePhotoView:(id)sender {
@@ -312,6 +313,12 @@
     [UIView setAnimationDuration:0.5];
     [mCommentsViewController.view setAlpha:1.0f];
     [UIView commitAnimations];
+}
+
+#pragma mark - UIAlertViewDelegate 
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self closePhotoView:nil];
 }
 
 #pragma mark - TRGraphDelegate
