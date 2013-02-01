@@ -18,6 +18,7 @@
     IBOutlet UILabel * mTitleLabel;
     IBOutlet UILabel * mParticipantsLabel;
     IBOutlet UILabel * mPhotosLabel;
+    IBOutlet UIImageView * mBackground;
 
     TRPhoto * mPhoto;
 }

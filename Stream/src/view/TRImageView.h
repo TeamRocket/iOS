@@ -17,7 +17,6 @@
     TRImage * mImage;
     TRPhoto * mPhoto;
     TRConnection * mConnection;
-    UIActivityIndicatorView * mSpinner;
     UITapGestureRecognizer * mTapRecognizer;
     CGSize mPostDownloadResize;
 }

@@ -300,8 +300,9 @@
         mUploading = NO;
         [mProgressBar removeFromSuperview];
         [self refreshStream];
+    } else {
+        [mTableView reloadData];
     }
-    [mTableView reloadData];
 }
 
 - (void)uploadedBytes:(int)bytesWritten ofExpected:(int)bytesExpected {

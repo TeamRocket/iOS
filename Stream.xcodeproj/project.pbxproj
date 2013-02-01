@@ -13,6 +13,10 @@
 		0A26060916BBBE32009EF224 /* TRFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */; };
 		0A26061016BBD5AD009EF224 /* nux_streams.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060C16BBD5AD009EF224 /* nux_streams.png */; };
 		0A26061116BBD5AD009EF224 /* nux_streams@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060D16BBD5AD009EF224 /* nux_streams@2x.png */; };
+		0A26061416BBDC6D009EF224 /* streamcell_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061216BBDC6D009EF224 /* streamcell_selected.png */; };
+		0A26061516BBDC6D009EF224 /* streamcell_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061316BBDC6D009EF224 /* streamcell_selected@2x.png */; };
+		0A26061816BBE1DC009EF224 /* participantsCellBG_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061616BBE1DC009EF224 /* participantsCellBG_selected.png */; };
+		0A26061916BBE1DC009EF224 /* participantsCellBG_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061716BBE1DC009EF224 /* participantsCellBG_selected@2x.png */; };
 		0A3890D41664AFC7002E8BC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D31664AFC7002E8BC1 /* UIKit.framework */; };
 		0A3890D61664AFC7002E8BC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D51664AFC7002E8BC1 /* Foundation.framework */; };
 		0A3890D81664AFC7002E8BC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3890D71664AFC7002E8BC1 /* CoreGraphics.framework */; };
@@ -161,6 +165,10 @@
 		0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRFeedbackViewController.xib; path = gui/TRFeedbackViewController.xib; sourceTree = "<group>"; };
 		0A26060C16BBD5AD009EF224 /* nux_streams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nux_streams.png; path = img/UI/nux_streams.png; sourceTree = "<group>"; };
 		0A26060D16BBD5AD009EF224 /* nux_streams@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nux_streams@2x.png"; path = "img/UI/nux_streams@2x.png"; sourceTree = "<group>"; };
+		0A26061216BBDC6D009EF224 /* streamcell_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = streamcell_selected.png; path = img/UI/streamcell_selected.png; sourceTree = "<group>"; };
+		0A26061316BBDC6D009EF224 /* streamcell_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "streamcell_selected@2x.png"; path = "img/UI/streamcell_selected@2x.png"; sourceTree = "<group>"; };
+		0A26061616BBE1DC009EF224 /* participantsCellBG_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = participantsCellBG_selected.png; path = img/UI/participantsCellBG_selected.png; sourceTree = "<group>"; };
+		0A26061716BBE1DC009EF224 /* participantsCellBG_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "participantsCellBG_selected@2x.png"; path = "img/UI/participantsCellBG_selected@2x.png"; sourceTree = "<group>"; };
 		0A3890CF1664AFC7002E8BC1 /* Stream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3890D31664AFC7002E8BC1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A3890D51664AFC7002E8BC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -404,11 +412,11 @@
 				0A6ADB781687AE5700A3C1AE /* TRParticipantsViewController.xib */,
 				0A4C6C92167930D4002DD362 /* TRSignupViewController.xib */,
 				0AB19B59167814390036E2BC /* TRSplashViewController.xib */,
-				0A4C6CBC167955D6002DD362 /* TRStreamCell.xib */,
 				0A4C6CB71679533D002DD362 /* TRStreamTableViewController.xib */,
 				0A4C6C881679299C002DD362 /* TRTextFieldCell.xib */,
 				0ABAAE96167A674400DD9A8B /* TRPhotoStreamViewController.xib */,
 				0A6276771682AEC600827101 /* TRStreamSetupViewController.xib */,
+				0A4C6CBC167955D6002DD362 /* TRStreamCell.xib */,
 				0AF7A1F2167B01B40040023D /* TRStreamGridViewCell.xib */,
 				0A45768C167D62AA00848D8E /* TRPhotoViewController.xib */,
 				0A9A8EE816B103C500D85655 /* TRCommentCell.xib */,
@@ -582,8 +590,12 @@
 				0AAE997A1691A0900012B826 /* progress_bar@2x.png */,
 				0A6ADB691687A39D00A3C1AE /* remove_token.png */,
 				0A6ADB6A1687A39D00A3C1AE /* remove_token@2x.png */,
+				0A26061616BBE1DC009EF224 /* participantsCellBG_selected.png */,
+				0A26061716BBE1DC009EF224 /* participantsCellBG_selected@2x.png */,
 				0A6ADB7F1687B35400A3C1AE /* participantsCellBG.png */,
 				0A6ADB801687B35400A3C1AE /* participantsCellBG@2x.png */,
+				0A26061216BBDC6D009EF224 /* streamcell_selected.png */,
+				0A26061316BBDC6D009EF224 /* streamcell_selected@2x.png */,
 				0A4C6CBE167956E4002DD362 /* streamcell.png */,
 				0A4C6CBF167956E4002DD362 /* streamcell@2x.png */,
 				0A4C6C71167921E9002DD362 /* tableviewgrouped_bot.png */,
@@ -777,6 +789,10 @@
 				0A26060916BBBE32009EF224 /* TRFeedbackViewController.xib in Resources */,
 				0A26061016BBD5AD009EF224 /* nux_streams.png in Resources */,
 				0A26061116BBD5AD009EF224 /* nux_streams@2x.png in Resources */,
+				0A26061416BBDC6D009EF224 /* streamcell_selected.png in Resources */,
+				0A26061516BBDC6D009EF224 /* streamcell_selected@2x.png in Resources */,
+				0A26061816BBE1DC009EF224 /* participantsCellBG_selected.png in Resources */,
+				0A26061916BBE1DC009EF224 /* participantsCellBG_selected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -66,10 +66,6 @@
 - (id)initWithURL:(NSURL *)url inFrame:(CGRect)frame {
     self = [self initWithFrame:frame];
     if (self) {
-        mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        mSpinner.center = self.center;
-        [mSpinner startAnimating];
-        [self addSubview:mSpinner];
         mConnection = [AppDelegate.network dataAtURL:url delegate:self];
     }
     return self;
@@ -78,10 +74,6 @@
 - (void)setTRImage:(TRImage*)image {
     [self setPlaceholder];
     mPostDownloadResize = CGSizeZero;
-    mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    mSpinner.center = self.center;
-    [mSpinner startAnimating];
-    [self addSubview:mSpinner];
     if (mConnection)
         [mConnection cancel];
     mConnection = [AppDelegate.network dataAtURL:image.url delegate:self];
@@ -96,10 +88,6 @@
     } else {
         if (!photo.image) {
             [self setPlaceholder];
-            mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            mSpinner.center = self.center;
-            [mSpinner startAnimating];
-            [self addSubview:mSpinner];
             if (mConnection)
                 [mConnection cancel];
             mConnection = [AppDelegate.network dataAtURL:photo.URL delegate:self];
@@ -141,8 +129,6 @@
 - (void)connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data {
     if (connection == mConnection) {
         mConnection = nil;
-        [mSpinner stopAnimating];
-        mSpinner = nil;
         mImage = [[TRImage alloc] initWithData:data fromURL:mImage.url];
         if (mPhoto != nil)
             mPhoto.image = mImage;
@@ -160,8 +146,6 @@
 }
 
 - (void)connection:(TRConnection *)connection failedWithError:(NSError *)error {
-    [mSpinner stopAnimating];
-    mSpinner = nil;
     NSLog(@"Image load error: %@", error);
 }
 
