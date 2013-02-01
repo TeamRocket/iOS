@@ -33,6 +33,7 @@
 
 - (void)addPhoto:(TRPhoto*)photo;
 - (void)addPhotoAsLatest:(TRPhoto*)photo;
+- (void)removePhoto:(TRPhoto*)photo;
 
 - (void)addParticipant:(TRUser*)newUser;
 

@@ -135,6 +135,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
+        [AppDelegate.graph sendDeleteStream:stream.ID];
         [AppDelegate.graph.me removeStream:stream];
         [tableView reloadData];
     }

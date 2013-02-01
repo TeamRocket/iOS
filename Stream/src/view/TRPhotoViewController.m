@@ -318,6 +318,8 @@
 #pragma mark - UIAlertViewDelegate 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [AppDelegate.graph sendDeletePhoto:mPhoto.ID];
+    [mStream removePhoto:mPhoto];
     [self closePhotoView:nil];
 }
 

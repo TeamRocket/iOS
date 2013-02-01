@@ -57,9 +57,11 @@
 - (void)sendLikePhoto:(NSString*)ID forPhone:(NSString*)phone;
 - (void)sendUnlikePhoto:(NSString*)ID forPhone:(NSString*)phone;
 - (void)sendNewComment:(NSString*)comment forPhoto:(NSString*)photoID;
+- (void)sendDeletePhoto:(NSString*)photoID;
 - (void)uploadPhoto:(TRPhoto*)photo toStream:(TRPhotoStream*)stream;
 - (void)createStreamNamed:(NSString*)streamName forPhone:(NSString*)phone withParticipants:(NSArray*)participants;
 - (void)downloadParticipantsInStream:(NSString*)streamID;
+- (void)sendDeleteStream:(NSString*)streamID;
 - (void)downloadUserPhotos:(NSString*)phone inStream:(NSString*)streamID;
 - (void)downloadLikesForPhoto:(NSString*)ID;
 - (void)sendInviteUsers:(NSArray*)invitees toStream:(NSString*)streamID;

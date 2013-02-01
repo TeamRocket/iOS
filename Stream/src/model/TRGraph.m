@@ -33,6 +33,8 @@ typedef enum {
     kTRGraphNetworkTaskGetUserStatus,
     kTRGraphNetworkTaskSendComment,
     kTRGraphNetworkTaskSendFeedback,
+    kTRGraphNetworkTaskDeletePhoto,
+    kTRGraphNetworkTaskDeleteStream,
 } TRGraphNetworkTask;
 
 @implementation NSString (encode)
@@ -227,6 +229,18 @@ typedef enum {
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
                          (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskSendComment]);
+}
+
+- (void)sendDeletePhoto:(NSString*)photoID {
+    TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"stream/1.0/api/delete_picture.php" relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
+                                               arguments:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          photoID, @"picture_id",
+                                                          mMe.phone, @"viewer_phone",
+                                                          nil]
+                                                delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskDeletePhoto]);
 }
 
 - (void)downloadPhotoInfo:(NSString*)ID {
@@ -546,6 +560,18 @@ typedef enum {
             [stream addParticipant:user];
         }
     }
+}
+
+- (void)sendDeleteStream:(NSString*)streamID {
+    TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"stream/1.0/api/delete_from_stream.php" relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
+                                               arguments:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          streamID, @"stream_id",
+                                                          mMe.phone, @"viewer_phone",
+                                                          nil]
+                                                delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskDeleteStream]);
 }
 
 #pragma mark - TRConnectionDelegate

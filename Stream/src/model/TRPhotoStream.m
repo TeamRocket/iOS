@@ -56,6 +56,11 @@
     [mPhotos insertObject:photo atIndex:0];
 }
 
+- (void)removePhoto:(TRPhoto*)photo {
+    if ([mPhotos containsObject:photo])
+        [mPhotos removeObject:photo];
+}
+
 - (TRPhoto*)photoBefore:(TRPhoto*)photo {
     int index = [mPhotos indexOfObject:photo];
     if (index == 0) {
