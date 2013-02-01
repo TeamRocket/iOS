@@ -85,6 +85,18 @@ typedef enum {
     return CFDictionaryGetCount(mActiveConnections) > 0;
 }
 
+- (void)sendFeedback:(NSString*)feedback {
+    TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"stream/1.0/api/feedback.php" relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
+                                               arguments:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [feedback encodeString:NSASCIIStringEncoding], @"user_feedback",
+                                                          mMe.phone, @"user_phone",
+                                                          nil]
+                                                delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskSendLikePhoto]);
+}
+
 #pragma mark User 
 
 - (void)loginAsUser:(NSString*)phone password:(NSString*)password {
