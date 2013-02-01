@@ -60,7 +60,6 @@
 }
 
 - (void)pressedAddButton:(TRTokenField*)sender {
-    [AppDelegate.graph registerForDelegateCallback:self];
     ABPeoplePickerNavigationController * ABPicker = [[ABPeoplePickerNavigationController alloc] init];
     ABPicker.peoplePickerDelegate = self;
     [self presentViewController:ABPicker animated:YES completion:nil];
@@ -275,69 +274,46 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person {
-
-    NSString * first = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-    NSString * last = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
-    NSString * phone;
-    TRUser * newUser;
-
-    ABMultiValueRef phones = ABRecordCopyValue(person, kABPersonPhoneProperty);
-    if (phones == nil || ABMultiValueGetCount(phones) == 0) {
-        CFArrayRef linkedContacts = ABPersonCopyArrayOfAllLinkedPeople(person);
-        phones = ABMultiValueCreateMutable(kABPersonPhoneProperty);
-        ABMultiValueRef linkedPhones;
-        for (int i = 0; i < CFArrayGetCount(linkedContacts); i++) {
-            ABRecordRef linkedContact = CFArrayGetValueAtIndex(linkedContacts, i);
-            linkedPhones = ABRecordCopyValue(linkedContact, kABPersonPhoneProperty);
-            if (linkedPhones != nil && ABMultiValueGetCount(linkedPhones) > 0) {
-                for (int j = 0; j < ABMultiValueGetCount(linkedPhones); j++) {
-                    ABMultiValueAddValueAndLabel(phones, ABMultiValueCopyValueAtIndex(linkedPhones, j), NULL, NULL);
-                }
-            }
-            CFRelease(linkedPhones);
-        }
-        CFRelease(linkedContacts);
-    }
-    if (ABMultiValueGetCount(phones) > 0) {
-        phone = (__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phones, 0);
-        [AppDelegate.graph downloadUserStatus:phone];
-        newUser = [[TRUser alloc] initWithPhone:phone
-                                      firstName:first
-                                       lastName:last];
-        [AppDelegate.graph addUser:newUser];
-        [self addParticipant:newUser];
-    } else {
-        
-    }
-    [mTableView reloadData];
-
-    CFRelease(phones);
-    [self dismissViewControllerAnimated:YES completion:nil];
-    return NO;
-}
-
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier {
-    return NO;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField*)textField{
-    [textField resignFirstResponder];
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person{
     return YES;
 }
 
-#pragma mark - TRGraphDelegate
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+                                property:(ABPropertyID)property
+                              identifier:(ABMultiValueIdentifier)identifier
+{
 
-- (void)graphFinishedUpdating {
-    for (TRUser * participant in mParticipants) {
-        TRUser * graphUser = [AppDelegate.graph getUserWithPhone:participant.phone];
-        if (!graphUser) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Can't Invite User" message:[NSString stringWithFormat:@"%@ %@ is not currently participating in the Stream beta.", participant.firstName, participant.lastName] delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert show];
-            [mParticipants removeObject:participant];
-        }
-    }
-    [mTableView reloadData];
+    ABPersonViewController *controller = [[ABPersonViewController alloc] init];
+    controller.displayedPerson = person;
+    controller.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonPhoneProperty]];
+    controller.personViewDelegate = self;
+    [peoplePicker pushViewController:controller animated:YES];
+    return NO;
+}
+
+- (BOOL)personViewController:(ABPersonViewController *)personViewController
+shouldPerformDefaultActionForPerson:(ABRecordRef)person
+                    property:(ABPropertyID)property
+                  identifier:(ABMultiValueIdentifier)identifierForValue
+{
+    ABMutableMultiValueRef multi = ABRecordCopyValue(person, property);
+    NSString * phone = (__bridge_transfer NSString*)ABMultiValueCopyValueAtIndex(multi, identifierForValue);
+    NSString * first = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    NSString * last = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+    TRUser *newUser = [[TRUser alloc] initWithPhone:phone
+                                          firstName:first
+                                           lastName:last];
+    [AppDelegate.graph addUser:newUser];
+    [self addParticipant:newUser];
+
+    ABPeoplePickerNavigationController *peoplePicker = (ABPeoplePickerNavigationController *)personViewController.navigationController;
+    [peoplePicker dismissViewControllerAnimated:YES completion:nil];
+    return NO;
+}
+- (BOOL)textFieldShouldReturn:(UITextField*)textField{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 
