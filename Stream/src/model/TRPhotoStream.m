@@ -79,4 +79,13 @@
     }
 }
 
+- (TRPhoto *)searchForPhotoWithIDPrefix:(NSString*)prefix {
+    for (TRPhoto * photo in mPhotos) {
+        if ([[photo.ID substringToIndex:[prefix length]] isEqualToString:prefix]) {
+            return photo;
+        }
+    }
+    return nil;
+}
+
 @end

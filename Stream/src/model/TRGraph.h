@@ -50,6 +50,7 @@
 - (void)signupWithPhone:(NSString*)phone first:(NSString*)first last:(NSString*)last password:(NSString*)password;
 - (TRUser*)getUserWithPhone:(NSString*)phone;
 - (TRPhoto*)getPhotoWithID:(NSString*)ID;
+- (TRPhotoStream *)searchForStreamWithIDPrefix:(NSString*)prefix;
 
 - (void)downloadUserPhotoStreams:(NSString*)phone;
 - (void)downloadStreamInfo:(NSString*)stream forPhone:(NSString*)phone;

@@ -40,4 +40,6 @@
 - (TRPhoto*)photoBefore:(TRPhoto*)photo;
 - (TRPhoto*)photoAfter:(TRPhoto*)photo;
 
+- (TRPhoto *)searchForPhotoWithIDPrefix:(NSString*)prefix;
+
 @end

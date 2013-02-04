@@ -407,6 +407,15 @@ typedef enum {
     return [mStreams objectForKey:ID];
 }
 
+- (TRPhotoStream *)searchForStreamWithIDPrefix:(NSString*)prefix {
+    for (NSString * streamID in mStreams) {
+        if ([[streamID substringToIndex:[prefix length]] isEqualToString:prefix]) {
+            return [mStreams objectForKey:streamID];
+        }
+    }
+    return nil;
+}
+
 - (void)downloadUserPhotoStreams:(NSString*)phone {
     TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/populate_user_streams.php?viewer_phone=%@", phone]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
