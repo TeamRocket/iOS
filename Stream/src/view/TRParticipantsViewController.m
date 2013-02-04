@@ -33,7 +33,7 @@
                                                                                 action:nil];
     }
     [TestFlight passCheckpoint:@"Viewed Participants"];
-    [[Mixpanel sharedInstance] track:@"Viewed Participants"];
+    [[Mixpanel sharedInstance] track:@"View Participants"];
     return self;
 }
 

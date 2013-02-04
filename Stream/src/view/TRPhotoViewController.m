@@ -71,7 +71,6 @@
     [self.view addSubview:mCommentButton];
     
     [TestFlight passCheckpoint:@"Viewed Picture"];
-    [[Mixpanel sharedInstance] track:@"Viewed Picture"];
 }
 
 - (void)setPhotoView:(TRImageView*)photoView {
@@ -269,7 +268,7 @@
     
     [mLikeOverlayView.layer addAnimation:fadeInAndOut forKey:@"FadeOverlay"];
     [TestFlight passCheckpoint:@"Liked Photo"];
-    [[Mixpanel sharedInstance] track:@"Liked Photo"];
+    [[Mixpanel sharedInstance] track:@"Like Photo"];
 }
 
 - (void)commentButtonPressed:(id)sender {

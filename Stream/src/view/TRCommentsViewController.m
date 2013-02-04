@@ -54,7 +54,7 @@
     }
     mShouldFocus = NO;
     [TestFlight passCheckpoint:@"Viewed Comments"];
-    [[Mixpanel sharedInstance] track:@"Viewed Comments"];
+    [[Mixpanel sharedInstance] track:@"View Comments"];
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -77,7 +77,7 @@
     [mCommentsTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[mPhoto.comments count]-1 inSection:0]
                           atScrollPosition:UITableViewScrollPositionTop animated:YES];
     [TestFlight passCheckpoint:@"Commented on Photo"];
-    [[Mixpanel sharedInstance] track:@"Commented on Photo"];
+    [[Mixpanel sharedInstance] track:@"Comment on Photo"];
 }
 
 - (IBAction)backButtonPressed:(id)sender {

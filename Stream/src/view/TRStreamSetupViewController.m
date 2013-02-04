@@ -268,7 +268,6 @@
     [AppDelegate.graph sendInviteUsers:participantPhones toStream:mStream.ID];
     [self dismissViewControllerAnimated:YES completion:nil];
     [TestFlight passCheckpoint:@"Updated Stream Info"];
-    [[Mixpanel sharedInstance] track:@"Updated Stream Info"];
 }
 
 #pragma mark - ABPeoplePickerDelegate
@@ -316,6 +315,7 @@
 
     CFRelease(phones);
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[Mixpanel sharedInstance] track:@"Add Participant"];
     return NO;
 }
 

@@ -141,7 +141,7 @@
         [self dismissSplash];
         [AppDelegate.graph unregisterForDelegateCallback:self];
         [TestFlight passCheckpoint:@"Logged In"];
-        [[Mixpanel sharedInstance] track:@"Logged In"];
+        [[Mixpanel sharedInstance] track:@"Sign In"];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signin Error" message:@"You entered an incorrect phone number or password." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];

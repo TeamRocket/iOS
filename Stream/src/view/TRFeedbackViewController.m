@@ -36,6 +36,7 @@
 - (IBAction)sendButtonPressed:(id)sender {
     if ([mFeedbackBox.text length] > 0 && ![mFeedbackBox.text isEqualToString:@"What do you think about stream?"]) {
         [AppDelegate.graph sendFeedback:mFeedbackBox.text];
+        [[Mixpanel sharedInstance] track:@"Send Feedback"];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
