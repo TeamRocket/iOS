@@ -130,6 +130,7 @@
         TRFeedbackViewController * feedback = [[TRFeedbackViewController alloc] initWithNibName:@"TRFeedbackViewController" bundle:nil];
         [self presentViewController:feedback animated:YES completion:nil];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
