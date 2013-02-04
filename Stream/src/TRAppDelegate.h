@@ -12,6 +12,8 @@
 @class TRStreamViewController;
 @class TRGraph;
 @class TRNetwork;
+@class TRPhoto;
+@class TRPhotoStream;
 
 #define AppDelegate ((TRAppDelegate *)[[UIApplication sharedApplication] delegate])
 

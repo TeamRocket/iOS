@@ -44,6 +44,7 @@
 
     int mCurrentIndex;
 }
+- (id)initWithPhoto:(TRPhoto*)photo inStream:(TRPhotoStream*)stream;
 
 - (void)setPhotoView:(TRImageView*)photoView;
 - (void)setPhotoStream:(TRPhotoStream*)stream;

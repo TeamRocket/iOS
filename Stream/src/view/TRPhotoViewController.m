@@ -29,6 +29,20 @@
 
 @implementation TRPhotoViewController
 
+- (id)initWithPhoto:(TRPhoto*)photo inStream:(TRPhotoStream*)stream {
+    self = [self initWithNibName:@"TRPhotoViewController" bundle:nil];
+    if (self) {
+        [self setPhotoStream:stream];
+        TRImageView * imageView = [[TRImageView alloc] initWithTRPhoto:photo
+                                                               inFrame:CGRectMake(0.0, 0.0,
+                                                                                  mScroller.frame.size.width,
+                                                                                  mScroller.frame.size.height)];
+        [self setPhotoView:imageView];
+        [self.view setBackgroundColor:[UIColor blackColor]];
+    }
+    return self;
+}
+
 - (void)viewDidLoad{
     mCommentsViewController = [[TRCommentsViewController alloc] initWithNibName:@"TRCommentsViewController" bundle:nil];
     [mDeleteButton removeFromSuperview];
