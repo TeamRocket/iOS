@@ -282,6 +282,7 @@
     
     [mLikeOverlayView.layer addAnimation:fadeInAndOut forKey:@"FadeOverlay"];
     [TestFlight passCheckpoint:@"Liked Photo"];
+    [[Mixpanel sharedInstance] track:@"Like Photo"];
 }
 
 - (void)commentButtonPressed:(id)sender {
@@ -336,6 +337,8 @@
         [AppDelegate.graph sendDeletePhoto:mPhoto.ID];
         [mStream removePhoto:mPhoto];
         [self closePhotoView:nil];
+        [TestFlight passCheckpoint:@"Deleted Photo"];
+        [[Mixpanel sharedInstance] track:@"Deleted Photo"];
     }
 }
 

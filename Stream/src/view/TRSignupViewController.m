@@ -263,6 +263,7 @@
         [self dismissSplash];
         [AppDelegate.graph unregisterForDelegateCallback:self];
         [TestFlight passCheckpoint:@"Signed Up"];
+        [[Mixpanel sharedInstance] track:@"Signed Up"];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signup Error" message:@"Ensure that you have not already registered and try again later." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];

@@ -24,6 +24,7 @@
         self.title = @"LIKES";
     }
     [TestFlight passCheckpoint:@"Viewed Likers"];
+    [[Mixpanel sharedInstance] track:@"View Likes"];
     return self;
 }
 

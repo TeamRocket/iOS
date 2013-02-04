@@ -66,6 +66,7 @@
 - (id)initWithPhotoStream:(TRPhotoStream *)stream{
     self = [self initWithPhotoStream:stream mode:kTRPhotoStreamViewModeAll];
     [TestFlight passCheckpoint:@"Viewed Stream"];
+    [[Mixpanel sharedInstance] track:@"View Stream"];
     return self;
 }
 
@@ -283,6 +284,8 @@
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self.navigationController pushViewController:photoView animated:NO];
+
+    [[Mixpanel sharedInstance] track:@"Clicked Picture"];
 }
 
 - (void)tappedParticipantsButton:(id)sender {
@@ -343,6 +346,7 @@
     [mTableView reloadData];
     [self dismissViewControllerAnimated:YES completion:nil];
     [TestFlight passCheckpoint:@"Uploaded Picture"];
+    [[Mixpanel sharedInstance] track:@"Add Picture"];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

@@ -256,6 +256,7 @@
                         withParticipants:participantPhones];
     [self dismissViewControllerAnimated:YES completion:nil];
     [TestFlight passCheckpoint:@"Created Stream"];
+    [[Mixpanel sharedInstance] track:@"Created Stream"];
 }
 
 - (void)updateStreamTapped:(id)sender {
@@ -314,6 +315,7 @@
 
     CFRelease(phones);
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[Mixpanel sharedInstance] track:@"Add Participant"];
     return NO;
 }
 

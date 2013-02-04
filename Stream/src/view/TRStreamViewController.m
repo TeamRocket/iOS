@@ -13,7 +13,7 @@
 #import "TRUser.h"
 
 #import "TRPhotoStreamViewController.h"
-#import "TRPhotoViewController.h";
+#import "TRPhotoViewController.h"
 #import "TRStreamTableViewController.h"
 
 @interface TRStreamViewController ()
