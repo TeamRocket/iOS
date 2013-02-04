@@ -40,9 +40,11 @@ typedef enum {
 @implementation NSString (encode)
 - (NSString *)encodeString:(NSStringEncoding)encoding
 {
-    return (__bridge NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)self,
-                                                                NULL, (CFStringRef)@";/!?:@&=$+{}<>,.^*()",
-                                                                CFStringConvertNSStringEncodingToEncoding(encoding));
+    return (__bridge NSString *) CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                         (__bridge CFStringRef) self,
+                                                                         nil,
+                                                                         CFSTR("~?!@#$^&%*+.,:;='\"`<>()[]{}/\\|-_ "),
+                                                                         kCFStringEncodingUTF8);
 }  
 @end
 
