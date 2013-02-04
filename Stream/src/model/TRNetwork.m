@@ -109,10 +109,6 @@
     NSMutableData *body = [NSMutableData data];
     NSMutableString * reqString = [[NSMutableString alloc] init];
 
-    for (NSString * key in args) {
-        [reqString appendFormat:@"%@=%@&", key, [args objectForKey:key]];
-    }
-
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [request setHTTPBody:[NSData dataWithBytes:[reqString UTF8String] length: [reqString length]]];
 
