@@ -30,7 +30,6 @@ typedef enum {
     kTRGraphNetworkTaskDownloadLikes,
     kTRGraphNetworkTaskSendInvite,
     kTRGraphNetworkTaskRegisterPushToken,
-    kTRGraphNetworkTaskGetUserStatus,
     kTRGraphNetworkTaskSendComment,
     kTRGraphNetworkTaskSendFeedback,
     kTRGraphNetworkTaskDeletePhoto,
@@ -178,25 +177,6 @@ typedef enum {
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
                          (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskRegisterPushToken]);
-}
-
-- (void)downloadUserStatus:(NSString*)phone {
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/isInBeta.php?phone=%@", phone]
-                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
-    CFDictionaryAddValue(mActiveConnections,
-                         (__bridge const void *)conn,
-                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskGetUserStatus]);
-}
-
-- (void)p_downloadedUserStatus:(NSDictionary*)info {
-    if (info) {
-        NSString * phone = [info objectForKey:@"phone"];
-        if (phone != nil) {
-            if ([[info objectForKey:@"isInBeta"] intValue] == 0) {
-                [self removeUser:[self getUserWithPhone:phone]];
-            }
-        }
-    }
 }
 
 
@@ -615,9 +595,6 @@ typedef enum {
                 break;
             case kTRGraphNetworkTaskSendInvite:
                 [self p_sentInvite:info];
-                break;
-            case kTRGraphNetworkTaskGetUserStatus:
-                [self p_downloadedUserStatus:info];
                 break;
             default:
                 break;
