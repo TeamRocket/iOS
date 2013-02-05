@@ -56,6 +56,11 @@
     [mPhotos insertObject:photo atIndex:0];
 }
 
+- (void)removePhoto:(TRPhoto*)photo {
+    if ([mPhotos containsObject:photo])
+        [mPhotos removeObject:photo];
+}
+
 - (TRPhoto*)photoBefore:(TRPhoto*)photo {
     int index = [mPhotos indexOfObject:photo];
     if (index == 0) {
@@ -72,6 +77,15 @@
     } else {
         return [mPhotos objectAtIndex:index+1];
     }
+}
+
+- (TRPhoto *)searchForPhotoWithIDPrefix:(NSString*)prefix {
+    for (TRPhoto * photo in mPhotos) {
+        if ([[photo.ID substringToIndex:[prefix length]] isEqualToString:prefix]) {
+            return photo;
+        }
+    }
+    return nil;
 }
 
 @end

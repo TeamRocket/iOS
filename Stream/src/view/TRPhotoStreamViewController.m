@@ -66,6 +66,7 @@
 - (id)initWithPhotoStream:(TRPhotoStream *)stream{
     self = [self initWithPhotoStream:stream mode:kTRPhotoStreamViewModeAll];
     [TestFlight passCheckpoint:@"Viewed Stream"];
+    [[Mixpanel sharedInstance] track:@"View Stream"];
     return self;
 }
 
@@ -101,6 +102,7 @@
 - (void)showPhotoPicker {
     if (!mPicker) {
         mPicker = [[UIImagePickerController alloc] init];
+        [mPicker setAllowsEditing:YES];
         [mPicker setDelegate:self];
     }
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -271,7 +273,6 @@
     [photoView.view setBackgroundColor:[UIColor blackColor]];
     TRImageView * largeFrame = [[TRImageView alloc] initWithTRPhoto:frame.TRPhoto
                                                             inFrame:[frame.superview convertRect:frame.frame toView:self.view]];
-    [largeFrame setPictureFrame:YES];
     largeFrame.center = CGPointMake(largeFrame.center.x,
                                     largeFrame.center.y + self.navigationController.navigationBar.frame.size.height);
     [photoView setPhotoView:largeFrame];
@@ -283,6 +284,8 @@
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self.navigationController pushViewController:photoView animated:NO];
+
+    [[Mixpanel sharedInstance] track:@"Clicked Picture"];
 }
 
 - (void)tappedParticipantsButton:(id)sender {
@@ -300,8 +303,9 @@
         mUploading = NO;
         [mProgressBar removeFromSuperview];
         [self refreshStream];
+    } else {
+        [mTableView reloadData];
     }
-    [mTableView reloadData];
 }
 
 - (void)uploadedBytes:(int)bytesWritten ofExpected:(int)bytesExpected {
@@ -342,6 +346,7 @@
     [mTableView reloadData];
     [self dismissViewControllerAnimated:YES completion:nil];
     [TestFlight passCheckpoint:@"Uploaded Picture"];
+    [[Mixpanel sharedInstance] track:@"Add Picture"];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

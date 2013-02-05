@@ -33,10 +33,13 @@
 
 - (void)addPhoto:(TRPhoto*)photo;
 - (void)addPhotoAsLatest:(TRPhoto*)photo;
+- (void)removePhoto:(TRPhoto*)photo;
 
 - (void)addParticipant:(TRUser*)newUser;
 
 - (TRPhoto*)photoBefore:(TRPhoto*)photo;
 - (TRPhoto*)photoAfter:(TRPhoto*)photo;
+
+- (TRPhoto *)searchForPhotoWithIDPrefix:(NSString*)prefix;
 
 @end

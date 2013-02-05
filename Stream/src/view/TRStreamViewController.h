@@ -7,11 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TRGraph.h"
 
 @class TRStreamTableViewController;
 
-@interface TRStreamViewController : UINavigationController {
+@interface TRStreamViewController : UINavigationController <TRGraphDelegate> {
     TRStreamTableViewController * mStreamTable;
+    NSString * mJumpToStreamIDPrefix;
+    NSString * mJumpToPhotoIDPrefix;
+    BOOL * mComment;
 }
+
+- (void)jumpToStream:(NSString*)streamIDPrefix;
+
+- (void)jumpToPhoto:(NSString*)photoIDPrefix inStream:(NSString*)streamIDPrefix comment:(BOOL)comment;
 
 @end

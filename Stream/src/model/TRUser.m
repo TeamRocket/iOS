@@ -16,6 +16,7 @@
 @synthesize firstName = mFirstName;
 @synthesize lastName = mLastName;
 @synthesize phone = mPhone;
+@synthesize streams = mStreams;
 
 - (id)initWithPhone:(NSString*)phone firstName:(NSString*)first lastName:(NSString*)last {
     self = [super init];
@@ -30,17 +31,14 @@
     return self;
 }
 
-- (NSArray*)streams {
-    return [mStreams sortedArrayUsingComparator:^(id obj1, id obj2) {
-        TRPhotoStream * stream1 = obj1;
-        TRPhotoStream * stream2 = obj2;
-        return [stream1.ID compare:stream2.ID];
-    }];
-}
-
 - (void)addStream:(TRPhotoStream*)stream {
     if (![mStreams containsObject:stream])
         [mStreams addObject:stream];
+}
+
+- (void)removeStream:(TRPhotoStream*)stream{
+    if ([mStreams containsObject:stream])
+        [mStreams removeObject:stream];
 }
 
 - (NSString*)title {

@@ -19,8 +19,10 @@
 @synthesize rightFrame = mRightFrame;
 
 - (void)awakeFromNib {
-    [mLeftFrame setPictureFrame:YES];
-    [mRightFrame setPictureFrame:YES];
+    [mLeftFrame setPictureInnerShadow:YES];
+    [mLeftFrame setPlaceholder];
+    [mRightFrame setPictureInnerShadow:YES];
+    [mRightFrame setPlaceholder];
 }
 
 @end
