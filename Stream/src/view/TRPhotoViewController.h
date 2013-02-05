@@ -49,4 +49,6 @@
 - (void)setPhotoView:(TRImageView*)photoView;
 - (void)setPhotoStream:(TRPhotoStream*)stream;
 
+- (void)showComments;
+
 @end

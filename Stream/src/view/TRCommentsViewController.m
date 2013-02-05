@@ -230,4 +230,8 @@
     }
 }
 
+- (void)graphFinishedUpdating {
+    [self setPhoto:mPhoto];
+}
+
 @end

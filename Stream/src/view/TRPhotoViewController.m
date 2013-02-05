@@ -329,6 +329,10 @@
     [UIView commitAnimations];
 }
 
+- (void)showComments {
+    [self showComments:nil];
+}
+
 #pragma mark - UIAlertViewDelegate 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -341,6 +345,7 @@
 
 - (void)graphFinishedUpdating {
     [self updateIndicators];
+    [mCommentsViewController graphFinishedUpdating];
     if (mPrevPhoto != [mStream photoBefore:mPhoto]) {
         [self setPrevPhoto:[mStream photoBefore:mPhoto]];
     }

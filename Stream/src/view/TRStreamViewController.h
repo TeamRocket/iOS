@@ -15,10 +15,11 @@
     TRStreamTableViewController * mStreamTable;
     NSString * mJumpToStreamIDPrefix;
     NSString * mJumpToPhotoIDPrefix;
+    BOOL * mComment;
 }
 
 - (void)jumpToStream:(NSString*)streamIDPrefix;
 
-- (void)jumpToPhoto:(NSString*)photoIDPrefix inStream:(NSString*)streamIDPrefix;
+- (void)jumpToPhoto:(NSString*)photoIDPrefix inStream:(NSString*)streamIDPrefix comment:(BOOL)comment;
 
 @end
