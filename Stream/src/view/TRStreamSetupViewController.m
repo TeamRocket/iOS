@@ -307,6 +307,7 @@ shouldPerformDefaultActionForPerson:(ABRecordRef)person
                                            lastName:last];
     [AppDelegate.graph addUser:newUser];
     [self addParticipant:newUser];
+    [mTableView reloadData];
 
     ABPeoplePickerNavigationController *peoplePicker = (ABPeoplePickerNavigationController *)personViewController.navigationController;
     [peoplePicker dismissViewControllerAnimated:YES completion:nil];
