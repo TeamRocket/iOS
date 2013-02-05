@@ -76,7 +76,7 @@
             NSString * pictureIDPrefix = [actions objectForKey:@"small_picture_id"];
             if (streamIDPrefix != nil) {
                 if (pictureIDPrefix != nil) {
-                    [mStream jumpToPhoto:pictureIDPrefix inStream:streamIDPrefix];
+                    [mStream jumpToPhoto:pictureIDPrefix inStream:streamIDPrefix comment:[[actions objectForKey:@"is_comment"] boolValue]];
                 } else {
                     [mStream jumpToStream:streamIDPrefix];
                 }

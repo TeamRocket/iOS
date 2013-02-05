@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TRGraph.h"
+
 @class TRPhoto;
 
-@interface TRCommentsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate> {
+@interface TRCommentsViewController : UIViewController <TRGraphDelegate, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate> {
     IBOutlet UIButton * mBackButton;
     IBOutlet UIButton * mSendButton;
     IBOutlet UIImageView * mBottomGradient;

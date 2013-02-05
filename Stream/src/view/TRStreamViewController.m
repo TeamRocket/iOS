@@ -9,6 +9,7 @@
 #import "TRStreamViewController.h"
 
 #import "TRAppDelegate.h"
+#import "TRPhoto.h"
 #import "TRPhotoStream.h"
 #import "TRUser.h"
 
@@ -67,12 +68,13 @@
     }
 }
 
-- (void)jumpToPhoto:(NSString*)photoIDPrefix inStream:(NSString*)streamIDPrefix {
+- (void)jumpToPhoto:(NSString*)photoIDPrefix inStream:(NSString*)streamIDPrefix comment:(BOOL)comment {
     if (streamIDPrefix != nil) {
         TRPhotoStream * stream = [AppDelegate.graph searchForStreamWithIDPrefix:streamIDPrefix];
         if (stream == nil) {
             mJumpToPhotoIDPrefix = photoIDPrefix;
             mJumpToStreamIDPrefix = streamIDPrefix;
+            mComment = comment;
             [AppDelegate.graph registerForDelegateCallback:self];
             [AppDelegate.graph downloadUserPhotoStreams:AppDelegate.graph.me.phone];
         } else {
@@ -80,6 +82,7 @@
             if (photo == nil) {
                 mJumpToPhotoIDPrefix = photoIDPrefix;
                 mJumpToStreamIDPrefix = streamIDPrefix;
+                mComment = comment;
                 [AppDelegate.graph registerForDelegateCallback:self];
                 [AppDelegate.graph downloadStreamInfo:stream.ID forPhone:AppDelegate.graph.me.phone];
             } else {
@@ -88,10 +91,16 @@
                 [AppDelegate.graph unregisterForDelegateCallback:self];
                 TRPhotoStreamViewController * streamController = [[TRPhotoStreamViewController alloc] initWithPhotoStream:stream];
                 TRPhotoViewController * photoView = [[TRPhotoViewController alloc] initWithPhoto:photo inStream:stream];
+                [AppDelegate.graph registerForDelegateCallback:photoView];
+                [AppDelegate.graph downloadPhotoInfo:photo.ID];
+                [AppDelegate.graph downloadLikesForPhoto:photo.ID];
                 [self popToRootViewControllerAnimated:NO];
                 [self setNavigationBarHidden:YES animated:NO];
                 [self pushViewController:streamController animated:NO];
                 [self pushViewController:photoView animated:NO];
+                if (comment) {
+                    [photoView showComments];
+                }
             }
         }
     }
@@ -99,7 +108,7 @@
 
 - (void)graphFinishedUpdating {
     if (mJumpToStreamIDPrefix && mJumpToPhotoIDPrefix) {
-        [self jumpToPhoto:mJumpToPhotoIDPrefix inStream:mJumpToStreamIDPrefix];
+        [self jumpToPhoto:mJumpToPhotoIDPrefix inStream:mJumpToStreamIDPrefix comment:mComment];
     } if (mJumpToStreamIDPrefix && mJumpToPhotoIDPrefix == nil) {
         [self jumpToStream:mJumpToStreamIDPrefix];
     }
