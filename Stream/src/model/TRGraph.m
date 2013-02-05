@@ -120,7 +120,7 @@ typedef enum {
 }
 
 - (void)signupWithPhone:(NSString*)phone first:(NSString*)first last:(NSString*)last password:(NSString*)password {
-    TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"stream/1.0/api/sign_in.php" relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
+    TRConnection * conn = [AppDelegate.network postToURL:[NSURL URLWithString:@"stream/1.0/api/sign_up.php" relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]]
                                                arguments:[NSDictionary dictionaryWithObjectsAndKeys:
                                                           [first encodeString:NSASCIIStringEncoding], @"viewer_first",
                                                           [last encodeString:NSASCIIStringEncoding], @"viewer_last",
