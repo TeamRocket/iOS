@@ -24,9 +24,15 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    [Mixpanel sharedInstanceWithToken:@"b270f22f26f5edc1cbd5b3c0c811253a"];
     [TestFlight takeOff:@"c5a032ea808bb992ba0e2063fd719860_MTYwMTg0MjAxMi0xMi0xNSAwMjozNjo1My40MzM0MDM"];
     if (launchOptions != nil && [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
-        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+        NSDictionary *notification = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[[[notification objectForKey:@"aps"] objectForKey:@"badge"] intValue]];
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    } else {
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
     }
     mGraph = [[TRGraph alloc] init];
@@ -48,6 +54,9 @@
     mPushToken = [mPushToken substringWithRange:NSMakeRange(1, mPushToken.length-2)];
     if ([[NSUserDefaults alloc] objectForKey:@"user_phone"] != nil && [NSNull null] != [[NSUserDefaults alloc] objectForKey:@"user_phone"]) {
         [mGraph registerPushToken:mPushToken forPhone:[[NSUserDefaults alloc] objectForKey:@"user_phone"]];
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel.people identify:[[NSUserDefaults alloc] objectForKey:@"user_phone"]];
+        [mixpanel.people addPushDeviceToken:deviceToken];
     }
 }
 
@@ -59,6 +68,21 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    UIApplicationState state = [application applicationState];
+    if (state != UIApplicationStateActive) {
+        if ([userInfo objectForKey:@"actions"]) {
+            NSDictionary * actions = [userInfo objectForKey:@"actions"];
+            NSString * streamIDPrefix = [actions objectForKey:@"small_stream_id"];
+            NSString * pictureIDPrefix = [actions objectForKey:@"small_picture_id"];
+            if (streamIDPrefix != nil) {
+                if (pictureIDPrefix != nil) {
+                    [mStream jumpToPhoto:pictureIDPrefix inStream:streamIDPrefix comment:[[actions objectForKey:@"is_comment"] boolValue]];
+                } else {
+                    [mStream jumpToStream:streamIDPrefix];
+                }
+            }
+        }
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

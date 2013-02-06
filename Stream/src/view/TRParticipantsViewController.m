@@ -33,6 +33,7 @@
                                                                                 action:nil];
     }
     [TestFlight passCheckpoint:@"Viewed Participants"];
+    [[Mixpanel sharedInstance] track:@"View Participants"];
     return self;
 }
 
@@ -41,7 +42,7 @@
     [mTableView registerNib:[UINib nibWithNibName:@"TRParticipantCell" bundle:nil] forCellReuseIdentifier:@"TRParticipantCell"];
     [AppDelegate.graph registerForDelegateCallback:self];
     [AppDelegate.graph downloadParticipantsInStream:mStream.ID];
-    UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
+    UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithTitle:@"invite" style:UIBarButtonItemStylePlain target:self action:nil];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [add setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [add setTarget:self];

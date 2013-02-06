@@ -46,6 +46,7 @@
 
 - (void)authenitcated {
     [TestFlight passCheckpoint:@"Authenticated"];
+    [[Mixpanel sharedInstance] track:@"Authenticated"];
     if (AppDelegate.pushToken != nil)
         [AppDelegate.graph registerPushToken:AppDelegate.pushToken forPhone:[[NSUserDefaults alloc] objectForKey:@"user_phone"]];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -64,6 +65,7 @@
             [AppDelegate.graph registerPushToken:AppDelegate.pushToken forPhone:me.phone];
         [self dismissViewControllerAnimated:NO completion:nil];
         [TestFlight passCheckpoint:@"Automatically Logged In"];
+        [[Mixpanel sharedInstance] track:@"Automatically Logged In"];
     }
 }
 

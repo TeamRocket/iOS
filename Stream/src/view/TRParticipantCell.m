@@ -25,7 +25,10 @@
     } else {
         mPhotoCountLabel.text = [NSString stringWithFormat:@"%i photos", photos];
     }
+}
 
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
 }
 
 @end

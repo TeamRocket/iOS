@@ -9,8 +9,12 @@
 #import "TRStreamViewController.h"
 
 #import "TRAppDelegate.h"
-#import "TRGraph.h"
+#import "TRPhoto.h"
+#import "TRPhotoStream.h"
+#import "TRUser.h"
 
+#import "TRPhotoStreamViewController.h"
+#import "TRPhotoViewController.h"
 #import "TRStreamTableViewController.h"
 
 @interface TRStreamViewController ()
@@ -44,6 +48,70 @@
     [[UIBarButtonItem appearance] setBackgroundImage:[UIImage imageNamed:@"navbaritem.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setBackgroundImage:[UIImage imageNamed:@"navbaritem_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"MuseoSans-500" size:11.0], UITextAttributeFont, nil] forState:UIControlStateNormal];
+}
+
+- (void)jumpToStream:(NSString*)streamIDPrefix {
+    if (streamIDPrefix != nil) {
+        TRPhotoStream * stream = [AppDelegate.graph searchForStreamWithIDPrefix:streamIDPrefix];
+        if (stream == nil) {
+            mJumpToStreamIDPrefix = streamIDPrefix;
+            mJumpToPhotoIDPrefix = nil;
+            [AppDelegate.graph downloadUserPhotoStreams:AppDelegate.graph.me.phone];
+        } else {
+            mJumpToStreamIDPrefix = nil;
+            mJumpToPhotoIDPrefix = nil;
+            [AppDelegate.graph unregisterForDelegateCallback:self];
+            TRPhotoStreamViewController * streamController = [[TRPhotoStreamViewController alloc] initWithPhotoStream:stream];
+            [self popToRootViewControllerAnimated:NO];
+            [self pushViewController:streamController animated:NO];
+        }
+    }
+}
+
+- (void)jumpToPhoto:(NSString*)photoIDPrefix inStream:(NSString*)streamIDPrefix comment:(BOOL)comment {
+    if (streamIDPrefix != nil) {
+        TRPhotoStream * stream = [AppDelegate.graph searchForStreamWithIDPrefix:streamIDPrefix];
+        if (stream == nil) {
+            mJumpToPhotoIDPrefix = photoIDPrefix;
+            mJumpToStreamIDPrefix = streamIDPrefix;
+            mComment = comment;
+            [AppDelegate.graph registerForDelegateCallback:self];
+            [AppDelegate.graph downloadUserPhotoStreams:AppDelegate.graph.me.phone];
+        } else {
+            TRPhoto * photo = [stream searchForPhotoWithIDPrefix:photoIDPrefix];
+            if (photo == nil) {
+                mJumpToPhotoIDPrefix = photoIDPrefix;
+                mJumpToStreamIDPrefix = streamIDPrefix;
+                mComment = comment;
+                [AppDelegate.graph registerForDelegateCallback:self];
+                [AppDelegate.graph downloadStreamInfo:stream.ID forPhone:AppDelegate.graph.me.phone];
+            } else {
+                mJumpToStreamIDPrefix = nil;
+                mJumpToPhotoIDPrefix = nil;
+                [AppDelegate.graph unregisterForDelegateCallback:self];
+                TRPhotoStreamViewController * streamController = [[TRPhotoStreamViewController alloc] initWithPhotoStream:stream];
+                TRPhotoViewController * photoView = [[TRPhotoViewController alloc] initWithPhoto:photo inStream:stream];
+                [AppDelegate.graph registerForDelegateCallback:photoView];
+                [AppDelegate.graph downloadPhotoInfo:photo.ID];
+                [AppDelegate.graph downloadLikesForPhoto:photo.ID];
+                [self popToRootViewControllerAnimated:NO];
+                [self setNavigationBarHidden:YES animated:NO];
+                [self pushViewController:streamController animated:NO];
+                [self pushViewController:photoView animated:NO];
+                if (comment) {
+                    [photoView showComments];
+                }
+            }
+        }
+    }
+}
+
+- (void)graphFinishedUpdating {
+    if (mJumpToStreamIDPrefix && mJumpToPhotoIDPrefix) {
+        [self jumpToPhoto:mJumpToPhotoIDPrefix inStream:mJumpToStreamIDPrefix comment:mComment];
+    } if (mJumpToStreamIDPrefix && mJumpToPhotoIDPrefix == nil) {
+        [self jumpToStream:mJumpToStreamIDPrefix];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -14,6 +14,7 @@
 #import "TRPhotoStream.h"
 #import "TRUser.h"
 
+#import "TRFeedbackViewController.h"
 #import "TRPhotoStreamViewController.h"
 #import "TRStreamCell.h"
 #import "TRStreamSetupViewController.h"
@@ -61,52 +62,96 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    if ([AppDelegate.graph.me.streams count] > 0)
+        return 2;
+    else 
+        return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [AppDelegate.graph.me.streams count];
+    if (section == 0) {
+        return [AppDelegate.graph.me.streams count];
+    } else {
+        return 1;
+    }
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TRStreamCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TRStreamCell"];
-    if (cell == nil) {
-        cell = [[NSBundle mainBundle] loadNibNamed:@"TRStreamCell" owner:self options:nil][0];
-    }
+    if (indexPath.section == 0) {
+        TRStreamCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TRStreamCell"];
+        if (cell == nil) {
+            cell = [[NSBundle mainBundle] loadNibNamed:@"TRStreamCell" owner:self options:nil][0];
+        }
 
-    TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
-    [cell.titleLabel setText:stream.name];
-    if (stream.numParticipants == 1) {
-        [cell.participantsLabel setText:@"1 Participant"];
+        TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
+        [cell.titleLabel setText:stream.name];
+        if (stream.numParticipants == 1) {
+            [cell.participantsLabel setText:@"1 Participant"];
+        } else {
+            [cell.participantsLabel setText:[NSString stringWithFormat:@"%i Participants", stream.numParticipants]];
+        }
+        if (stream.numPhotos == 1) {
+            [cell.photosLabel setText:@"1 Photo"];
+        } else {
+            [cell.photosLabel setText:[NSString stringWithFormat:@"%i Photos", stream.numPhotos]];
+        }
+        if (stream.numPhotos > 0) {
+            [cell setPhoto:[stream.photos objectAtIndex:0]];
+        } else {
+            [cell setBlankPhoto];
+        }
+        
+        return cell;
     } else {
-        [cell.participantsLabel setText:[NSString stringWithFormat:@"%i Participants", stream.numParticipants]];
+        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        }
+        [cell.textLabel setText:@"Send Feedback"];
+        [cell.textLabel setTextColor:[UIColor colorWithWhite:0.6 alpha:1.0]];
+        [cell.textLabel setShadowColor:[UIColor whiteColor]];
+        [cell.textLabel setShadowOffset:CGSizeMake(0.0, 1.0)];
+        [cell.textLabel setFont:[UIFont fontWithName:@"MuseoSans-700" size:13.0f]];
+        [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
+        [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+        return cell;
     }
-    if (stream.numPhotos == 1) {
-        [cell.photosLabel setText:@"1 Photo"];
-    } else {
-        [cell.photosLabel setText:[NSString stringWithFormat:@"%i Photos", stream.numPhotos]];
-    }
-    if (stream.numPhotos > 0) {
-        [cell setPhoto:[stream.photos objectAtIndex:0]];
-    } else {
-        [cell setBlankPhoto];
-    }
-
-    
-    return cell;
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
-    TRPhotoStreamViewController * streamController = [[TRPhotoStreamViewController alloc] initWithPhotoStream:stream];
-    [self.navigationController pushViewController:streamController animated:YES];
+    if (indexPath.section == 0) {
+        TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
+        TRPhotoStreamViewController * streamController = [[TRPhotoStreamViewController alloc] initWithPhotoStream:stream];
+        [self.navigationController pushViewController:streamController animated:YES];
+    } else {
+        TRFeedbackViewController * feedback = [[TRFeedbackViewController alloc] initWithNibName:@"TRFeedbackViewController" bundle:nil];
+        [self presentViewController:feedback animated:YES completion:nil];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        TRPhotoStream * stream = [AppDelegate.graph.me.streams objectAtIndex:indexPath.row];
+        [AppDelegate.graph sendDeleteStream:stream.ID];
+        [AppDelegate.graph.me removeStream:stream];
+        [TestFlight passCheckpoint:@"Deleted Stream"];
+        [[Mixpanel sharedInstance] track:@"Deleted Stream"];
+        [tableView reloadData];
+    }
 }
 
 #pragma mark - TRGraph 
 
 - (void)graphFinishedUpdating {
+    if ([AppDelegate.graph.me.streams count] == 0) {
+        [self.view addSubview:mNUX];
+    } else {
+        [mNUX removeFromSuperview];
+    }
     if (mRefreshControl) {
         [mRefreshControl endRefreshing];
     }

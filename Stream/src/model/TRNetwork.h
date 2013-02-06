@@ -11,7 +11,7 @@
 @class TRNetwork;
 @class TRConnection;
 
-@protocol TRConnectionDelegate
+@protocol TRConnectionDelegate <NSObject>
 
 - (void)connection:(TRConnection *)connection finishedDownloadingData:(NSData *)data;
 - (void)connection:(TRConnection *)connection failedWithError:(NSError *)error;
@@ -39,5 +39,6 @@
 
 - (TRConnection *)dataAtURL:(NSURL *)url delegate:(id<TRConnectionDelegate>) delegate;
 - (TRConnection *)postToURL:(NSURL *)url arguments:(NSDictionary*)args data:(NSData*)data delegate:(id<TRConnectionDelegate>) delegate;
+- (TRConnection *)postToURL:(NSURL *)url arguments:(NSDictionary*)args delegate:(id<TRConnectionDelegate>) delegate;
 
 @end
