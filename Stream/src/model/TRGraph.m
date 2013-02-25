@@ -515,7 +515,7 @@ typedef enum {
             [scanner setScanLocation:([scanner scanLocation] + 1)];
         }
     }
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/invitePeople1.php?inviteesPhone=%@&inviterPhone=%@&streamID=%@", strippedString, mMe.phone, streamID]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/invite_users.php?invitees_phone=%@&inviter_phone=%@&stream_id=%@", strippedString, mMe.phone, streamID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,
