@@ -34,6 +34,7 @@ typedef enum {
     kTRGraphNetworkTaskSendFeedback,
     kTRGraphNetworkTaskDeletePhoto,
     kTRGraphNetworkTaskDeleteStream,
+    kTRGraphNetworkTaskFlagPhoto,
 } TRGraphNetworkTask;
 
 @implementation NSString (encode)
@@ -374,6 +375,14 @@ typedef enum {
             }
         }
     }
+}
+
+- (void)flagPhoto:(NSString*)photo_id byPhone:(NSString*)phone {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/flag_picture.php?flagger_phone=%@&picture_id=%@", phone, photo_id]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskFlagPhoto]);
 }
 
 #pragma mark Stream

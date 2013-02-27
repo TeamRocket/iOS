@@ -209,11 +209,12 @@
 - (void)updateIndicators {
     if (mPhoto.uploader) {
         [mUploaderLabel setText:[NSString stringWithFormat:@"%@ %@", mPhoto.uploader.firstName, mPhoto.uploader.lastName]];
-        if (mPhoto.uploader == AppDelegate.graph.me) {
-            [self.view insertSubview:mDeleteButton belowSubview:mLikeIndicator];
+        if (mPhoto.uploader.phone == AppDelegate.graph.me.phone) {
+            [mDeleteButton setBackgroundImage:[UIImage imageNamed:@"delete_icon.png"] forState:UIControlStateNormal];
         } else {
-            [mDeleteButton removeFromSuperview];
+            [mDeleteButton setBackgroundImage:[UIImage imageNamed:@"flag_icon.png"] forState:UIControlStateNormal];
         }
+        [self.view insertSubview:mDeleteButton belowSubview:mLikeIndicator];
     } else {
         [mDeleteButton removeFromSuperview];
     }
@@ -291,8 +292,13 @@
 }
 
 - (IBAction)deleteButtonPressed:(id)sender {
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Deleting a picture is permanent and can't be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Delete", nil];
-    [alert show];
+    if (mPhoto.uploader.phone == AppDelegate.graph.me.phone) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Deleting a picture is permanent and can't be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Delete", nil];
+        [alert show];
+    } else {
+        UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mark as Offensive", nil];
+        [sheet showInView:self.view];
+    }
 }
 
 - (IBAction)closePhotoView:(id)sender {
@@ -332,6 +338,16 @@
 
 - (void)showComments {
     [self showComments:nil];
+}
+
+#pragma mark - UIActionSheetDelegate 
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [AppDelegate.graph flagPhoto:mPhoto.ID byPhone:AppDelegate.graph.me.phone];
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Photo Flagged" message:@"The Stream Team has been notified and will respond to your report within 24 hours." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 #pragma mark - UIAlertViewDelegate 
