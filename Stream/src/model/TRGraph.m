@@ -34,6 +34,7 @@ typedef enum {
     kTRGraphNetworkTaskSendFeedback,
     kTRGraphNetworkTaskDeletePhoto,
     kTRGraphNetworkTaskDeleteStream,
+    kTRGraphNetworkTaskFlagPhoto,
 } TRGraphNetworkTask;
 
 @implementation NSString (encode)
@@ -376,6 +377,14 @@ typedef enum {
     }
 }
 
+- (void)flagPhoto:(NSString*)photo_id byPhone:(NSString*)phone {
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/flag_picture.php?flagger_phone=%@&picture_id=%@", phone, photo_id]
+                                                                relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
+    CFDictionaryAddValue(mActiveConnections,
+                         (__bridge const void *)conn,
+                         (__bridge const void *)[NSString stringWithFormat:@"%i",kTRGraphNetworkTaskFlagPhoto]);
+}
+
 #pragma mark Stream
 
 - (void)addStream:(TRPhotoStream *)stream {
@@ -515,7 +524,7 @@ typedef enum {
             [scanner setScanLocation:([scanner scanLocation] + 1)];
         }
     }
-    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"api/invitePeople1.php?inviteesPhone=%@&inviterPhone=%@&streamID=%@", strippedString, mMe.phone, streamID]
+    TRConnection * conn = [AppDelegate.network dataAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"stream/1.0/api/invite_users.php?invitees_phone=%@&inviter_phone=%@&stream_id=%@", strippedString, mMe.phone, streamID]
                                                                 relativeToURL:[NSURL URLWithString:@"http://75.101.134.112"]] delegate:self];
     CFDictionaryAddValue(mActiveConnections,
                          (__bridge const void *)conn,

@@ -15,7 +15,7 @@
 @class TRPhotoStream;
 @class TRImageView;
 
-@interface TRPhotoViewController : UIViewController <TRGraphDelegate, UIAlertViewDelegate, UIScrollViewDelegate> {
+@interface TRPhotoViewController : UIViewController <TRGraphDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIScrollViewDelegate> {
     TRImageView * mImageView;
     TRImageView * mPrevView;
     TRImageView * mNextView;
