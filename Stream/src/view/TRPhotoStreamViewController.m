@@ -102,7 +102,7 @@
 - (void)showPhotoPicker {
     if (!mPicker) {
         mPicker = [[UIImagePickerController alloc] init];
-        [mPicker setAllowsEditing:YES];
+        [mPicker setAllowsEditing:NO];
         [mPicker setDelegate:self];
     }
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
