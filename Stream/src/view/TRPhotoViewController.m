@@ -201,6 +201,9 @@
     [mScroller addSubview:mImageView];
     mImageView.center = CGPointMake(mScroller.contentSize.width/2, self.view.center.y - mScroller.frame.origin.y);
     [mImageView setTRPhoto:mPhoto];
+    UILongPressGestureRecognizer * saveGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longTapRecognized:)];
+    [mImageView setUserInteractionEnabled:YES];
+    [mImageView addGestureRecognizer:saveGestureRecognizer];
 
     [self setPrevPhoto:[mStream photoBefore:mPhoto]];
     [self setNextPhoto:[mStream photoAfter:mPhoto]];
@@ -296,8 +299,8 @@
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Deleting a picture is permanent and can't be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Delete", nil];
         [alert show];
     } else {
-        UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mark as Offensive", nil];
-        [sheet showInView:self.view];
+        mFlagSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mark as Offensive", nil];
+        [mFlagSheet showInView:self.view];
     }
 }
 
@@ -340,13 +343,31 @@
     [self showComments:nil];
 }
 
+- (void)longTapRecognized:(UILongPressGestureRecognizer * )sender {
+    if (mSaveSheet == nil) {
+        mSaveSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                 delegate:self
+                                        cancelButtonTitle:@"Cancel"
+                                   destructiveButtonTitle:nil
+                                        otherButtonTitles:@"Save Photo", nil];
+    }
+    [mSaveSheet showInView:self.view];
+}
+
 #pragma mark - UIActionSheetDelegate 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        [AppDelegate.graph flagPhoto:mPhoto.ID byPhone:AppDelegate.graph.me.phone];
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Photo Flagged" message:@"The Stream Team has been notified and will respond to your report within 24 hours." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
+    if (actionSheet == mFlagSheet) {
+        if (buttonIndex == 0) {
+            [AppDelegate.graph flagPhoto:mPhoto.ID byPhone:AppDelegate.graph.me.phone];
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Photo Flagged" message:@"The Stream Team has been notified and will respond to your report within 24 hours." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alert show];
+        }
+    }
+    if (actionSheet == mSaveSheet) {
+        if (buttonIndex == 0) {
+            UIImageWriteToSavedPhotosAlbum(mImageView.TRPhoto.image, nil, nil, nil);
+        }
     }
 }
 
