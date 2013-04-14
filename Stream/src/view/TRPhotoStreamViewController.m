@@ -215,6 +215,7 @@
                             [gridCell.leftFrame setTRPhoto:leftPhoto];
                         } else {
                             [gridCell.leftFrame setPlaceholder];
+                            [gridCell.leftFrame setSpinnerVisible:YES];
                         }
                         if (!gridCell.leftFrame.tapRecognizer)
                             gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
@@ -229,6 +230,7 @@
                         [gridCell.leftFrame setTRPhoto:leftPhoto];
                     } else {
                         [gridCell.leftFrame setPlaceholder];
+                        [gridCell.leftFrame setSpinnerVisible:YES];
                     }
                     if (!gridCell.leftFrame.tapRecognizer)
                         gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
@@ -251,8 +253,10 @@
                 }
                 if (rightPhoto)
                     [gridCell.rightFrame setTRPhoto:rightPhoto];
-                else
+                else {
                     [gridCell.rightFrame setPlaceholder];
+                    [gridCell.rightFrame setSpinnerVisible:YES];
+                }
                 if (!gridCell.rightFrame.tapRecognizer)
                     gridCell.rightFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
                 else

@@ -17,6 +17,7 @@
     TRImage * mImage;
     TRPhoto * mPhoto;
     TRConnection * mConnection;
+    UIActivityIndicatorView * mSpinner;
     UITapGestureRecognizer * mTapRecognizer;
     CGSize mPostDownloadResize;
 }
@@ -36,5 +37,7 @@
 - (void)setPlaceholder;
 
 - (void)setPictureInnerShadow:(BOOL)shadow;
+
+- (void)setSpinnerVisible:(BOOL)spinner;
 
 @end
