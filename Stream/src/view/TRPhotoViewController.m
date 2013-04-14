@@ -244,7 +244,7 @@
     TRUser * me = [AppDelegate.graph getUserWithPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]];
     
     if ([mLikeButton.titleLabel.text isEqualToString:@"Like"]) {
-        [mLikeButton setTitle:@"Liked" forState:UIControlStateNormal];
+        [mLikeButton.titleLabel setText:@"Liked"];
         [mLikeOverlayImage setImage:[UIImage imageNamed:@"heart_red_large.png"]];
         [mLikeOverlayLabel setText:@"Liked!"];
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_red_small.png"]];
@@ -253,7 +253,7 @@
         [mPhoto addLiker:me];
         mPhoto.numLikes++;
     } else {
-        [mLikeButton setTitle:@"Like" forState:UIControlStateNormal];
+        [mLikeButton.titleLabel setText:@"Like"];
         [mLikeOverlayImage setImage:[UIImage imageNamed:@"heart_unlike_large.png"]];
         [mLikeOverlayLabel setText:@"Unliked..."];
         [mLikeIndicator setImage:[UIImage imageNamed:@"heart_white_small.png"]];
