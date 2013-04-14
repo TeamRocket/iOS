@@ -13,6 +13,7 @@
 
 #import "TRAppDelegate.h"
 #import "TRGraph.h"
+#import "TRPhotoStreamViewController.h"
 #import "TRTableViewCell.h"
 #import "TRTextFieldCell.h"
 
@@ -31,24 +32,32 @@
         } else {
             mMode = kTRPhotoStreamSetupModeInvite;
             mParticipants = [mStream.participants mutableCopy];
+            [AppDelegate.graph registerForDelegateCallback:self];
+            [AppDelegate.graph downloadParticipantsInStream:mStream.ID];
         }
+        mCreateButton = [[UIBarButtonItem alloc] initWithTitle:@"create" style:UIBarButtonItemStyleBordered target:nil action:nil];
+        self.title = @"NEW STREAM";
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"back"
+                                                                                 style:UIBarButtonItemStyleBordered
+                                                                                target:nil
+                                                                                action:nil];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [mCreateButton setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [mCreateButton setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [mCreateButton setTarget:self];
     if (mMode == kTRPhotoStreamSetupModeInvite) {
-        [mTitleItem setTitle:@"INVITE"];
+        self.title = @"INVITE";
         [mCreateButton setTitle:@"update"];
         [mCreateButton setAction:@selector(updateStreamTapped:)];
     } else {
         [mCreateButton setAction:@selector(createStreamTapped:)];
     }
+    [self.navigationItem setRightBarButtonItem:mCreateButton];
     if (mParticipants == nil) {
         mParticipants = [[NSMutableArray alloc] init];
     }
@@ -62,6 +71,7 @@
 - (void)pressedAddButton:(TRTokenField*)sender {
     ABPeoplePickerNavigationController * ABPicker = [[ABPeoplePickerNavigationController alloc] init];
     ABPicker.peoplePickerDelegate = self;
+    ABPicker.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonPhoneProperty]];
     [self presentViewController:ABPicker animated:YES completion:nil];
 }
 
@@ -88,7 +98,7 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TRTableViewCell * cell;
     int sectionRows = [tableView numberOfRowsInSection:[indexPath section]];
-    if (indexPath.section == 1 && indexPath.row == sectionRows - 1) {
+    if (indexPath.section == 1 && indexPath.row == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell"];
         if (!cell) {
             cell = [[TRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddCell"];
@@ -122,7 +132,7 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
         if (!cell) {
             cell = [[TRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-            if (!(mMode == kTRPhotoStreamSetupModeInvite && indexPath.row < [mStream.participants count])) {
+            if (!(mMode == kTRPhotoStreamSetupModeInvite && indexPath.row - 1 < [mStream.participants count])) {
                 UIButton * remove = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 35.0, 35.0f)];
                 [remove setBackgroundImage:[UIImage imageNamed:@"remove_token.png"] forState:UIControlStateNormal];
                 remove.center = CGPointMake(cell.frame.size.width - remove.frame.size.width, cell.center.y);
@@ -144,10 +154,8 @@
     }
     if (indexPath.section == 1) {
         [cell.textLabel setBackgroundColor:[UIColor clearColor]];
-        if (indexPath.row == sectionRows - 1) {
-            
-        } else {
-            TRUser * user = [mParticipants objectAtIndex:indexPath.row];
+        if (indexPath.row > 0) {
+            TRUser * user = [mParticipants objectAtIndex:indexPath.row - 1];
             [cell.textLabel setText:[NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName]];
         }
     }
@@ -174,7 +182,17 @@
             return @"Stream Details";
             break;
         case 1:
-            return @"Participants";
+            switch ([mParticipants count]) {
+                case 0:
+                    return @"Add Participants";
+                    break;
+                case 1:
+                    return @"1 Participant";
+                    break;
+                default:
+                    return [NSString stringWithFormat:@"%i Participants", [mParticipants count]];
+                    break;
+            }
             break;
         default:
             break;
@@ -221,8 +239,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 1 && indexPath.row == [tableView numberOfRowsInSection:[indexPath section]] - 1) {
+    if (indexPath.section == 1 && indexPath.row == 0) {
         [self pressedAddButton:nil];
+    } else if (mMode == kTRPhotoStreamSetupModeInvite && indexPath.row - 1 < [mStream.participants count]) {
+        TRPhotoStreamViewController * streamView = [[TRPhotoStreamViewController alloc] initWithPhotoStream:mStream forUser:[mStream.participants objectAtIndex:indexPath.row - 1]];
+        [self.navigationController pushViewController:streamView animated:YES];
     }
 }
 
@@ -241,7 +262,7 @@
 
 - (void)removeButtonTapped:(id)sender {
     NSIndexPath * index = [mTableView indexPathForCell:(UITableViewCell*)[sender superview]];
-    [mParticipants removeObjectAtIndex:index.row];
+    [mParticipants removeObjectAtIndex:index.row - 1];
     [mTableView reloadData];
 }
 
@@ -253,7 +274,7 @@
     [AppDelegate.graph createStreamNamed:mStreamNameField.textField.text
                                 forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]
                         withParticipants:participantPhones];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
     [TestFlight passCheckpoint:@"Created Stream"];
     [[Mixpanel sharedInstance] track:@"Created Stream"];
 }
@@ -265,7 +286,7 @@
         [participantPhones addObject:user.phone];
     }
     [AppDelegate.graph sendInviteUsers:participantPhones toStream:mStream.ID];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
     [TestFlight passCheckpoint:@"Updated Stream Info"];
 }
 
@@ -279,27 +300,16 @@
     return YES;
 }
 
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-      shouldContinueAfterSelectingPerson:(ABRecordRef)person
-                                property:(ABPropertyID)property
-                              identifier:(ABMultiValueIdentifier)identifier
-{
-
-    ABPersonViewController *controller = [[ABPersonViewController alloc] init];
-    controller.displayedPerson = person;
-    controller.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonPhoneProperty]];
-    controller.personViewDelegate = self;
-    [peoplePicker pushViewController:controller animated:YES];
+- (BOOL)personViewController:(ABPersonViewController *)personViewController shouldPerformDefaultActionForPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifierForValue {
     return NO;
 }
 
-- (BOOL)personViewController:(ABPersonViewController *)personViewController
-shouldPerformDefaultActionForPerson:(ABRecordRef)person
-                    property:(ABPropertyID)property
-                  identifier:(ABMultiValueIdentifier)identifierForValue
-{
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+                                property:(ABPropertyID)property
+                              identifier:(ABMultiValueIdentifier)identifier {
     ABMutableMultiValueRef multi = ABRecordCopyValue(person, property);
-    NSString * phone = (__bridge_transfer NSString*)ABMultiValueCopyValueAtIndex(multi, identifierForValue);
+    NSString * phone = (__bridge_transfer NSString*)ABMultiValueCopyValueAtIndex(multi, identifier);
     NSString * first = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
     NSString * last = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
     TRUser *newUser = [[TRUser alloc] initWithPhone:phone
@@ -309,14 +319,21 @@ shouldPerformDefaultActionForPerson:(ABRecordRef)person
     [self addParticipant:newUser];
     [mTableView reloadData];
 
-    ABPeoplePickerNavigationController *peoplePicker = (ABPeoplePickerNavigationController *)personViewController.navigationController;
     [peoplePicker dismissViewControllerAnimated:YES completion:nil];
     return NO;
 }
+
 - (BOOL)textFieldShouldReturn:(UITextField*)textField{
     [textField resignFirstResponder];
     return YES;
 }
 
+#pragma mark - TRGraphDelegate methods
+
+- (void)graphFinishedUpdating {
+    if ([mParticipants count] == 0)
+        mParticipants = [mStream.participants mutableCopy];
+    [mTableView reloadData];
+}
 
 @end
