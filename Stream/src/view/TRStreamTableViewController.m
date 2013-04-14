@@ -39,6 +39,17 @@
     [add setTarget:self];
     [add setAction:@selector(presentSetup:)];
     [self.navigationItem setRightBarButtonItem:add];
+
+    UIBarButtonItem * logout = [[UIBarButtonItem alloc] initWithTitle:@"logout"
+                                                                style:UIBarButtonItemStyleBordered
+                                                               target:self
+                                                               action:@selector(logout:)];
+    [logout setBackgroundImage:[UIImage imageNamed:@"navbarback.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [logout setBackgroundImage:[UIImage imageNamed:@"navbarback_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [logout setTitlePositionAdjustment:UIOffsetMake(5.0f, 0.0f) forBarMetrics:UIBarMetricsDefault];
+    [logout setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"MuseoSans-500" size:11.0], UITextAttributeFont, nil] forState:UIControlStateNormal];
+    [self.navigationItem setLeftBarButtonItem:logout];
+
     [mTableView registerNib:[UINib nibWithNibName:@"TRStreamCell" bundle:nil] forCellReuseIdentifier:@"TRStreamCell"];
 
     mRefreshControl = [[UIRefreshControl alloc] init];
@@ -57,6 +68,13 @@
     TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithStream:nil];
     mWasPreviouslyCreatingStream = YES;
     [self.navigationController presentViewController:setup animated:YES completion:nil];
+}
+
+- (void)logout:(id)sender {
+    [[NSUserDefaults alloc] removeObjectForKey:@"user_phone"];
+    [[NSUserDefaults alloc] removeObjectForKey:@"user_first"];
+    [[NSUserDefaults alloc] removeObjectForKey:@"user_last"];
+    [AppDelegate showSplash:YES];
 }
 
 #pragma mark - Table view data source

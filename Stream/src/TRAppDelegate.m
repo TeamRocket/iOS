@@ -20,6 +20,12 @@
 @synthesize network = mNetwork;
 @synthesize pushToken = mPushToken;
 
+- (void)showSplash:(BOOL)animated {
+    if (mSplash == nil)
+        mSplash = [[TRSplashViewController alloc] initWithNibName:@"TRSplashViewController" bundle:nil];
+    [mStream presentViewController:mSplash animated:animated completion:nil];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -41,7 +47,7 @@
     mStream = [[TRStreamViewController alloc] init];
     self.window.rootViewController = mStream;
     [self.window makeKeyAndVisible];
-    [mStream presentViewController:mSplash animated:NO completion:nil];
+    [self showSplash:NO];
 
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:( UIRemoteNotificationTypeAlert |
                                                                             UIRemoteNotificationTypeBadge |
