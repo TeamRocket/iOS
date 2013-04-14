@@ -148,11 +148,7 @@
                 UIButton * participantsButton = [[UIButton alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 300.0f, 46.0f)];
                 [participantsButton setBackgroundImage:[UIImage imageNamed:@"view_participants_normal.png"] forState:UIControlStateNormal];
                 [participantsButton setBackgroundImage:[UIImage imageNamed:@"view_participants_highlighted.png"] forState:UIControlStateSelected];
-                if (mStream.numParticipants == 1) {
-                    [participantsButton setTitle:@"       1 Participant" forState:UIControlStateNormal];
-                } else {
-                    [participantsButton setTitle:[NSString stringWithFormat:@"       %i Participants", mStream.numParticipants] forState:UIControlStateNormal];
-                }
+                [participantsButton setTitle:@"        Invite Users" forState:UIControlStateNormal];
 
                 [participantsButton setTitleColor:[UIColor colorWithRed:0.281f green:0.285f blue:0.297f alpha:1.0] forState:UIControlStateNormal];
                 [participantsButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0f]];
