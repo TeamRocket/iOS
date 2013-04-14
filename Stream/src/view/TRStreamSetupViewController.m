@@ -13,6 +13,7 @@
 
 #import "TRAppDelegate.h"
 #import "TRGraph.h"
+#import "TRPhotoStreamViewController.h"
 #import "TRTableViewCell.h"
 #import "TRTextFieldCell.h"
 
@@ -36,6 +37,10 @@
         }
         mCreateButton = [[UIBarButtonItem alloc] initWithTitle:@"create" style:UIBarButtonItemStyleBordered target:nil action:nil];
         self.title = @"NEW STREAM";
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"back"
+                                                                                 style:UIBarButtonItemStyleBordered
+                                                                                target:nil
+                                                                                action:nil];
     }
     return self;
 }
@@ -225,6 +230,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1 && indexPath.row == 0) {
         [self pressedAddButton:nil];
+    } else if (mMode == kTRPhotoStreamSetupModeInvite && indexPath.row - 1 < [mStream.participants count]) {
+        TRPhotoStreamViewController * streamView = [[TRPhotoStreamViewController alloc] initWithPhotoStream:mStream forUser:[mStream.participants objectAtIndex:indexPath.row - 1]];
+        [self.navigationController pushViewController:streamView animated:YES];
     }
 }
 
@@ -323,7 +331,8 @@ shouldPerformDefaultActionForPerson:(ABRecordRef)person
 #pragma mark - TRGraphDelegate methods
 
 - (void)graphFinishedUpdating {
-    mParticipants = [mStream.participants mutableCopy];
+    if ([mParticipants count] == 0)
+        mParticipants = [mStream.participants mutableCopy];
     [mTableView reloadData];
 }
 
