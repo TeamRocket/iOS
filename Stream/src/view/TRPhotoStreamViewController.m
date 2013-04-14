@@ -177,12 +177,21 @@
         }
         return cell;
     } else {
-        NSArray * photoArray = mMode == kTRPhotoStreamViewModeAll ? mStream.photos : [mUser photosInStream:mStream];
+        NSArray * photoArray;
+        int photoBoxes;
+        if (mMode == kTRPhotoStreamViewModeAll) {
+            photoArray = mStream.photos;
+            photoBoxes = mStream.numPhotos;
+        } else {
+            photoArray = [mUser photosInStream:mStream];
+            photoBoxes = [mUser getCountOfPhotosInStream:mStream];
+        }
+        photoBoxes = mUploading ? photoBoxes + 1 : photoBoxes;
+        
         cell = [tableView dequeueReusableCellWithIdentifier:@"TRStreamGridViewCell"];
         if (cell == nil) {
             cell = [[NSBundle mainBundle] loadNibNamed:@"TRStreamGridViewCell" owner:self options:nil][0];
         }
-        int photoBoxes = mUploading ? [photoArray count] + 1 : [photoArray count];
         TRStreamGridViewCell * gridCell = (TRStreamGridViewCell*)cell;
         if (photoBoxes > 0) {
             if (indexPath.row * 2 < photoBoxes) {
@@ -201,8 +210,13 @@
                         [gridCell.leftFrame setImage:[UIImage imageNamed:@"upload_placeholder.png"]];
                         [gridCell.leftFrame setUserInteractionEnabled:NO];
                     } else {
-                        leftPhoto = [photoArray objectAtIndex:((indexPath.row) * 2) - 1];
-                        [gridCell.leftFrame setTRPhoto:leftPhoto];
+                        if (((indexPath.row) * 2) - 1 < [photoArray count]) {
+                            leftPhoto = [photoArray objectAtIndex:((indexPath.row) * 2) - 1];
+                            [gridCell.leftFrame setTRPhoto:leftPhoto];
+                        } else {
+                            [gridCell.leftFrame setPlaceholder];
+                            [gridCell.leftFrame setSpinnerVisible:YES];
+                        }
                         if (!gridCell.leftFrame.tapRecognizer)
                             gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
                         else
@@ -211,8 +225,13 @@
                         [gridCell.leftFrame.tapRecognizer setNumberOfTapsRequired:1];
                     }
                 } else {
-                    leftPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
-                    [gridCell.leftFrame setTRPhoto:leftPhoto];
+                    if (indexPath.row * 2 < [photoArray count]) {
+                        leftPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
+                        [gridCell.leftFrame setTRPhoto:leftPhoto];
+                    } else {
+                        [gridCell.leftFrame setPlaceholder];
+                        [gridCell.leftFrame setSpinnerVisible:YES];
+                    }
                     if (!gridCell.leftFrame.tapRecognizer)
                         gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
                     else
@@ -226,11 +245,18 @@
             if (indexPath.row * 2 + 1 < photoBoxes) {
                 TRPhoto * rightPhoto;
                 if (mUploading) {
-                    rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
+                    if ((indexPath.row * 2) < [photoArray count])
+                        rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
                 } else {
-                    rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2) + 1];
+                    if ((indexPath.row * 2) + 1 < [photoArray count])
+                        rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2) + 1];
                 }
-                [gridCell.rightFrame setTRPhoto:rightPhoto];
+                if (rightPhoto)
+                    [gridCell.rightFrame setTRPhoto:rightPhoto];
+                else {
+                    [gridCell.rightFrame setPlaceholder];
+                    [gridCell.rightFrame setSpinnerVisible:YES];
+                }
                 if (!gridCell.rightFrame.tapRecognizer)
                     gridCell.rightFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
                 else
