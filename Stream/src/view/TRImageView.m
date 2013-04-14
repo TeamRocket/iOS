@@ -88,6 +88,7 @@
     } else {
         if (!photo.image) {
             [self setPlaceholder];
+            [self setSpinnerVisible:YES];
             if (mConnection)
                 [mConnection cancel];
             mConnection = [AppDelegate.network dataAtURL:photo.URL delegate:self];
