@@ -290,7 +290,7 @@
 
 - (void)tappedParticipantsButton:(id)sender {
     TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithStream:mStream];
-    [self presentViewController:setup animated:YES completion:nil];
+    [self.navigationController pushViewController:setup animated:YES];
 }
 
 #pragma mark - TRGraphDelegate

@@ -34,23 +34,25 @@
             [AppDelegate.graph registerForDelegateCallback:self];
             [AppDelegate.graph downloadParticipantsInStream:mStream.ID];
         }
+        mCreateButton = [[UIBarButtonItem alloc] initWithTitle:@"create" style:UIBarButtonItemStyleBordered target:nil action:nil];
+        self.title = @"NEW STREAM";
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [mCreateButton setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [mCreateButton setBackgroundImage:[UIImage imageNamed:@"navbaritem_orange_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [mCreateButton setTarget:self];
     if (mMode == kTRPhotoStreamSetupModeInvite) {
-        [mTitleItem setTitle:@"INVITE"];
+        self.title = @"INVITE";
         [mCreateButton setTitle:@"update"];
         [mCreateButton setAction:@selector(updateStreamTapped:)];
     } else {
         [mCreateButton setAction:@selector(createStreamTapped:)];
     }
+    [self.navigationItem setRightBarButtonItem:mCreateButton];
     if (mParticipants == nil) {
         mParticipants = [[NSMutableArray alloc] init];
     }
@@ -253,7 +255,7 @@
     [AppDelegate.graph createStreamNamed:mStreamNameField.textField.text
                                 forPhone:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_phone"]
                         withParticipants:participantPhones];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
     [TestFlight passCheckpoint:@"Created Stream"];
     [[Mixpanel sharedInstance] track:@"Created Stream"];
 }
@@ -265,7 +267,7 @@
         [participantPhones addObject:user.phone];
     }
     [AppDelegate.graph sendInviteUsers:participantPhones toStream:mStream.ID];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
     [TestFlight passCheckpoint:@"Updated Stream Info"];
 }
 

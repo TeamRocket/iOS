@@ -56,7 +56,7 @@
 - (void)presentSetup:(id)sender {
     TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithStream:nil];
     mWasPreviouslyCreatingStream = YES;
-    [self.navigationController presentViewController:setup animated:YES completion:nil];
+    [self.navigationController pushViewController:setup animated:YES];
 }
 
 #pragma mark - Table view data source
