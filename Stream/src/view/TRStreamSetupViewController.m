@@ -300,6 +300,10 @@
     return YES;
 }
 
+- (BOOL)personViewController:(ABPersonViewController *)personViewController shouldPerformDefaultActionForPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifierForValue {
+    return NO;
+}
+
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
       shouldContinueAfterSelectingPerson:(ABRecordRef)person
                                 property:(ABPropertyID)property
