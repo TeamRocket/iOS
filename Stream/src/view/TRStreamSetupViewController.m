@@ -181,7 +181,17 @@
             return @"Stream Details";
             break;
         case 1:
-            return @"Participants";
+            switch ([mParticipants count]) {
+                case 0:
+                    return @"Add Participants";
+                    break;
+                case 1:
+                    return @"1 Participant";
+                    break;
+                default:
+                    return [NSString stringWithFormat:@"%i Participants", [mParticipants count]];
+                    break;
+            }
             break;
         default:
             break;
