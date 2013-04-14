@@ -71,6 +71,7 @@
 - (void)pressedAddButton:(TRTokenField*)sender {
     ABPeoplePickerNavigationController * ABPicker = [[ABPeoplePickerNavigationController alloc] init];
     ABPicker.peoplePickerDelegate = self;
+    ABPicker.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonPhoneProperty]];
     [self presentViewController:ABPicker animated:YES completion:nil];
 }
 
@@ -302,24 +303,9 @@
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
       shouldContinueAfterSelectingPerson:(ABRecordRef)person
                                 property:(ABPropertyID)property
-                              identifier:(ABMultiValueIdentifier)identifier
-{
-
-    ABPersonViewController *controller = [[ABPersonViewController alloc] init];
-    controller.displayedPerson = person;
-    controller.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonPhoneProperty]];
-    controller.personViewDelegate = self;
-    [peoplePicker pushViewController:controller animated:YES];
-    return NO;
-}
-
-- (BOOL)personViewController:(ABPersonViewController *)personViewController
-shouldPerformDefaultActionForPerson:(ABRecordRef)person
-                    property:(ABPropertyID)property
-                  identifier:(ABMultiValueIdentifier)identifierForValue
-{
+                              identifier:(ABMultiValueIdentifier)identifier {
     ABMutableMultiValueRef multi = ABRecordCopyValue(person, property);
-    NSString * phone = (__bridge_transfer NSString*)ABMultiValueCopyValueAtIndex(multi, identifierForValue);
+    NSString * phone = (__bridge_transfer NSString*)ABMultiValueCopyValueAtIndex(multi, identifier);
     NSString * first = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
     NSString * last = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
     TRUser *newUser = [[TRUser alloc] initWithPhone:phone
@@ -329,10 +315,10 @@ shouldPerformDefaultActionForPerson:(ABRecordRef)person
     [self addParticipant:newUser];
     [mTableView reloadData];
 
-    ABPeoplePickerNavigationController *peoplePicker = (ABPeoplePickerNavigationController *)personViewController.navigationController;
     [peoplePicker dismissViewControllerAnimated:YES completion:nil];
     return NO;
 }
+
 - (BOOL)textFieldShouldReturn:(UITextField*)textField{
     [textField resignFirstResponder];
     return YES;
