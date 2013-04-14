@@ -31,6 +31,8 @@
         } else {
             mMode = kTRPhotoStreamSetupModeInvite;
             mParticipants = [mStream.participants mutableCopy];
+            [AppDelegate.graph registerForDelegateCallback:self];
+            [AppDelegate.graph downloadParticipantsInStream:mStream.ID];
         }
     }
     return self;
@@ -88,7 +90,7 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TRTableViewCell * cell;
     int sectionRows = [tableView numberOfRowsInSection:[indexPath section]];
-    if (indexPath.section == 1 && indexPath.row == sectionRows - 1) {
+    if (indexPath.section == 1 && indexPath.row == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell"];
         if (!cell) {
             cell = [[TRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddCell"];
@@ -122,7 +124,7 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
         if (!cell) {
             cell = [[TRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-            if (!(mMode == kTRPhotoStreamSetupModeInvite && indexPath.row < [mStream.participants count])) {
+            if (!(mMode == kTRPhotoStreamSetupModeInvite && indexPath.row - 1 < [mStream.participants count])) {
                 UIButton * remove = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 35.0, 35.0f)];
                 [remove setBackgroundImage:[UIImage imageNamed:@"remove_token.png"] forState:UIControlStateNormal];
                 remove.center = CGPointMake(cell.frame.size.width - remove.frame.size.width, cell.center.y);
@@ -144,10 +146,8 @@
     }
     if (indexPath.section == 1) {
         [cell.textLabel setBackgroundColor:[UIColor clearColor]];
-        if (indexPath.row == sectionRows - 1) {
-            
-        } else {
-            TRUser * user = [mParticipants objectAtIndex:indexPath.row];
+        if (indexPath.row > 0) {
+            TRUser * user = [mParticipants objectAtIndex:indexPath.row - 1];
             [cell.textLabel setText:[NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName]];
         }
     }
@@ -221,7 +221,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 1 && indexPath.row == [tableView numberOfRowsInSection:[indexPath section]] - 1) {
+    if (indexPath.section == 1 && indexPath.row == 0) {
         [self pressedAddButton:nil];
     }
 }
@@ -241,7 +241,7 @@
 
 - (void)removeButtonTapped:(id)sender {
     NSIndexPath * index = [mTableView indexPathForCell:(UITableViewCell*)[sender superview]];
-    [mParticipants removeObjectAtIndex:index.row];
+    [mParticipants removeObjectAtIndex:index.row - 1];
     [mTableView reloadData];
 }
 
@@ -318,5 +318,11 @@ shouldPerformDefaultActionForPerson:(ABRecordRef)person
     return YES;
 }
 
+#pragma mark - TRGraphDelegate methods
+
+- (void)graphFinishedUpdating {
+    mParticipants = [mStream.participants mutableCopy];
+    [mTableView reloadData];
+}
 
 @end

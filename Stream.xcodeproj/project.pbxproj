@@ -15,8 +15,6 @@
 		0A26061116BBD5AD009EF224 /* nux_streams@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26060D16BBD5AD009EF224 /* nux_streams@2x.png */; };
 		0A26061416BBDC6D009EF224 /* streamcell_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061216BBDC6D009EF224 /* streamcell_selected.png */; };
 		0A26061516BBDC6D009EF224 /* streamcell_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061316BBDC6D009EF224 /* streamcell_selected@2x.png */; };
-		0A26061816BBE1DC009EF224 /* participantsCellBG_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061616BBE1DC009EF224 /* participantsCellBG_selected.png */; };
-		0A26061916BBE1DC009EF224 /* participantsCellBG_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A26061716BBE1DC009EF224 /* participantsCellBG_selected@2x.png */; };
 		0A26063B16BBF25A009EF224 /* MPCJSONDataSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26063116BBF25A009EF224 /* MPCJSONDataSerializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0A26063C16BBF25A009EF224 /* MPCJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26063316BBF25A009EF224 /* MPCJSONSerializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0A26063D16BBF25A009EF224 /* MPCSerializedJSONData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A26063516BBF25A009EF224 /* MPCSerializedJSONData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -99,12 +97,6 @@
 		0A6276961682CFF800827101 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6276921682CFEC00827101 /* AddressBookUI.framework */; };
 		0A6ADB6B1687A39D00A3C1AE /* remove_token.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6ADB691687A39D00A3C1AE /* remove_token.png */; };
 		0A6ADB6C1687A39D00A3C1AE /* remove_token@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6ADB6A1687A39D00A3C1AE /* remove_token@2x.png */; };
-		0A6ADB751687AE2F00A3C1AE /* TRParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6ADB731687AE2F00A3C1AE /* TRParticipantsViewController.m */; };
-		0A6ADB791687AE5700A3C1AE /* TRParticipantsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A6ADB781687AE5700A3C1AE /* TRParticipantsViewController.xib */; };
-		0A6ADB7C1687B1A400A3C1AE /* TRParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6ADB7B1687B1A400A3C1AE /* TRParticipantCell.m */; };
-		0A6ADB7E1687B2F200A3C1AE /* TRParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A6ADB7D1687B2F200A3C1AE /* TRParticipantCell.xib */; };
-		0A6ADB811687B35400A3C1AE /* participantsCellBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6ADB7F1687B35400A3C1AE /* participantsCellBG.png */; };
-		0A6ADB821687B35400A3C1AE /* participantsCellBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6ADB801687B35400A3C1AE /* participantsCellBG@2x.png */; };
 		0A92F67E1689012B00803DA1 /* empty_stream.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A92F67C1689012B00803DA1 /* empty_stream.png */; };
 		0A92F67F1689012B00803DA1 /* empty_stream@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A92F67D1689012B00803DA1 /* empty_stream@2x.png */; };
 		0A92F6931689068400803DA1 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A92F6921689068400803DA1 /* libTestFlight.a */; };
@@ -176,8 +168,6 @@
 		0A26060D16BBD5AD009EF224 /* nux_streams@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nux_streams@2x.png"; path = "img/UI/nux_streams@2x.png"; sourceTree = "<group>"; };
 		0A26061216BBDC6D009EF224 /* streamcell_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = streamcell_selected.png; path = img/UI/streamcell_selected.png; sourceTree = "<group>"; };
 		0A26061316BBDC6D009EF224 /* streamcell_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "streamcell_selected@2x.png"; path = "img/UI/streamcell_selected@2x.png"; sourceTree = "<group>"; };
-		0A26061616BBE1DC009EF224 /* participantsCellBG_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = participantsCellBG_selected.png; path = img/UI/participantsCellBG_selected.png; sourceTree = "<group>"; };
-		0A26061716BBE1DC009EF224 /* participantsCellBG_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "participantsCellBG_selected@2x.png"; path = "img/UI/participantsCellBG_selected@2x.png"; sourceTree = "<group>"; };
 		0A26063016BBF25A009EF224 /* MPCJSONDataSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCJSONDataSerializer.h; sourceTree = "<group>"; };
 		0A26063116BBF25A009EF224 /* MPCJSONDataSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCJSONDataSerializer.m; sourceTree = "<group>"; };
 		0A26063216BBF25A009EF224 /* MPCJSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCJSONSerializer.h; sourceTree = "<group>"; };
@@ -286,14 +276,6 @@
 		0A6276921682CFEC00827101 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		0A6ADB691687A39D00A3C1AE /* remove_token.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = remove_token.png; path = img/UI/remove_token.png; sourceTree = "<group>"; };
 		0A6ADB6A1687A39D00A3C1AE /* remove_token@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "remove_token@2x.png"; path = "img/UI/remove_token@2x.png"; sourceTree = "<group>"; };
-		0A6ADB721687AE2F00A3C1AE /* TRParticipantsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRParticipantsViewController.h; path = src/view/TRParticipantsViewController.h; sourceTree = "<group>"; };
-		0A6ADB731687AE2F00A3C1AE /* TRParticipantsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRParticipantsViewController.m; path = src/view/TRParticipantsViewController.m; sourceTree = "<group>"; };
-		0A6ADB781687AE5700A3C1AE /* TRParticipantsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRParticipantsViewController.xib; path = gui/TRParticipantsViewController.xib; sourceTree = "<group>"; };
-		0A6ADB7A1687B1A300A3C1AE /* TRParticipantCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TRParticipantCell.h; path = src/view/TRParticipantCell.h; sourceTree = "<group>"; };
-		0A6ADB7B1687B1A400A3C1AE /* TRParticipantCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRParticipantCell.m; path = src/view/TRParticipantCell.m; sourceTree = "<group>"; };
-		0A6ADB7D1687B2F200A3C1AE /* TRParticipantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TRParticipantCell.xib; path = gui/TRParticipantCell.xib; sourceTree = "<group>"; };
-		0A6ADB7F1687B35400A3C1AE /* participantsCellBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = participantsCellBG.png; path = img/UI/participantsCellBG.png; sourceTree = "<group>"; };
-		0A6ADB801687B35400A3C1AE /* participantsCellBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "participantsCellBG@2x.png"; path = "img/UI/participantsCellBG@2x.png"; sourceTree = "<group>"; };
 		0A92F67C1689012B00803DA1 /* empty_stream.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = empty_stream.png; path = img/UI/empty_stream.png; sourceTree = "<group>"; };
 		0A92F67D1689012B00803DA1 /* empty_stream@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "empty_stream@2x.png"; path = "img/UI/empty_stream@2x.png"; sourceTree = "<group>"; };
 		0A92F6921689068400803DA1 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestFlight.a; path = Stream/misc/libTestFlight.a; sourceTree = "<group>"; };
@@ -478,8 +460,6 @@
 				0A26060816BBBE32009EF224 /* TRFeedbackViewController.xib */,
 				0A510AF916784BD500E2012F /* TRLoginViewController.xib */,
 				0A3CEB5516884DB300305544 /* TRLikerListViewController.xib */,
-				0A6ADB7D1687B2F200A3C1AE /* TRParticipantCell.xib */,
-				0A6ADB781687AE5700A3C1AE /* TRParticipantsViewController.xib */,
 				0A4C6C92167930D4002DD362 /* TRSignupViewController.xib */,
 				0AB19B59167814390036E2BC /* TRSplashViewController.xib */,
 				0A4C6CB71679533D002DD362 /* TRStreamTableViewController.xib */,
@@ -571,10 +551,6 @@
 				0A3CEB5316884D9600305544 /* TRLikerListViewController.m */,
 				0A510AF316784B9F00E2012F /* TRLoginViewController.h */,
 				0A510AF416784B9F00E2012F /* TRLoginViewController.m */,
-				0A6ADB7A1687B1A300A3C1AE /* TRParticipantCell.h */,
-				0A6ADB7B1687B1A400A3C1AE /* TRParticipantCell.m */,
-				0A6ADB721687AE2F00A3C1AE /* TRParticipantsViewController.h */,
-				0A6ADB731687AE2F00A3C1AE /* TRParticipantsViewController.m */,
 				0A4C6C8D167930B2002DD362 /* TRSignupViewController.h */,
 				0A4C6C8E167930B2002DD362 /* TRSignupViewController.m */,
 				0AB19B541678141F0036E2BC /* TRSplashViewController.h */,
@@ -662,10 +638,6 @@
 				0AAE997A1691A0900012B826 /* progress_bar@2x.png */,
 				0A6ADB691687A39D00A3C1AE /* remove_token.png */,
 				0A6ADB6A1687A39D00A3C1AE /* remove_token@2x.png */,
-				0A26061616BBE1DC009EF224 /* participantsCellBG_selected.png */,
-				0A26061716BBE1DC009EF224 /* participantsCellBG_selected@2x.png */,
-				0A6ADB7F1687B35400A3C1AE /* participantsCellBG.png */,
-				0A6ADB801687B35400A3C1AE /* participantsCellBG@2x.png */,
 				0A26061216BBDC6D009EF224 /* streamcell_selected.png */,
 				0A26061316BBDC6D009EF224 /* streamcell_selected@2x.png */,
 				0A4C6CBE167956E4002DD362 /* streamcell.png */,
@@ -830,11 +802,7 @@
 				0A62768B1682C5B800827101 /* add_token@2x.png in Resources */,
 				0A6ADB6B1687A39D00A3C1AE /* remove_token.png in Resources */,
 				0A6ADB6C1687A39D00A3C1AE /* remove_token@2x.png in Resources */,
-				0A6ADB791687AE5700A3C1AE /* TRParticipantsViewController.xib in Resources */,
 				0A9A8EEE16B109A200D85655 /* MuseoSans-100.otf in Resources */,
-				0A6ADB7E1687B2F200A3C1AE /* TRParticipantCell.xib in Resources */,
-				0A6ADB811687B35400A3C1AE /* participantsCellBG.png in Resources */,
-				0A6ADB821687B35400A3C1AE /* participantsCellBG@2x.png in Resources */,
 				0A3CEB5616884DB300305544 /* TRLikerListViewController.xib in Resources */,
 				0A92F67E1689012B00803DA1 /* empty_stream.png in Resources */,
 				0A92F67F1689012B00803DA1 /* empty_stream@2x.png in Resources */,
@@ -863,8 +831,6 @@
 				0A26061116BBD5AD009EF224 /* nux_streams@2x.png in Resources */,
 				0A26061416BBDC6D009EF224 /* streamcell_selected.png in Resources */,
 				0A26061516BBDC6D009EF224 /* streamcell_selected@2x.png in Resources */,
-				0A26061816BBE1DC009EF224 /* participantsCellBG_selected.png in Resources */,
-				0A26061916BBE1DC009EF224 /* participantsCellBG_selected@2x.png in Resources */,
 				0A9F4B3216DEA91700B8B047 /* flag_icon.png in Resources */,
 				0A9F4B3316DEA91700B8B047 /* flag_icon@2x.png in Resources */,
 			);
@@ -899,8 +865,6 @@
 				0A45768B167D59B400848D8E /* TRPhotoViewController.m in Sources */,
 				0A6276741682AE8900827101 /* TRStreamSetupViewController.m in Sources */,
 				0A62767F1682BBC600827101 /* TRTokenField.m in Sources */,
-				0A6ADB751687AE2F00A3C1AE /* TRParticipantsViewController.m in Sources */,
-				0A6ADB7C1687B1A400A3C1AE /* TRParticipantCell.m in Sources */,
 				0A3CEB5416884D9600305544 /* TRLikerListViewController.m in Sources */,
 				0A4D4B6416B0C9C10036C440 /* TRCommentsViewController.m in Sources */,
 				0A9A8EEC16B1052200D85655 /* TRCommentCell.m in Sources */,

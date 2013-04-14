@@ -18,7 +18,7 @@
 
 #import "TRImageView.h"
 #import "TRStreamGridViewCell.h"
-#import "TRParticipantsViewController.h"
+#import "TRStreamSetupViewController.h"
 #import "TRPhotoViewController.h"
 
 #define MAX_UPLOAD_DIMENTION 1024
@@ -289,8 +289,8 @@
 }
 
 - (void)tappedParticipantsButton:(id)sender {
-    TRParticipantsViewController * participants = [[TRParticipantsViewController alloc] initWithStream:mStream];
-    [self.navigationController pushViewController:participants animated:YES];
+    TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithStream:mStream];
+    [self presentViewController:setup animated:YES completion:nil];
 }
 
 #pragma mark - TRGraphDelegate
