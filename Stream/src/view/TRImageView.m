@@ -88,6 +88,7 @@
     } else {
         if (!photo.image) {
             [self setPlaceholder];
+            [self setSpinnerVisible:YES];
             if (mConnection)
                 [mConnection cancel];
             mConnection = [AppDelegate.network dataAtURL:photo.URL delegate:self];
@@ -119,6 +120,22 @@
     }
 }
 
+- (void)setSpinnerVisible:(BOOL)spinner {
+    if (spinner) {
+        if (mSpinner == nil) {
+            mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            mSpinner.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + mSpinner.frame.size.height * 2);
+        }
+        [mSpinner startAnimating];
+        [self addSubview: mSpinner];
+    } else {
+        if (mSpinner != nil) {
+            [mSpinner removeFromSuperview];
+            mSpinner = nil;
+        }
+    }
+}
+
 - (void)setTapRecognizer:(UITapGestureRecognizer *)tapRecognizer {
     [self addGestureRecognizer:tapRecognizer];
     mTapRecognizer = tapRecognizer;
@@ -141,6 +158,7 @@
                                     mPostDownloadResize.width, photoSize.height);
             self.center = oldCenter;
         }
+        [self setSpinnerVisible:NO];
         [self setBackgroundColor:[UIColor colorWithPatternImage:[mImage sizedTo:self.frame.size]]];
     }
 }

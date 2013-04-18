@@ -27,6 +27,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [mNUX removeFromSuperview];
+    mLoadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 32)];
+    mLoadingLabel.text = @"Loading...";
+    mLoadingLabel.font = [UIFont boldSystemFontOfSize:22.0];
+    mLoadingLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+    mLoadingLabel.shadowColor = [UIColor whiteColor];
+    mLoadingLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+    mLoadingLabel.backgroundColor = [UIColor clearColor];
+    mLoadingLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:mLoadingLabel];
+    mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    mSpinner.center = CGPointMake(self.view.center.x, 70);
+    [mSpinner startAnimating];
+    [self.view addSubview:mSpinner];
     self.title = @"STREAM";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"back"
                                                                              style:UIBarButtonItemStyleBordered
@@ -39,6 +53,17 @@
     [add setTarget:self];
     [add setAction:@selector(presentSetup:)];
     [self.navigationItem setRightBarButtonItem:add];
+
+    UIBarButtonItem * logout = [[UIBarButtonItem alloc] initWithTitle:@"logout"
+                                                                style:UIBarButtonItemStyleBordered
+                                                               target:self
+                                                               action:@selector(logout:)];
+    [logout setBackgroundImage:[UIImage imageNamed:@"navbarback.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [logout setBackgroundImage:[UIImage imageNamed:@"navbarback_highlighted.png"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [logout setTitlePositionAdjustment:UIOffsetMake(5.0f, 0.0f) forBarMetrics:UIBarMetricsDefault];
+    [logout setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"MuseoSans-500" size:11.0], UITextAttributeFont, nil] forState:UIControlStateNormal];
+    [self.navigationItem setLeftBarButtonItem:logout];
+
     [mTableView registerNib:[UINib nibWithNibName:@"TRStreamCell" bundle:nil] forCellReuseIdentifier:@"TRStreamCell"];
 
     mRefreshControl = [[UIRefreshControl alloc] init];
@@ -56,7 +81,14 @@
 - (void)presentSetup:(id)sender {
     TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithStream:nil];
     mWasPreviouslyCreatingStream = YES;
-    [self.navigationController presentViewController:setup animated:YES completion:nil];
+    [self.navigationController pushViewController:setup animated:YES];
+}
+
+- (void)logout:(id)sender {
+    [[NSUserDefaults alloc] removeObjectForKey:@"user_phone"];
+    [[NSUserDefaults alloc] removeObjectForKey:@"user_first"];
+    [[NSUserDefaults alloc] removeObjectForKey:@"user_last"];
+    [AppDelegate showSplash:YES];
 }
 
 #pragma mark - Table view data source
@@ -152,6 +184,8 @@
     } else {
         [mNUX removeFromSuperview];
     }
+    [mLoadingLabel removeFromSuperview];
+    [mSpinner removeFromSuperview];
     if (mRefreshControl) {
         [mRefreshControl endRefreshing];
     }

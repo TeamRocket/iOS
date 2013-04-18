@@ -42,6 +42,9 @@
     UIImageView * mLikeOverlayImage;
     UILabel * mLikeOverlayLabel;
 
+    UIActionSheet * mFlagSheet;
+    UIActionSheet * mSaveSheet;
+
     int mCurrentIndex;
 }
 - (id)initWithPhoto:(TRPhoto*)photo inStream:(TRPhotoStream*)stream;

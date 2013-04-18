@@ -18,7 +18,7 @@
 
 #import "TRImageView.h"
 #import "TRStreamGridViewCell.h"
-#import "TRParticipantsViewController.h"
+#import "TRStreamSetupViewController.h"
 #import "TRPhotoViewController.h"
 
 #define MAX_UPLOAD_DIMENTION 1024
@@ -102,7 +102,7 @@
 - (void)showPhotoPicker {
     if (!mPicker) {
         mPicker = [[UIImagePickerController alloc] init];
-        [mPicker setAllowsEditing:YES];
+        [mPicker setAllowsEditing:NO];
         [mPicker setDelegate:self];
     }
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -148,11 +148,7 @@
                 UIButton * participantsButton = [[UIButton alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 300.0f, 46.0f)];
                 [participantsButton setBackgroundImage:[UIImage imageNamed:@"view_participants_normal.png"] forState:UIControlStateNormal];
                 [participantsButton setBackgroundImage:[UIImage imageNamed:@"view_participants_highlighted.png"] forState:UIControlStateSelected];
-                if (mStream.numParticipants == 1) {
-                    [participantsButton setTitle:@"       1 Participant" forState:UIControlStateNormal];
-                } else {
-                    [participantsButton setTitle:[NSString stringWithFormat:@"       %i Participants", mStream.numParticipants] forState:UIControlStateNormal];
-                }
+                [participantsButton setTitle:@"        Invite Users" forState:UIControlStateNormal];
 
                 [participantsButton setTitleColor:[UIColor colorWithRed:0.281f green:0.285f blue:0.297f alpha:1.0] forState:UIControlStateNormal];
                 [participantsButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0f]];
@@ -177,12 +173,21 @@
         }
         return cell;
     } else {
-        NSArray * photoArray = mMode == kTRPhotoStreamViewModeAll ? mStream.photos : [mUser photosInStream:mStream];
+        NSArray * photoArray;
+        int photoBoxes;
+        if (mMode == kTRPhotoStreamViewModeAll) {
+            photoArray = mStream.photos;
+            photoBoxes = mStream.numPhotos;
+        } else {
+            photoArray = [mUser photosInStream:mStream];
+            photoBoxes = [mUser getCountOfPhotosInStream:mStream];
+        }
+        photoBoxes = mUploading ? photoBoxes + 1 : photoBoxes;
+        
         cell = [tableView dequeueReusableCellWithIdentifier:@"TRStreamGridViewCell"];
         if (cell == nil) {
             cell = [[NSBundle mainBundle] loadNibNamed:@"TRStreamGridViewCell" owner:self options:nil][0];
         }
-        int photoBoxes = mUploading ? [photoArray count] + 1 : [photoArray count];
         TRStreamGridViewCell * gridCell = (TRStreamGridViewCell*)cell;
         if (photoBoxes > 0) {
             if (indexPath.row * 2 < photoBoxes) {
@@ -201,8 +206,13 @@
                         [gridCell.leftFrame setImage:[UIImage imageNamed:@"upload_placeholder.png"]];
                         [gridCell.leftFrame setUserInteractionEnabled:NO];
                     } else {
-                        leftPhoto = [photoArray objectAtIndex:((indexPath.row) * 2) - 1];
-                        [gridCell.leftFrame setTRPhoto:leftPhoto];
+                        if (((indexPath.row) * 2) - 1 < [photoArray count]) {
+                            leftPhoto = [photoArray objectAtIndex:((indexPath.row) * 2) - 1];
+                            [gridCell.leftFrame setTRPhoto:leftPhoto];
+                        } else {
+                            [gridCell.leftFrame setPlaceholder];
+                            [gridCell.leftFrame setSpinnerVisible:YES];
+                        }
                         if (!gridCell.leftFrame.tapRecognizer)
                             gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
                         else
@@ -211,8 +221,13 @@
                         [gridCell.leftFrame.tapRecognizer setNumberOfTapsRequired:1];
                     }
                 } else {
-                    leftPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
-                    [gridCell.leftFrame setTRPhoto:leftPhoto];
+                    if (indexPath.row * 2 < [photoArray count]) {
+                        leftPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
+                        [gridCell.leftFrame setTRPhoto:leftPhoto];
+                    } else {
+                        [gridCell.leftFrame setPlaceholder];
+                        [gridCell.leftFrame setSpinnerVisible:YES];
+                    }
                     if (!gridCell.leftFrame.tapRecognizer)
                         gridCell.leftFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
                     else
@@ -226,11 +241,18 @@
             if (indexPath.row * 2 + 1 < photoBoxes) {
                 TRPhoto * rightPhoto;
                 if (mUploading) {
-                    rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
+                    if ((indexPath.row * 2) < [photoArray count])
+                        rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2)];
                 } else {
-                    rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2) + 1];
+                    if ((indexPath.row * 2) + 1 < [photoArray count])
+                        rightPhoto = [photoArray objectAtIndex:(indexPath.row * 2) + 1];
                 }
-                [gridCell.rightFrame setTRPhoto:rightPhoto];
+                if (rightPhoto)
+                    [gridCell.rightFrame setTRPhoto:rightPhoto];
+                else {
+                    [gridCell.rightFrame setPlaceholder];
+                    [gridCell.rightFrame setSpinnerVisible:YES];
+                }
                 if (!gridCell.rightFrame.tapRecognizer)
                     gridCell.rightFrame.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedPhoto:)];
                 else
@@ -289,8 +311,8 @@
 }
 
 - (void)tappedParticipantsButton:(id)sender {
-    TRParticipantsViewController * participants = [[TRParticipantsViewController alloc] initWithStream:mStream];
-    [self.navigationController pushViewController:participants animated:YES];
+    TRStreamSetupViewController * setup = [[TRStreamSetupViewController alloc] initWithStream:mStream];
+    [self.navigationController pushViewController:setup animated:YES];
 }
 
 #pragma mark - TRGraphDelegate

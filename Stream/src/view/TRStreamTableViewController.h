@@ -15,6 +15,8 @@
     UIRefreshControl * mRefreshControl;
     BOOL mWasPreviouslyCreatingStream;
     IBOutlet UIImageView * mNUX;
+    UILabel * mLoadingLabel;
+    UIActivityIndicatorView * mSpinner;
 }
 
 @end

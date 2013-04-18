@@ -21,9 +21,9 @@ typedef enum {
     kTRPhotoStreamSetupModeInvite,
 } TRPhotoStreamSetupMode;
 
-@interface TRStreamSetupViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate, TRTokenFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
-    IBOutlet UINavigationItem * mTitleItem;
-    IBOutlet UIBarButtonItem * mCreateButton;
+@interface TRStreamSetupViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate, TRTokenFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, TRGraphDelegate> {
+    UINavigationItem * mTitleItem;
+    UIBarButtonItem * mCreateButton;
     IBOutlet UITableView * mTableView;
     NSMutableArray * mParticipants;
     TRTextFieldCell * mStreamNameField;

@@ -27,6 +27,8 @@
     NSString * mPushToken;
 }
 
+- (void)showSplash:(BOOL)animated;
+
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) TRGraph * graph;
 @property (strong, nonatomic) TRNetwork * network;
