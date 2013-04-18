@@ -27,6 +27,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [mNUX removeFromSuperview];
+    mLoadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 32)];
+    mLoadingLabel.text = @"Loading...";
+    mLoadingLabel.font = [UIFont boldSystemFontOfSize:22.0];
+    mLoadingLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+    mLoadingLabel.shadowColor = [UIColor whiteColor];
+    mLoadingLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+    mLoadingLabel.backgroundColor = [UIColor clearColor];
+    mLoadingLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:mLoadingLabel];
+    mSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    mSpinner.center = CGPointMake(self.view.center.x, 70);
+    [mSpinner startAnimating];
+    [self.view addSubview:mSpinner];
     self.title = @"STREAM";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"back"
                                                                              style:UIBarButtonItemStyleBordered
@@ -170,6 +184,8 @@
     } else {
         [mNUX removeFromSuperview];
     }
+    [mLoadingLabel removeFromSuperview];
+    [mSpinner removeFromSuperview];
     if (mRefreshControl) {
         [mRefreshControl endRefreshing];
     }
